@@ -14,8 +14,10 @@
     "ejs": "^2.6.1",
     "express": "^4.16.3",
     "forever": "^0.15.3",
-    "node-sass-middleware": "^0.9.8",
     "serve-static": "^1.8.1",
     "shelljs": "^0.8.2"
+  },
+  "devDependencies": {
+    "node-sass-middleware": "^0.9.8"
   }
 }
