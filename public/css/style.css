@@ -33,11 +33,7 @@ body.page--home main {
 .page {
   min-height: 100vh;
 }
-h1 {
-  font-size: 80px;
-  line-height: 88px;
-  letter-spacing: 3.2px;
-}
+
 .btn-primary {
   background-color: #209481;
   color: #fff;
