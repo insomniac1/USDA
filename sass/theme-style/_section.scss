@@ -11,3 +11,107 @@
     background-position: 97% 143px;
   }
 }
+
+.section--range-slider {
+	.range-style {
+	  position: relative;
+	  z-index: 1000;
+	  -webkit-appearance: none;
+	     -moz-appearance: none;
+	          appearance: none;
+	  background: transparent;
+	  height: 37px;
+	  border-radius: 5px;
+	  outline: none;
+	  margin: 0;
+	  padding: 0;
+	  width: 100%;
+	}
+	input[type='range'] {
+		position: relative;
+		-webkit-appearance: none;
+		-moz-appearance: none;
+		appearance: none;
+		background: transparent;
+		height: 37px;
+		border-radius: 6px;
+		outline: none;
+		margin: 0;
+		padding: 0;
+		width: 100%;
+		background: #F5F5F5;
+
+		&::-webkit-slider-thumb {
+			position: relative;
+			-webkit-appearance: none;
+			        appearance: none;
+			width: 10px;
+			height: 22px;
+			cursor: pointer;
+			z-index: 5000;
+			transition: background 0.3s ease-in-out;
+			z-index: 9999;
+			position: relative;
+
+			&:hover,
+			&:active {}
+		}
+
+		&::-moz-range-track {
+		  background: transparent;
+		}
+	}
+
+	.fill {
+	  position: absolute;
+	  z-index: 50;
+	  top: 0;
+	  height: 37px;
+	  width: 0%;
+	  border-radius: 6px;
+	}
+	.slider-container {
+		display: inline-block;
+		position: relative;
+		width: 100%;
+		margin: 15px 0;
+
+
+		&.range-blue {
+			input[type='range']::-webkit-slider-thumb {
+				background: url('/img/range-blue.svg') no-repeat;
+			}
+			.fill {
+	  			background: #2E8BC2;
+			}
+		}
+		&.range-teal {
+			input[type='range']::-webkit-slider-thumb {
+				background: url('/img/range-teal.svg') no-repeat;
+			}
+			.fill {
+	  			background: #58C4B3;				
+			}
+		}
+		&.range-red {
+			input[type='range']::-webkit-slider-thumb {
+				background: url('/img/range-red.svg') no-repeat;
+			}
+			.fill {
+	  			background: #B6334F;
+			}
+		}
+	}
+	.count {
+	  position: absolute;
+	  top: -18px;
+	  left: 0;
+	  color: #000;
+	  padding: 2px 5px;
+	  border-radius: 20px;
+	  text-align: center;
+	  width: 18px;
+	  margin-left: 0px;
+	  font-size: 11px;
+	}
+}
