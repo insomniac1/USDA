@@ -164,3 +164,37 @@
   border-top-width: 0;
   border-bottom-color: #ffffff;
 }
+
+
+
+
+
+
+
+
+
+
+#zoom-bar-chart {
+  font-size: 12px;
+}
+
+#zoom-bar-chart .zoom {
+  cursor: move;
+  fill: none;
+  pointer-events: all;
+}
+
+#zoom-bar-chart circle {
+  fill: #FF7700;
+  fill-opacity: 1;
+}
+
+#zoom-bar-chart .axis {
+  /*stroke-width: 0px;*/
+  stroke: #888;
+  font: 10px avenir next, sans-serif;
+}
+
+#zoom-bar-chart .axis > path {
+  stroke: #888;
+}
