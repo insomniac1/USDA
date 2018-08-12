@@ -9,20 +9,6 @@ body.page--home {
   background-size: cover;
   background-position: 50% 50%;
 }
-body.page--landing {
-}
-.section {
-  padding: 110px 0;
-}
-.corn-production {
-  background-image: url('/img/corn-production.svg');
-  background-repeat: no-repeat;
-  background-position: 100% 0%;
-}
-header {
-  height: 40px;
-  background-color: #209481;
-}
 body.page--home main {
   flex-grow: 1;
   display: flex;

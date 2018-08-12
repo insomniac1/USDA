@@ -9,7 +9,7 @@
 //
 
 $white:    #fff !default;
-$gray-100: #f8f9fa !default;
+$gray-100: #f9f9f9;
 $gray-200: #e9ecef !default;
 $gray-300: #dee2e6 !default;
 $gray-400: #ced4da !default;
@@ -202,7 +202,7 @@ $container-max-widths: (
   sm: 540px,
   md: 720px,
   lg: 960px,
-  xl: 1140px
+  xl: 1160px
 ) !default;
 
 @include _assert-ascending($container-max-widths, "$container-max-widths");
@@ -213,7 +213,7 @@ $container-max-widths: (
 // Set the number of columns and specify the width of the gutters.
 
 $grid-columns:                12 !default;
-$grid-gutter-width:           30px !default;
+$grid-gutter-width:           40px;
 
 // Components
 //
@@ -265,10 +265,10 @@ $font-weight-bold:            700;
 $font-weight-extra-bold:      800;
 
 $font-weight-base:            $font-weight-normal;
-$line-height-base:            1.5;
+$line-height-base:            1.625;
 
 $h1-font-size:                $font-size-base * 5;
-$h2-font-size:                $font-size-base * 2 !default;
+$h2-font-size:                $font-size-base * 3.75;
 $h3-font-size:                $font-size-base * 1.75 !default;
 $h4-font-size:                $font-size-base * 1.5 !default;
 $h5-font-size:                $font-size-base * 1.25 !default;

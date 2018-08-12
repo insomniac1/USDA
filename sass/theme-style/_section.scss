@@ -1,0 +1,13 @@
+.section {
+  .section--header {
+    min-height: 486px;
+    background-repeat: no-repeat;
+  }
+}
+
+.section--corn-production {
+  .section--header {
+    background-image: url('/img/corn-production.svg');
+    background-position: 97% 143px;
+  }
+}
