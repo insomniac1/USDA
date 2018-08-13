@@ -56,3 +56,12 @@
 .text-hide {
   @include text-hide($ignore-warning: true);
 }
+
+.text-sm {
+  font-size: $font-size-sm;
+}
+
+.text-ex {
+  font-size: 0.750rem;
+  line-height: 1.334em;
+}

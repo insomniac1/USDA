@@ -10,10 +10,10 @@
 
 $white:    #fff !default;
 $gray-100: #f9f9f9;
-$gray-200: #e9ecef !default;
+$gray-200: #f5f5f5;
 $gray-300: #dee2e6 !default;
-$gray-400: #ced4da !default;
-$gray-500: #adb5bd !default;
+$gray-400: #7A7A7A;
+$gray-500: #afafaf;
 $gray-600: #6c757d !default;
 $gray-700: #495057 !default;
 $gray-800: #343a40 !default;
@@ -42,10 +42,12 @@ $blue:    #007bff !default;
 $indigo:  #6610f2 !default;
 $purple:  #6f42c1 !default;
 $pink:    #e83e8c !default;
-$red:     #dc3545 !default;
+$red:     #B6334F;
 $orange:  #fd7e14 !default;
-$yellow:  #ffc107 !default;
+$yellow:  #E8B251;
 $green:   #209481;
+$greenblue:    #56ADB3;
+$green-dark:   #163933;
 $teal:    #20c997 !default;
 $cyan:    #17a2b8 !default;
 
@@ -76,7 +78,7 @@ $success:       $green !default;
 $info:          $cyan !default;
 $warning:       $yellow !default;
 $danger:        $red !default;
-$light:         $gray-100 !default;
+$light:         $gray-100;
 $dark:          $gray-800 !default;
 
 $theme-colors: () !default;
@@ -90,7 +92,10 @@ $theme-colors: map-merge(
     "warning":    $warning,
     "danger":     $danger,
     "light":      $light,
-    "dark":       $dark
+    "tlight":     $gray-500,
+    "dark":       $dark,
+    "green-dark": $green-dark,
+    "greenblue":  $greenblue,
   ),
   $theme-colors
 );
@@ -131,11 +136,17 @@ $spacers: () !default;
 $spacers: map-merge(
   (
     0: 0,
+    5px: 0.314rem, // 5px
     1: 0.626rem, // 10px
+    15px: 0.938rem, //15px
     2: 1.250rem, // 20px
     3: 1.875rem, // 30px
     4: 2.500rem, // 40px
     5: 3.125rem, // 50px
+    7: 4.375rem, // 70px
+    9: 5.625rem, // 70px
+    10: 6.250rem, // 100px
+    13: 8.125rem // 130px
   ),
   $spacers
 );
@@ -159,7 +170,7 @@ $sizes: map-merge(
 // Settings for the `<body>` element.
 
 $body-bg:                   $white !default;
-$body-color:                $gray-900 !default;
+$body-color:                $gray-900;
 
 // Links
 //
@@ -225,9 +236,9 @@ $line-height-sm:              1.5 !default;
 $border-width:                1px !default;
 $border-color:                $gray-300 !default;
 
-$border-radius:               .25rem !default;
+$border-radius:               1rem;
 $border-radius-lg:            6rem;
-$border-radius-sm:            .2rem !default;
+$border-radius-sm:            .5rem;
 
 $box-shadow-sm:               0 .125rem .25rem rgba($black, .075) !default;
 $box-shadow:                  0 .5rem 1rem rgba($black, .15) !default;
@@ -255,7 +266,7 @@ $font-family-base:            $font-family-sans-serif !default;
 
 $font-size-base:              1rem !default; // Assumes the browser default, typically `16px`
 $font-size-lg:                ($font-size-base * 1.25) !default;
-$font-size-sm:                ($font-size-base * .875) !default;
+$font-size-sm:                ($font-size-base * .875);
 
 $font-weight-light:           300;
 $font-weight-normal:          400;
@@ -270,7 +281,7 @@ $line-height-base:            1.625;
 $h1-font-size:                $font-size-base * 5;
 $h2-font-size:                $font-size-base * 3.75;
 $h3-font-size:                $font-size-base * 1.75 !default;
-$h4-font-size:                $font-size-base * 1.5 !default;
+$h4-font-size:                $font-size-base * 2.188;
 $h5-font-size:                $font-size-base * 1.25 !default;
 $h6-font-size:                $font-size-base !default;
 
@@ -296,7 +307,7 @@ $lead-font-weight:            300 !default;
 
 $small-font-size:             80% !default;
 
-$text-muted:                  $gray-600 !default;
+$text-muted:                  $body-color;
 
 $blockquote-small-color:      $gray-600 !default;
 $blockquote-font-size:        ($font-size-base * 1.25) !default;
@@ -374,13 +385,14 @@ $input-btn-border-width:      $border-width !default;
 // For each of Bootstrap's buttons, define text, background, and border color.
 
 $btn-min-width:               200px;
+$btn-min-width-sm:            115px;
 $btn-padding-y:               0.5rem;
-$btn-padding-x:               0.5rem;
+$btn-padding-x:               0.938rem;
 $btn-line-height:             $line-height-base;
 
-$btn-padding-y-sm:            $input-btn-padding-y-sm !default;
+$btn-padding-y-sm:            2px;
 $btn-padding-x-sm:            $input-btn-padding-x-sm !default;
-$btn-line-height-sm:          $input-btn-line-height-sm !default;
+$btn-line-height-sm:          1rem;
 
 $btn-padding-y-lg:            $input-btn-padding-y-lg !default;
 $btn-padding-x-lg:            $input-btn-padding-x-lg !default;
@@ -388,7 +400,7 @@ $btn-line-height-lg:          $input-btn-line-height-lg !default;
 
 $btn-border-width:            $input-btn-border-width !default;
 
-$btn-font-weight:             $font-weight-normal !default;
+$btn-font-weight:             $font-weight-bold;
 $btn-box-shadow:              inset 0 1px 0 rgba($white, .15), 0 1px 1px rgba($black, .075) !default;
 $btn-focus-width:             $input-btn-focus-width !default;
 $btn-focus-box-shadow:        $input-btn-focus-box-shadow !default;
@@ -708,8 +720,8 @@ $pagination-disabled-border-color:  $gray-300 !default;
 
 // Jumbotron
 
-$jumbotron-padding:                 2rem !default;
-$jumbotron-bg:                      $gray-200 !default;
+$jumbotron-padding:                 1.875rem;
+$jumbotron-bg:                      $gray-200;
 
 
 // Cards

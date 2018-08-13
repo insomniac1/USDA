@@ -12,7 +12,6 @@
   vertical-align: middle;
   user-select: none;
   border: $btn-border-width solid transparent;
-  min-width: $btn-min-width;
   @include button-size($btn-padding-y, $btn-padding-x, $font-size-base, $btn-line-height, $btn-border-radius);
   @include transition($btn-transition);
 
@@ -37,6 +36,10 @@
   // Opinionated: add "hand" cursor to non-disabled .btn elements
   &:not(:disabled):not(.disabled) {
     cursor: pointer;
+  }
+
+  &.btn-width {
+    min-width: $btn-min-width;
   }
 
   &:not(:disabled):not(.disabled):active,
@@ -80,7 +83,7 @@ fieldset:disabled a.btn {
 // Make a button look and behave like a link
 .btn-link {
   font-weight: $font-weight-normal;
-  color: $link-color;
+  color: $body-color;
   background-color: transparent;
 
   @include hover {
@@ -117,6 +120,8 @@ fieldset:disabled a.btn {
 
 .btn-sm {
   @include button-size($btn-padding-y-sm, $btn-padding-x-sm, $font-size-sm, $btn-line-height-sm, $btn-border-radius-sm);
+  min-width: $btn-min-width-sm;
+  font-weight: $font-weight-bold;
 }
 
 
@@ -142,3 +147,79 @@ input[type="button"] {
     width: 100%;
   }
 }
+
+.btn-outline-warning {
+  &:hover {
+    color: $white;
+  }
+}
+
+.btn-icon {
+  text-align: left;
+  padding-left: 3.467em;
+  position: relative;
+
+  img, svg {
+    margin-right: 1.063em;
+    position: absolute;
+    left: 16px;
+  }
+
+  &.btn-icon--oil svg {
+    top: 16px;
+    left: 14px;
+  }
+
+  &.btn-icon--water img {
+    top: 10px;
+    left: 18px;
+  }
+
+  &.btn-icon--carbon svg {
+    top: 9px;
+  }
+
+  &.btn-outline-primary {
+    color: rgba($primary, .5);
+    border-color: rgba($primary, .5);
+  }
+
+  &.btn-outline-danger {
+    color: rgba($danger, .5);
+    border-color: rgba($danger, .5);
+  }
+
+  &.btn-outline-primary,
+  &.btn-outline-danger,
+  &.btn-outline-warning {
+    &:hover {
+      color: $white;
+
+      polygon,
+      polyline {
+        fill: $white;
+        opacity: 1;
+      }
+    }
+  }
+}
+
+.btn-link-primary {
+  color: $primary;
+  font-weight: $font-weight-bold;
+
+  svg {
+    margin-right: 1rem;
+  }
+
+  &:hover {
+    color: $white;
+
+    polygon,
+    polyline {
+      fill: $white;
+      opacity: 1;
+    }
+  }
+}
+

@@ -331,3 +331,19 @@ textarea.form-control {
     }
   }
 }
+
+.form-custom {
+  padding-right: 0;
+  padding-left: 0;
+  background: transparent;
+  border-width: 0;
+
+  &:focus {
+    background: transparent;
+    box-shadow: none;
+  }
+}
+
+.input-group-custom {
+  border-bottom: 1px solid $gray-400;
+}

@@ -24,7 +24,11 @@ h2, .h2 {
 }
 
 h3, .h3 { font-size: $h3-font-size; }
-h4, .h4 { font-size: $h4-font-size; }
+
+h4, .h4 {
+  font-size: $h4-font-size;
+  line-height: 1.286em;
+}
 h5, .h5 { font-size: $h5-font-size; }
 h6, .h6 { font-size: $h6-font-size; }
 
