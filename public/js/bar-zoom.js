@@ -8,10 +8,11 @@ for (var i = 0; i < 300; i++) {
 }  
   
 var margin = {top: 10, right: 10, bottom: 100, left: 40},
-    margin2 = {top: 430, right: 10, bottom: 20, left: 40},
-    width = 750 - margin.left - margin.right,
-    height = 500 - margin.top - margin.bottom,
-    height2 = 500 - margin2.top - margin2.bottom;
+    margin2 = {top: 10, right: 10, bottom: 20, left: 40},
+    zoom_bar = $('#zoom-bar-chart');
+    width = zoom_bar.width() - margin.left - margin.right,
+    height = 100 - margin.top - margin.bottom,
+    height2 = 100 - margin2.top - margin2.bottom;
 
 var x = d3.scale.ordinal().rangeBands([0, width], .1),
     x2 = d3.scale.ordinal().rangeBands([0, width], .1),
@@ -35,22 +36,22 @@ var svg = d3.select("#zoom-bar-chart").append("svg")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom);
 
-var focus = svg.append("g")
-    .attr("class", "focus")
-    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+// var focus = svg.append("g")
+//     .attr("class", "focus")
+//     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
   
 var context = svg.append("g")
     .attr("class", "context")
     .attr("transform", "translate(" + margin2.left + "," + margin2.top + ")");
 
-  focus.append("g")
-      .attr("class", "x axis")
-      .attr("transform", "translate(0," + height + ")")
-      .call(xAxis);
+  // focus.append("g")
+  //     .attr("class", "x axis")
+  //     .attr("transform", "translate(0," + height + ")")
+  //     .call(xAxis);
 
-  focus.append("g")
-      .attr("class", "y axis")
-      .call(yAxis);
+  // focus.append("g")
+  //     .attr("class", "y axis")
+  //     .call(yAxis);
    
   // console.log(x(data[0].date))
   // console.log(x(data[1].date))
@@ -145,8 +146,8 @@ function brushed() {
         })
 
 
-    focus.select(".x.axis").call(xAxis.tickValues(filteredTickValues));
-    focus.select(".y.axis").call(yAxis);
+    // focus.select(".x.axis").call(xAxis.tickValues(filteredTickValues));
+    // focus.select(".y.axis").call(yAxis);
     
     var min_selected = data[0];
     var max_selected = data[data.length -1];
@@ -161,34 +162,34 @@ function brushed() {
 
       // console.log('QWE UPDATE');
 
-      var bars =  focus.selectAll('.bar')
-          .data(data)
-      bars
-        .attr(
-        {  
-          height: function (d, i)
-          { 
-            return height - y(d.price);
-          },
-          width: function(d){ 
-            return x.rangeBand()
-          },
-          x: function(d) {
+      // var bars =  focus.selectAll('.bar')
+      //     .data(data)
+      // bars
+      //   .attr(
+      //   {  
+      //     height: function (d, i)
+      //     { 
+      //       return height - y(d.price);
+      //     },
+      //     width: function(d){ 
+      //       return x.rangeBand()
+      //     },
+      //     x: function(d) {
 
-            return x(d.date);
-          },
-          y: function(d)
-          {
-            return y(d.price)
-          }
-        })
+      //       return x(d.date);
+      //     },
+      //     y: function(d)
+      //     {
+      //       return y(d.price)
+      //     }
+      //   })
 
   } 
   
   function exit(data)
   {
-    var bars =  focus.selectAll('.bar').data(data)
-    bars.exit().remove()
+    // var bars =  focus.selectAll('.bar').data(data)
+    // bars.exit().remove()
   }
   
   function enter(data)
@@ -198,26 +199,26 @@ function brushed() {
 
       // console.log('QWE ENTER');
 
-      var bars =  focus.selectAll('.bar')
-          .data(data)
-      bars.enter().append("rect")
-        .classed('bar', true)
-        .attr(
-        {  
-          height: function (d, i)
-          { 
-            return height - y(d.price);
-          },
-          width: function(d){ 
-            return x.rangeBand()
-          },
-          x: function(d) {
+      // var bars =  focus.selectAll('.bar')
+      //     .data(data)
+      // bars.enter().append("rect")
+      //   .classed('bar', true)
+      //   .attr(
+      //   {  
+      //     height: function (d, i)
+      //     { 
+      //       return height - y(d.price);
+      //     },
+      //     width: function(d){ 
+      //       return x.rangeBand()
+      //     },
+      //     x: function(d) {
  
-            return x(d.date);
-          },
-          y: function(d)
-          {
-            return y(d.price)
-          }
-        })
+      //       return x(d.date);
+      //     },
+      //     y: function(d)
+      //     {
+      //       return y(d.price)
+      //     }
+      //   })
   }
