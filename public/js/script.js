@@ -51,16 +51,14 @@ $(document).ready(function() {
     /*
     ** Round slider
      */
-
-    var options = { circleShape: 'half-top' };
     $("#round-temperature").roundSlider({
         radius: 150,
         width: 40,
         circleShape: "half-top",
         sliderType: "min-range",
-        value: 50,
+        value: 79,
         min: 0,
-        max: 100,
+        max: 158,
         editableTooltip: false,
         tooltipFormat: "temperatureTooltip"
     });
@@ -69,11 +67,11 @@ $(document).ready(function() {
         width: 40,
         circleShape: "half-top",
         sliderType: "min-range",
-        value: 50,
+        value: 75,
         min: 0,
-        max: 100,
+        max: 150,
         editableTooltip: false,
-        tooltipFormat: "vegetationTooltip"
+        tooltipFormat: "vegetationTooltip",
     });
 });
 
@@ -82,6 +80,5 @@ function temperatureTooltip(args) {
 }
 
 function vegetationTooltip(args) {
-    return args.value + '<div class="tooltip-label">Vegetation Level</div>';
+    return args.value/100 + '<div class="tooltip-label">Vegetation Level</div>';
 }
-
