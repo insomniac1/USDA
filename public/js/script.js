@@ -9,6 +9,10 @@ $(document).ready(function() {
     var rangeMaxVal_water = $(slider_water).prop('max');
 
     // Default value
+    $(slider_water).siblings('.count').text($(slider_water).val() + ' mm').css({
+        'left': $(slider_water).val() * (100 / rangeMaxVal_water) + '%', 
+        'transform': 'translateX(-' + $(slider_water).val() * (100 / rangeMaxVal_water) + '%)'
+    });
     $(slider_water).siblings('.fill').css('width', $(slider_water).val() + '%');
     slider_water.oninput = function() {
         $(this).siblings('.count').text(this.value + ' mm').css({
@@ -23,6 +27,10 @@ $(document).ready(function() {
     var rangeMaxVal_carbon = $(slider_carbon).prop('max');
 
     // Default value
+    $(slider_carbon).siblings('.count').text($(slider_carbon).val()  + ' g').css({
+        'left': $(slider_carbon).val() * (100 / rangeMaxVal_carbon) + '%', 
+        'transform': 'translateX(-' + $(slider_carbon).val() * (100 / rangeMaxVal_carbon) + '%)'
+    });
     $(slider_carbon).siblings('.fill').css('width', $(slider_carbon).val() + '%');
     slider_carbon.oninput = function() {
         $(this).siblings('.count').text(this.value + ' g').css({
@@ -38,6 +46,10 @@ $(document).ready(function() {
     var rangeMaxVal_soil = $(slider_soil).prop('max');
 
     // Default value
+    $(slider_soil).siblings('.count').text(soilValues[$(slider_soil).val()]).css({
+        'left': $(slider_soil).val() * (100 / rangeMaxVal_soil) + '%', 
+        'transform': 'translateX(-' + $(slider_soil).val() * (100 / rangeMaxVal_soil) + '%)'
+    });
     $(slider_soil).siblings('.fill').css('width', $(slider_soil).val() * (100 / rangeMaxVal_soil) + '%');
     slider_soil.oninput = function() {
         $(this).siblings('.count').text(soilValues[this.value]).css({
