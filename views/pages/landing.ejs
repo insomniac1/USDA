@@ -9,10 +9,10 @@
       <div class="section section--corn-production">
         <div class="section--header d-flex align-items-center">
           <div class="container">
-            <div class="row">
+            <div class="row pt-4 pb-15 py-md-0">
               <div class="col-lg-6 col-md-8 col-sm-10">
                 <div class="h2 mb-3">Corn Production in the U.S.</div>
-                <p>Every year, the United States produces <strong>XXX</strong> tons of corn on average. Explore the map below to find the most productive states.</p>
+                <p>Every year, the United States produces <strong>XXX</strong> tons of corn on average.<br>Explore the map below to find the most productive states.</p>
               </div>
             </div>
           </div>
@@ -103,7 +103,7 @@
                 <h5 class="mb-4">Temperature and Vegetation</h5>
               </div>
 
-              <div class="col-lg-9 col-md-6">
+              <div class="col-lg-9 col-md-6 mob-full">
                 <img src="/img/temp vegetation.png" class="img-fluid" alt="Temperature">
 
                 <div class="gradient-wrapper">
@@ -113,15 +113,15 @@
               </div>
 
               <div class="col-lg-3 col-md-4 mt-4 mt-md-0">
-                <div class="mb-15px">
+                <div class="mb-15px text-center text-md-left">
                   <button type="button" class="btn btn-width btn-icon btn-icon--corn btn-primary"><img src="/img/icon--corn-yield.svg" alt="Corn Yield">Corn Yield</button>
                 </div>
 
-                <div class="mb-15px">
+                <div class="mb-15px text-center text-md-left">
                   <button type="button" class="btn btn-width btn-icon btn-icon--temperature btn-greenblue"><img src="/img/icon--temperature.svg" alt="Temperature">Temperature</button>
                 </div>
 
-                <div class="mb-5">
+                <div class="mb-5 text-center text-md-left">
                   <button type="button" class="btn btn-width btn-icon btn-icon--vegetation btn-outline-warning">
                     <?xml version="1.0" encoding="UTF-8"?>
                     <svg width="17px" height="26px" viewBox="0 0 17 26" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -155,7 +155,7 @@
                 <h5 class="mb-4">Soil Chemistry</h5>
               </div>
 
-              <div class="col-lg-9 col-md-6">
+              <div class="col-lg-9 col-md-6 mob-full">
                 <div id="chart-circle-wrapper-final" class="scatter-chart-group">
                   <div class="chart-wrapper">
                     <div id="chart-final" class="chart"></div>
@@ -167,11 +167,11 @@
               </div>
 
               <div class="col-lg-3 col-md-4 mt-4 mt-md-0">
-                <div class="mb-15px">
+                <div class="mb-15px text-center text-md-left">
                   <button type="button" class="btn btn-width btn-icon btn-icon--water btn-primary"><img src="/img/icon--accessible-water.svg" alt="Accessible Water">Accessible Water</button>
                 </div>
 
-                <div class="mb-15px">
+                <div class="mb-15px text-center text-md-left">
                   <button type="button" class="btn btn-width btn-icon btn-icon--carbon btn-outline-primary"><?xml version="1.0" encoding="UTF-8"?>
                     <svg width="22px" height="23px" viewBox="0 0 22 23" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                       <title>carbon-icon</title>
@@ -196,7 +196,7 @@
                   </button>
                 </div>
 
-                <div class="mb-5">
+                <div class="mb-5 text-center text-md-left">
                   <button type="button" class="btn btn-width btn-icon btn-icon--oil btn-outline-danger">
                     <?xml version="1.0" encoding="UTF-8"?>
                     <svg width="31px" height="11px" viewBox="0 0 31 11" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -231,14 +231,14 @@
 
       <div class="section section--range-slider">
         <div class="section--content">
-          <div class="bg-green-dark text-white py-10">
+          <div class="bg-green-dark text-white pt-4 pb-6 py-md-10">
             <div class="container">
-              <div class="row mb-7">
-                <div class="col-lg-8 col-md-6 col-12 mb-2 mb-md-0">
+              <div class="row mb-md-7">
+                <div class="col-lg-8 col-md-6 col-12 mb-2 mb-md-7">
                   <h4>Is <span class="text-primary">selected county</span> good for corn?</h4>
                 </div>
 
-                <div class="col-lg-4 text-md-right mb-4 mb-md-0">
+                <div class="col-lg-4 text-md-right d-none d-md-flex mb-md-7">
                   <a href="#" class="btn btn-link btn-link-primary pl-0">
                     <?xml version="1.0" encoding="UTF-8"?>
                     <svg width="23px" height="26px" viewBox="0 0 23 26" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -263,14 +263,40 @@
                   Predicted Corn Yield</a>
                 </div>
 
-                <div class="col-12 text-center mb-2 mb-md-7 ">
+                <div class="col-12 text-center mb-2 mb-md-7 mob-full">
                   <img src="/img/selected country.svg" class="img-fluid" alt="Chart">
+                </div>
+
+                <div class="col-lg-4 text-md-right d-md-none mb-3">
+                  <a href="#" class="btn btn-link btn-link-primary pl-0">
+                    <?xml version="1.0" encoding="UTF-8"?>
+                    <svg width="23px" height="26px" viewBox="0 0 23 26" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                        <!-- Generator: Sketch 49.3 (51167) - http://www.bohemiancoding.com/sketch -->
+                        <title>corn-icon</title>
+                        <desc>Created with Sketch.</desc>
+                        <defs>
+                            <path d="M1.95923516e-10,10.4485109 L1.95923516e-10,10.3961969 C0.018620161,10.3426464 0.104027554,10.3165527 0.269303693,10.3165527 C1.85111687,10.3165527 5.60792315,9.91819435 9.56245608,14.4993158 C10.2387471,15.282754 10.8198657,16.1027747 11.3088437,16.9283061 C9.17115505,20.4756211 8.77906311,24.1589092 9.86623012,25.5313866 C8.44345508,24.6460351 7.00117101,22.4512795 6.00337644,18.6820789 C4.63378887,13.5083955 0.151383261,11.0224427 0,10.4485108 Z M14.646865,10.9833383 C13.8798174,11.2436655 12.8453775,11.367223 11.6619176,11.3463092 L11.6619176,8.1313578 C12.614301,8.13972333 13.4735551,8.0691475 14.1849096,7.91611149 C14.3950271,8.97826773 14.5569653,10.028606 14.646865,10.9833383 Z M14.6813353,11.3924523 C14.7092148,11.7687018 14.7245716,12.1270916 14.7258238,12.4620446 C14.2778412,12.866312 13.8241903,13.3286069 13.3679031,13.8571621 C12.7101325,14.6191553 12.1423934,15.4157393 11.6619176,16.218365 L11.6619176,11.7448003 C12.8358866,11.7655814 13.8740833,11.6504558 14.6813353,11.3924523 Z M8.19412178,10.8571251 C8.28843739,9.91275012 8.4510346,8.87993961 8.65943849,7.83770128 C9.39491571,7.99027254 10.3153992,8.09431047 11.2664643,8.12352342 L11.2664643,11.3341592 C10.0981635,11.2829702 8.96439889,11.0948786 8.19412178,10.8571251 Z M8.15767417,11.2597326 C8.97804203,11.5075115 10.1012612,11.6833868 11.2664643,11.7328496 L11.2664643,16.0804666 C10.8101771,15.3397192 10.2791493,14.6059431 9.67127165,13.9017782 C9.14386877,13.2907629 8.61995907,12.7683822 8.10428797,12.3217561 C8.10929705,11.9876662 8.12761972,11.6319321 8.15767417,11.2597326 Z M15.7284297,10.3525378 C15.556803,10.5372433 15.320981,10.6970514 15.0306524,10.8312318 C14.9379845,9.887056 14.7786168,8.85902579 14.5726516,7.8202399 C14.8998892,7.72788715 15.1873837,7.61468697 15.4282148,7.48017462 C15.5642507,8.38630717 15.6659481,9.34874103 15.7284297,10.3525378 Z M15.7565728,10.8604447 C15.7683705,11.1053023 15.7779273,11.3524173 15.7850455,11.6015905 C15.5639212,11.7619961 15.3406878,11.9355476 15.1157408,12.1233736 C15.1078317,11.8444563 15.0916181,11.5525924 15.067825,11.2504376 C15.3313287,11.1394948 15.5624053,11.0096299 15.7565728,10.8604447 Z M7.36301078,10.482801 C7.42305377,9.45948467 7.52382845,8.47819517 7.66006211,7.55460125 C7.8328752,7.62365004 8.03851091,7.68851606 8.27051017,7.74800425 C8.06553355,8.77138694 7.90537497,9.78593936 7.80908209,10.7219488 C7.61761679,10.6445345 7.46576272,10.5639997 7.36301078,10.482801 Z M7.33934949,10.9335435 C7.46286273,11.00153 7.60773046,11.0668608 7.77085494,11.1289383 C7.74541411,11.4294997 7.72728917,11.7204341 7.71707329,11.9992186 C7.58130099,11.8905331 7.44625369,11.7870263 7.31193139,11.6883662 C7.31858819,11.4345456 7.32781543,11.1829158 7.33934949,10.9335435 Z M14.1053576,7.5244588 C13.4276166,7.66985961 12.5916283,7.74070101 11.6619176,7.73286663 L11.6619176,4.98704866 C12.2790225,4.97423479 12.8933592,4.92636539 13.4516733,4.8420462 C13.6928339,5.70243393 13.9156718,6.6140771 14.1053576,7.5244588 Z M8.73945187,7.44790759 C8.92399674,6.57052325 9.13899152,5.69340447 9.37105669,4.86349116 C9.94828668,4.94522102 10.6023664,4.98811094 11.2664643,4.9904347 L11.2664643,7.72496585 C10.3424218,7.6957529 9.44045874,7.59025433 8.73945187,7.44790759 Z M15.3615809,7.05711802 C15.1357112,7.20431144 14.842153,7.32826729 14.4928359,7.42825525 C14.3050615,6.52922676 14.0843327,5.62906959 13.8436334,4.77492281 C14.2021118,4.70580763 14.5288881,4.61982861 14.807419,4.51652101 C15.0240615,5.29046496 15.2105177,6.14275273 15.3615809,7.05711802 Z M7.72181873,7.15504779 C7.86866372,6.24619313 8.05050633,5.39755697 8.26200793,4.62480809 C8.4732459,4.69219706 8.71460422,4.75049017 8.97817384,4.79948825 C8.7463064,5.62462125 8.53315707,6.49217943 8.35025992,7.359804 C8.096313,7.2956019 7.88257049,7.22642033 7.72181873,7.15504779 Z M13.34266,4.46081722 C12.8202662,4.53451353 12.2427726,4.57667312 11.6619176,4.5884247 L11.6619176,2.57206732 C12.0200665,2.56224115 12.3667472,2.53435606 12.6962257,2.48788092 C12.9171523,3.08296196 13.1355743,3.75100897 13.34266,4.46081722 Z M9.48026771,4.48066875 C9.68689205,3.77112607 9.90485273,3.10294627 10.1253838,2.50713491 C10.4371988,2.54272159 10.7728727,2.56595916 11.1138853,2.57339518 C11.1648987,2.57452387 11.2157804,2.57532058 11.2664643,2.57571894 L11.2664643,4.59174435 C10.6393413,4.58961977 10.0220387,4.55210769 9.48026771,4.48066875 Z M14.6983398,4.14186494 C14.4298929,4.24510616 14.1016008,4.33015567 13.7350815,4.39741185 C13.5283253,3.69251668 13.3087829,3.0250672 13.0842972,2.42288211 C13.3936735,2.36246442 13.6843317,2.28385503 13.9511308,2.1865228 C14.2249822,2.74973516 14.4757655,3.40662815 14.6983398,4.14186494 Z M8.36917577,4.24816024 C8.58265464,3.52706516 8.82295843,2.87900246 9.0854735,2.31818024 C9.27140246,2.36963487 9.49087904,2.41564526 9.73289645,2.45402045 C9.50999261,3.05454572 9.29216376,3.7191403 9.0869235,4.42031746 C8.81748799,4.37264724 8.57481148,4.31521723 8.36917577,4.24816024 Z M12.5499739,2.10539047 C12.2663021,2.14197305 11.9689212,2.16461309 11.6619176,2.17350976 L11.6619176,0.331234999 C11.9438099,0.720696716 12.2473203,1.33855058 12.5499739,2.10539047 Z M10.2722947,2.12198874 C10.6130437,1.256024 10.9552426,0.5782172 11.2664643,0.202100489 L11.2664643,2.17736055 C11.2186145,2.1769622 11.1706328,2.17623187 11.1224534,2.17516958 C10.8306089,2.16872946 10.5422575,2.14987383 10.2722947,2.12198874 Z M13.7675087,1.8293945 C13.5142868,1.91836121 13.2362831,1.99006572 12.9392318,2.0447736 C12.5887942,1.15756308 12.2302499,0.441447487 11.8922033,0 C12.5756125,0.163393332 13.2134786,0.811389643 13.7675087,1.8293945 Z M9.26461385,1.95547493 C9.73381918,1.0569112 10.2657698,0.426973798 10.8364089,0.137898395 C10.524528,0.588972876 10.1979495,1.26033955 9.87835736,2.07312344 C9.64721491,2.03932937 9.43861329,1.99916157 9.26461385,1.95547493 Z M10.7445978,25.8022703 C8.77728357,24.9199065 9.47908135,19.0892012 13.4336143,14.5080797 C17.3881472,9.92695823 21.1449535,10.3253166 22.7267667,10.3253166 C24.3085798,10.3253166 18.5745071,12.7154669 16.9926939,18.6908428 C15.4108807,24.6662186 12.711912,26.6846341 10.7445978,25.8022703 Z" id="path-corn-sec"></path>
+                        </defs>
+                        <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                            <g id="Desktop-WF" transform="translate(-1015.000000, -2104.000000)">
+                                <g id="corn-icon" transform="translate(1015.000000, 2104.000000)">
+                                    <mask id="mask-corn-sec" fill="white">
+                                        <use xlink:href="#path-corn-sec"></use>
+                                    </mask>
+                                    <g id="Clip-2"></g>
+                                    <polygon id="Fill-1" fill="#209481" mask="url(#mask-corn-sec)" points="0 26 23 26 23 0 0 0"></polygon>
+                                </g>
+                            </g>
+                        </g>
+                    </svg>
+                  Predicted Corn Yield</a>
                 </div>
               </div>
 
+
               <div class="row justify-content-between">
-                <div class="col-lg-8 col-md-10 col-12 mb-3">
-                  <p>Y/N…Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit ameta</p>
+                <div class="col-lg-8 col-md-10 col-12 mb-15px mb-md-3">
+                  <p class="mb-0">Y/N…Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit ameta</p>
                 </div>
 
                 <div class="col-lg-3 col-md-2 col-12">
@@ -282,7 +308,7 @@
             </div>
           </div>
 
-          <div class="bg-white pt-7 pb-13">
+          <div class="bg-white pt-7 pb-md-13">
             <div class="container">
               <h4 class="mb-2">What is optimal for corn?</h5>
 
@@ -304,8 +330,8 @@
                   </div>
                 </div>
 
-                <div class="col-md-4">
-                  <div class="jumbotron h-100 jumbotron-bg-corn">
+                <div class="col-md-4 mob-full">
+                  <div class="jumbotron h-100 jumbotron-bg-corn pb-15 pb-md-0">
                     <h5 class="mb-2 text-uppercase">Corn Yield is <span class="text-danger">Average</span></h5>
                     <p>Blurb…Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
                   </div>

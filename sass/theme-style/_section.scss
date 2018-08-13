@@ -1,13 +1,22 @@
 .section {
   .section--header {
-    min-height: 486px;
+    @include media-breakpoint-up(md) {
+      min-height: 486px;
+    }
     background-repeat: no-repeat;
   }
 
   &:before {
     content: "";
-    width: 100∞;
-    height: 40px;
+    width: 100%;
+    @include media-breakpoint-up(md) {
+      height: 40px;
+    }
+
+    @include media-breakpoint-down(sm) {
+      height: 20px;
+    }
+    
     background-color: $primary;
     display: block;
   }
@@ -19,6 +28,10 @@
   .section--corn-production & {
     background-image: url('/img/corn-production.svg');
     background-position: 97% 143px;
+    @include media-breakpoint-down(sm) {
+      background-size: 300px;
+      background-position: right -45px bottom -50px;
+    }
   }
 
   .section--country & {
