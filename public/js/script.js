@@ -47,4 +47,41 @@ $(document).ready(function() {
         $(this).siblings('.fill').css('width', this.value * (100 / rangeMaxVal_soil) + '%');
     }
 
+
+    /*
+    ** Round slider
+     */
+
+    var options = { circleShape: 'half-top' };
+    $("#round-temperature").roundSlider({
+        radius: 150,
+        width: 40,
+        circleShape: "half-top",
+        sliderType: "min-range",
+        value: 50,
+        min: 0,
+        max: 100,
+        editableTooltip: false,
+        tooltipFormat: "temperatureTooltip"
+    });
+    $("#round-vegetation").roundSlider({
+        radius: 150,
+        width: 40,
+        circleShape: "half-top",
+        sliderType: "min-range",
+        value: 50,
+        min: 0,
+        max: 100,
+        editableTooltip: false,
+        tooltipFormat: "vegetationTooltip"
+    });
 });
+
+function temperatureTooltip(args) {
+    return args.value + ' <span class="tooltip-parameter">°F</span><div class="tooltip-label">Temperature</div>';
+}
+
+function vegetationTooltip(args) {
+    return args.value + '<div class="tooltip-label">Vegetation Level</div>';
+}
+

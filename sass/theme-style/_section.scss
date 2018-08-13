@@ -12,7 +12,7 @@
   }
 }
 
-.section--range-slider {
+.section--range-sliders {
 	.range-style {
 	  position: relative;
 	  z-index: 1000;
@@ -122,4 +122,62 @@
 		}
 	}
 
+	.round-sliders {
+		.round-slider-item {
+			margin-bottom: 45px;
+
+			&:last-child {
+				margin-bottom: 0;
+			}
+		}
+		.rs-path-color {
+			background: #f5f5f5;
+		}
+		.rs-handle {
+			width: 14px !important;
+			height: 27px !important;
+			transform: rotate(90deg);
+			margin: -12.5px 0px 0 14px !important;
+		}
+		.rs-border  {
+		    border-color: transparent;
+		}
+		.rs-tooltip-text {
+			font-size: 50px;
+			font-weight: bold;
+
+			.tooltip-parameter {
+				font-size: 30px;
+				font-weight: normal;
+			}
+			.tooltip-label {
+				font-size: 12px;
+				font-weight: bold;
+				text-transform: uppercase;
+				color: #030502;
+			}
+		}
+		.round-dark-teal {
+			.rs-handle {
+				background: url('/img/range-teal-dark.svg') no-repeat;
+			}
+			.rs-range-color {
+				background: #56ADB3;
+			}
+			.rs-tooltip-text {
+				color: #56ADB3;
+			}
+		}
+		.round-yellow {
+			.rs-handle {
+				background: url('/img/range-yellow.svg') no-repeat;
+			}
+			.rs-range-color {
+				background: #E8B251;
+			}
+			.rs-tooltip-text {
+				color: #E8B251;
+			}
+		}
+	}
 }
