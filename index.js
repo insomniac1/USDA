@@ -46,8 +46,8 @@ app.get('/api/map_points_data.js',(request,response) => {
   response.render('api/map_points_data');
 });
 
-app.get('/api/bar_zoom_data.csv',(request,response) => {
-  response.render('api/bar_zoom_data');
+app.get('/api/gradient-area-data.csv',(request,response) => {
+  response.render('api/gradient_area_data');
 });
 
 app.get('/api/data',(request,response) => {

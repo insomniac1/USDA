@@ -1,3 +1,6 @@
+
+/* START Circle Chart CSS */
+
 #chart-circle-wrapper-final .scatter-chart-group {
     color: #525252;
     text-align: center;
@@ -166,35 +169,54 @@
 }
 
 
+/* START Bar Chart CSS */
 
 
-
-
-
-
-
-
-#zoom-bar-chart {
-  font-size: 12px;
+#zoom-bar-chart svg {
+  font: 10px sans-serif;
 }
-
-#zoom-bar-chart .zoom {
-  cursor: move;
+#zoom-bar-chart .area {
+  fill: #FC582F; /* material Orange */
+  fill-opacity: .9;
+  clip-path: url(#clip);
+}
+#zoom-bar-chart .axis path,
+#zoom-bar-chart .axis line {
   fill: none;
-  pointer-events: all;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+#zoom-bar-chart .brush .extent {
+  stroke: #fff;
+  fill-opacity: .125;
+  shape-rendering: crispEdges;
+}
+#zoom-bar-chart #btnDiv {
+  fill: #fff;
+}
+#zoom-bar-chart .axis path,
+#zoom-bar-chart .axis line {
+  fill: none;
+  stroke: #121401;
+  stroke-width: 0px;
+  shape-rendering: crispEdges;
+}
+#zoom-bar-chart .point {
+  stroke: grey;
+  stroke-width: 0px;
+  opacity: 0;
+}
+#zoom-bar-chart .point:hover{
+  opacity: .5;
 }
 
-#zoom-bar-chart circle {
-  fill: #FF7700;
-  fill-opacity: 1;
-}
+/* START Line Area Chart CSS */
 
-#zoom-bar-chart .axis {
-  /*stroke-width: 0px;*/
-  stroke: #888;
-  font: 10px avenir next, sans-serif;
+.series-0 path.streamPath{
+    fill: url(#temperature-gradient-0) !important;
+    stroke-width: 0px;
 }
-
-#zoom-bar-chart .axis > path {
-  stroke: #888;
+.series-1 path.streamPath{
+    fill: url(#temperature-gradient-1) !important;
+    stroke-width: 0px;
 }

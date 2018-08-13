@@ -26,30 +26,25 @@ function drawFinalScatterplot() {
     maxDistanceFromPoint = 50;
 
   //Set the color for each region
-  var color = d3.scaleLinear()
+  var color = d3.scale.ordinal()
             .range(["#EFB605", "#E58903", "#E01A25", "#C20049", "#991C71", "#66489F", "#2074A0", "#10A66E", "#7EB852"])
             .domain(["Africa | North & East", "Africa | South & West", "America | North & Central", "America | South", 
                  "Asia | East & Central", "Asia | South & West", "Europe | North & West", "Europe | South & East", "Oceania"]);
                  
   //Set the new x axis range
-  var xScale = d3.scaleLog()
+  var xScale = d3.scale.log()
     .range([0, width])
     .domain([100,2e5]); //I prefer this exact scale over the true range and then using "nice"
     //.domain(d3.extent(countries, function(d) { return d.GDP_perCapita; }))
     //.nice();
   //Set new x-axis
-  var xAxis = d3.axisBottom()
-    // .orient("bottom")
+  var xAxis = d3.svg.axis()
+    .orient("bottom")
     .ticks(2)
     .tickFormat(function (d) {
       return xScale.tickFormat((mobileScreen ? 4 : 8),function(d) { 
-        // var prefix = d3.format(); 
-        return "$" + d/1000 + 'K';
-        // var prefix = d3.formatPrefix(d); 
-        // console.log(prefix.scale(d));
-        // qwe
-        // return "$" + prefix.scale(d) + prefix.symbol;
-        // return "$" + prefix.symbol;
+        var prefix = d3.formatPrefix(d); 
+        return "$" + prefix.scale(d) + prefix.symbol;
       })(d);
     })  
     .scale(xScale); 
@@ -60,12 +55,12 @@ function drawFinalScatterplot() {
     .call(xAxis);
       
   //Set the new y axis range
-  var yScale = d3.scaleLinear()
+  var yScale = d3.scale.linear()
     .range([height,0])
     .domain(d3.extent(countries, function(d) { return d.lifeExpectancy; }))
     .nice();  
-  var yAxis = d3.axisLeft()
-    // .orient("left")
+  var yAxis = d3.svg.axis()
+    .orient("left")
     .ticks(6)  //Set rough # of ticks
     .scale(yScale); 
   //Append the y-axis
@@ -75,7 +70,7 @@ function drawFinalScatterplot() {
       .call(yAxis);
       
   //Scale for the bubble size
-  var rScale = d3.scaleSqrt()
+  var rScale = d3.scale.sqrt()
         .range([mobileScreen ? 1 : 2, mobileScreen ? 10 : 16])
         .domain(d3.extent(countries, function(d) { return d.GDP; }));
 
@@ -109,19 +104,10 @@ function drawFinalScatterplot() {
   //Use the same variables of the data in the .x and .y as used in the cx and cy of the circle call
   //The clip extent will make the boundaries end nicely along the chart area instead of splitting up the entire SVG
   //(if you do not do this it would mean that you already see a tooltip when your mouse is still in the axis area, which is confusing)
-  
-  // var voronoi = d3.geom.voronoi()
-  //   .x(function(d) { return xScale(d.GDP_perCapita); })
-  //   .y(function(d) { return yScale(d.lifeExpectancy); })
-  //   .clipExtent([[0, 0], [width, height]]);
-  
-  var voronoi = d3.voronoi().extent([
-      [
-        function(d) { return xScale(d.GDP_perCapita); }, 
-        function(d) { return yScale(d.lifeExpectancy); }
-      ], 
-      [[0, 0], [width, height]]
-    ]);
+  var voronoi = d3.geom.voronoi()
+    .x(function(d) { return xScale(d.GDP_perCapita); })
+    .y(function(d) { return yScale(d.lifeExpectancy); })
+    .clipExtent([[0, 0], [width, height]]);
 
   var voronoiCells = voronoi(countries);
     
@@ -348,13 +334,7 @@ function drawLegend(svgName, svgLegendName, opacityCircles, color, rScale) {
       .attr("class", "legendText")
       .style("font-size", "10px")
       .attr("dy", ".35em")      
-      .text(function(d,i) { 
-
-        // console.log(d);
-        // console.log(color.domain(i));
-        // QWE
-        return color.domain()[i]; 
-      });  
+      .text(function(d,i) { return color.domain()[i]; });  
 
   //Create g element for bubble size legend
   var bubbleSizeLegend = legendWrapper.append("g")
