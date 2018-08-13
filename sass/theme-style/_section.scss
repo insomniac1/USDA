@@ -33,10 +33,8 @@
   background-position: right 20px bottom 20px;
 }
 
-
-
 //chart
-.section--range-slider {
+.section--range-sliders {
   .range-style {
     position: relative;
     z-index: 1000;
@@ -72,7 +70,6 @@
       width: 10px;
       height: 22px;
       cursor: pointer;
-      z-index: 5000;
       transition: background 0.3s ease-in-out;
       z-index: 9999;
       position: relative;
@@ -94,11 +91,22 @@
     width: 0%;
     border-radius: 6px;
   }
+  .count {
+    position: absolute;
+    top: -18px;
+    left: 0;
+    color: #000;
+    padding: 2px 5px;
+    text-align: center;
+    margin-left: 0px;
+    font-size: 11px;
+  }
   .slider-container {
     display: inline-block;
     position: relative;
     width: 100%;
     margin: 15px 0;
+    font-family: $font-family-sans-serif;
 
 
     &.range-blue {
@@ -108,6 +116,9 @@
       .fill {
           background: #2E8BC2;
       }
+      .count {
+        color: #2E8BC2;
+      }
     }
     &.range-teal {
       input[type='range']::-webkit-slider-thumb {
@@ -115,6 +126,9 @@
       }
       .fill {
           background: #58C4B3;        
+      }
+      .count {
+        color: #58C4B3;
       }
     }
     &.range-red {
@@ -124,18 +138,68 @@
       .fill {
           background: #B6334F;
       }
+      .count {
+        color: #B6334F;
+      }
     }
   }
-  .count {
-    position: absolute;
-    top: -18px;
-    left: 0;
-    color: #000;
-    padding: 2px 5px;
-    border-radius: 20px;
-    text-align: center;
-    width: 18px;
-    margin-left: 0px;
-    font-size: 11px;
+
+  .round-sliders {
+    .round-slider-item {
+      margin-bottom: 45px;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+    .rs-path-color {
+      background: #f5f5f5;
+    }
+    .rs-handle {
+      width: 14px !important;
+      height: 27px !important;
+      transform: rotate(90deg);
+      margin: -12.5px 0px 0 14px !important;
+    }
+    .rs-border  {
+        border-color: transparent;
+    }
+    .rs-tooltip-text {
+      font-size: 50px;
+      font-weight: bold;
+
+      .tooltip-parameter {
+        font-size: 30px;
+        font-weight: normal;
+      }
+      .tooltip-label {
+        font-size: 12px;
+        font-weight: bold;
+        text-transform: uppercase;
+        color: #030502;
+      }
+    }
+    .round-dark-teal {
+      .rs-handle {
+        background: url('/img/range-teal-dark.svg') no-repeat;
+      }
+      .rs-range-color {
+        background: #56ADB3;
+      }
+      .rs-tooltip-text {
+        color: #56ADB3;
+      }
+    }
+    .round-yellow {
+      .rs-handle {
+        background: url('/img/range-yellow.svg') no-repeat;
+      }
+      .rs-range-color {
+        background: #E8B251;
+      }
+      .rs-tooltip-text {
+        color: #E8B251;
+      }
+    }
   }
 }
