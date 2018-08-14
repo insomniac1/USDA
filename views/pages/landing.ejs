@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <title>Corn Production in the U.S.</title>
     <% include ../partials/head %>
   </head>
 
@@ -20,32 +21,30 @@
 
         <div class="section--content">
           <div class="bg-light">
-            <div class="d-flex justify-content-end mb-2">
-              <img src="/img/pallet.svg" alt="Pallet">
-            </div>
-
             <div class="container">
-              <div class="row justify-content-center">
+              <div class="row justify-content-center pt-md-6 pt-4">
                 <div class="col-lg-6 col-md-8 col-12 mb-2">
-                  <div class="input-group input-group-custom">
-                    <input class="form-control form-custom" type="text" placeholder="Search for a county…">
+                  <div class="mx-2 mx-md-0">
+                    <div class="input-group input-group-custom">
+                      <input class="form-control form-custom" type="text" placeholder="Search for a county…">
 
-                    <div class="input-group-append">
-                      <button type="button" class="btn btn-link"><i class="fas fa-search"></i></button>
+                      <div class="input-group-append">
+                        <button type="button" class="btn btn-link pr-0"><i class="fas fa-search"></i></button>
+                      </div>
                     </div>
                   </div>
                 </div>
 
-                <div class="col-lg-8 col-md-10 col-12 text-center mb-3 text-muted text-sm">
+                <div class="col-lg-8 col-md-10 col-12 text-center mb-2 mb-md-3 text-muted text-ex">
                   Not sure where to start? <span class="text-primary">Try Butler County, Iowa</span>
                 </div>
 
                 <div class="col-lg-8 col-md-10 col-12 text-center mb-3">
-                  <div class="d-md-inline-block">
+                  <div class="d-inline-block mb-2 mb-md-0 mr-1 mr-md-0">
                     <button type="button" class="btn btn-sm btn-primary">Yield</button>
                   </div>
 
-                  <div class="d-md-inline-block my-1 my-md-0 mx-md-5px">
+                  <div class="d-inline-block mb-2 mb-md-0 ml-1 ml-md-0">
                     <button type="button" class="btn btn-sm btn-outline-primary">Acres Harvested</button>
                   </div>
 
@@ -59,9 +58,13 @@
                 </div>
               </div>
             </div>
+            
+            <div class="country--pallet text-center pt-2 pt-md-0 pb-4">
+              <img src="/img/pallet.svg" alt="Pallet">
+            </div>
           </div>
 
-          <div class="bg-white pt-5 pb-3">
+          <div class="bg-white pt-md-5 pt-2 pb-md-3 pb-6">
             <div class="container">
 
               <div class="chart">
@@ -71,7 +74,6 @@
                     <div id="zoom-bar-chart"></div>
                   </div>
                 </div>
-
               </div>
             </div>
           </div>

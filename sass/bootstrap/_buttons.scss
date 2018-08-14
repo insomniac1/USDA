@@ -119,7 +119,7 @@ fieldset:disabled a.btn {
 }
 
 .btn-sm {
-  @include button-size($btn-padding-y-sm, $btn-padding-x-sm, $font-size-sm, $btn-line-height-sm, $btn-border-radius-sm);
+  @include button-size($btn-padding-y-sm, $btn-padding-x-sm, $font-size-xs, $btn-line-height-sm, $btn-border-radius-sm);
   min-width: $btn-min-width-sm;
   font-weight: $font-weight-bold;
 }

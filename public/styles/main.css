@@ -379,7 +379,8 @@ h1, .h1 {
 
 @media (max-width: 767.98px) {
   h1, .h1 {
-    font-size: 2.5rem;
+    font-size: 3rem;
+    line-height: 3.750rem;
   }
 }
 
@@ -405,6 +406,12 @@ h4, .h4 {
 
 h5, .h5 {
   font-size: 1.25rem;
+}
+
+@media (max-width: 767.98px) {
+  h5, .h5 {
+    font-size: 1.125rem;
+  }
 }
 
 h6, .h6 {
@@ -3037,7 +3044,7 @@ fieldset:disabled a.btn {
 
 .btn-sm, .btn-group-sm > .btn {
   padding: 2px 0.5rem;
-  font-size: 0.875rem;
+  font-size: 0.75rem;
   line-height: 1rem;
   border-radius: 0.5rem;
   min-width: 115px;
@@ -10673,6 +10680,18 @@ a.text-greenblue:hover, a.text-greenblue:focus {
   .table .thead-dark th {
     color: inherit;
     border-color: #dee2e6;
+  }
+}
+
+.bg-light {
+  position: relative;
+}
+
+@media (min-width: 768px) {
+  .country--pallet {
+    position: absolute;
+    top: 178px;
+    right: 0;
   }
 }
 

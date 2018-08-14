@@ -1,0 +1,11 @@
+.bg-light {
+  position: relative;
+}
+
+.country--pallet {
+  @include media-breakpoint-up(md) {
+    position: absolute;
+    top: 178px;
+    right: 0;
+  }
+}
