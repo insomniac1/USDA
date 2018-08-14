@@ -50,6 +50,10 @@ app.get('/api/gradient-area-data.csv',(request,response) => {
   response.render('api/gradient_area_data');
 });
 
+app.get('/api/bar-data.json',(request,response) => {
+  response.render('api/bar_data');
+});
+
 app.get('/api/data',(request,response) => {
   csv()
   .fromFile(dataFilePath)

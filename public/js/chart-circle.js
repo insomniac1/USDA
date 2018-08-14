@@ -4,14 +4,14 @@ function drawFinalScatterplot() {
   ////////////////////////////////////////////////////////////
 
   //Quick fix for resizing some things for mobile-ish viewers
-  var mobileScreen = document.getElementById("chart-circle-wrapper-final").offsetWidth < 550 ? true : false;
+  var mobileScreen = document.getElementById("chart-circle-wrapper").offsetWidth < 550 ? true : false;
 
   //Scatterplot
   var margin = {left: 30, top: 20, right: 20, bottom: 30},
-    width = Math.min( document.getElementById("chart-final").offsetWidth, 800) - margin.left - margin.right,
+    width = Math.min( document.getElementById("chart-circle").offsetWidth, 800) - margin.left - margin.right,
     height = width*2/3;
 
-  var svg = d3.select("#chart-final").append("svg")
+  var svg = d3.select("#chart-circle").append("svg")
         .attr("width", (width + margin.left + margin.right))
         .attr("height", (height + margin.top + margin.bottom));
         
@@ -171,9 +171,9 @@ function drawFinalScatterplot() {
 
   if (!mobileScreen) {
     //Draw the legend
-    drawLegend("chart-final","legend-final", opacityCircles, color, rScale);
+    drawLegend("chart-final","legend-circle", opacityCircles, color, rScale);
   } else {
-    d3.select("#legend-final-wrapper").style("display","none");
+    d3.select("#legend-circle-wrapper").style("display","none");
   }
 
   ///////////////////////////////////////////////////////////////////////////
