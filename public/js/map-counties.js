@@ -22,21 +22,33 @@ svg_map.append("rect")
 var g = svg_map.append("g");
 
 d3.json("/js/us.json", function(error, us) {
-  if (error) throw error;
+
+
+ g.append("g")
+      .attr("id", "counties")
+    .selectAll("path")
+      .data(topojson.feature(us, us.objects.counties).features)
+    .enter().append("path")
+  .attr("d", path)
+  .attr("class", "county-boundary")
+      .on("click", countyclicked);
 
   g.append("g")
       .attr("id", "states")
     .selectAll("path")
       .data(topojson.feature(us, us.objects.states).features)
     .enter().append("path")
-      .attr("d", path)
+  .attr("d", path)
+  .attr("class", "state")
       .on("click", clicked);
+
 
   g.append("path")
       .datum(topojson.mesh(us, us.objects.states, function(a, b) { return a !== b; }))
       .attr("id", "state-borders")
       .attr("d", path);
 });
+
 
 function clicked(d) {
   var x, y, k;
@@ -53,6 +65,24 @@ function clicked(d) {
     k = 1;
     centered = null;
   }
+
+  g.selectAll("path")
+      .classed("active", centered && function(d) { return d === centered; });
+
+  g.transition()
+      .duration(750)
+      .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")scale(" + k + ")translate(" + -x + "," + -y + ")")
+      .style("stroke-width", 1.5 / k + "px");
+}
+
+function countyclicked(d) {
+  console.log(d.id);
+  
+  x = width / 2;
+  y = height / 2;
+  k = 1;
+  centered = null;
+
 
   g.selectAll("path")
       .classed("active", centered && function(d) { return d === centered; });
