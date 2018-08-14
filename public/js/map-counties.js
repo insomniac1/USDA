@@ -13,6 +13,10 @@ var svg_map = d3.select("#map-counties").append("svg")
     .attr("width", width)
     .attr("height", height);
 
+// Define linear scale for output
+var color = d3.scale.linear()
+  .range(["#20906A","#3FA885","#64C2A2", "#8EDAC1", "#A5E7D1", "#DBAB58", "#E9BF77", "#F2CC89", "#F7E2BC", "#FBF0DE"]);
+
 svg_map.append("rect")
     .attr("class", "background")
     .attr("width", width)
@@ -23,30 +27,29 @@ var g = svg_map.append("g");
 
 d3.json("/js/us.json", function(error, us) {
 
-
- g.append("g")
-      .attr("id", "counties")
-    .selectAll("path")
-      .data(topojson.feature(us, us.objects.counties).features)
-    .enter().append("path")
-  .attr("d", path)
-  .attr("class", "county-boundary")
-      .on("click", countyclicked);
+  color.domain([0, 1, 2, 3, 4, 5, 6, 7, 8, 9]); // setting the range of the input data
 
   g.append("g")
-      .attr("id", "states")
+    .attr("id", "counties")
+    .selectAll("path")
+      .data(topojson.feature(us, us.objects.counties).features)
+      .enter().append("path")
+      .attr("d", path)
+      .attr("class", "county-boundary")
+    .on("click", countyclicked);
+
+  g.append("g")
+    .attr("id", "states")
     .selectAll("path")
       .data(topojson.feature(us, us.objects.states).features)
-    .enter().append("path")
-  .attr("d", path)
-  .attr("class", "state")
-      .on("click", clicked);
+      .enter().append("path")
+      .attr("d", path)
+      .attr("class", "state")
+      .on("click", clicked)
+      .style("fill", function(d) {
+        return color(d.id);
+      });
 
-
-  g.append("path")
-      .datum(topojson.mesh(us, us.objects.states, function(a, b) { return a !== b; }))
-      .attr("id", "state-borders")
-      .attr("d", path);
 });
 
 
@@ -70,7 +73,7 @@ function clicked(d) {
       .classed("active", centered && function(d) { return d === centered; });
 
   g.transition()
-      .duration(750)
+      .duration(70)
       .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")scale(" + k + ")translate(" + -x + "," + -y + ")")
       .style("stroke-width", 1.5 / k + "px");
 }
@@ -88,7 +91,7 @@ function countyclicked(d) {
       .classed("active", centered && function(d) { return d === centered; });
 
   g.transition()
-      .duration(750)
+      .duration(70)
       .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")scale(" + k + ")translate(" + -x + "," + -y + ")")
       .style("stroke-width", 1.5 / k + "px");
 }
