@@ -212,16 +212,24 @@
 
 /* START Line Area Chart CSS */
 
-.series-0 path.streamPath{
+#chart-gradient .x.axis .domain{
+  fill: #777d7b;
+}
+
+/*.series-0 path.streamPath{
     fill: url(#temperature-gradient-0) !important;
     stroke-width: 0px;
 }
 .series-1 path.streamPath{
     fill: url(#temperature-gradient-1) !important;
     stroke-width: 0px;
+}*/
+.gradient-wrapper{
+  min-height: 500px;
 }
 
 
+/* START Bar Chart */ 
 
 #zoom-bar-chart .brush{
   fill: #42937f;
