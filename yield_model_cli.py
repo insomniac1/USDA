@@ -2,7 +2,6 @@ import pickle
 import numpy
 from xgboost import XGBRegressor
 import argparse
-import sys
 
 # Parse CLI arguments
 parser = argparse.ArgumentParser(description='Generate crop yield estimates.')
@@ -20,10 +19,10 @@ parser.add_argument('--date', '-d', metavar='N', type=int, nargs=1,
                     help='The year for which the estimate should be given.')
 parser.add_argument('--cropquality', '-C', metavar='N', type=float, nargs=115,
                     help='115 floats representing the percentage of crops in "Excellent", "Good", "Fair", "Poor", or "Very Poor" condition for the 23 weeks of the growing season. If using this variable with some blank values, replaces the blank values with -2')
-parser.add_argument('--vegetation', '-v', metavar='N', type=int, nargs=20,
-                    help='20 floats for the vegetation over 20 8-day periods in the growin season. Replace blank values with -2.')
-parser.add_argument('--temperature', '-t', metavar='N', type=int, nargs=20,
-                    help='20 floats for the temperature over 20 8-day periods in the growing season. Replace blank values with -2.')
+parser.add_argument('--vegetation', '-v', metavar='N', type=int, nargs=21,
+                    help='20 floats for the vegetation over 21 8-day periods in the growin season. Replace blank values with -2.')
+parser.add_argument('--temperature', '-t', metavar='N', type=int, nargs=21,
+                    help='20 floats for the temperature over 21 8-day periods in the growing season. Replace blank values with -2.')
 args = parser.parse_args()
 
 # Load pickled model
@@ -90,4 +89,3 @@ model_input = numpy.asarray([vars])
 
 # Generate estimate
 print(model.predict(model_input)[0])
-sys.stdout.flush()
