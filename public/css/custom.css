@@ -1,6 +1,10 @@
 
 /* START Circle Chart CSS */
 
+#chart-circle-wrapper{
+  /*position: relative;*/
+}
+
 #chart-circle-wrapper .scatter-chart-group {
     color: #525252;
     text-align: center;
@@ -167,6 +171,17 @@
   border-top-width: 0;
   border-bottom-color: #ffffff;
 }
+#circle-tooltip{
+  position: fixed;
+  display: inline-block;
+  top: 0;
+  padding: 10px;
+  border: 1px solid #E1E1E1;
+  background-color: #fff;
+}
+
+
+
 
 
 /* START Bar Chart CSS */
