@@ -35,7 +35,9 @@ app.use('/',
 
 app.set('view engine', 'ejs');
 
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({
+  extended: false
+}));
 app.use(bodyParser.json());
 
 app.get('/', function(req, res) {
@@ -46,30 +48,40 @@ app.get('/landing', function(req, res) {
   res.render('pages/landing');
 });
 
-app.get('/api/map_points_data.js',(request,response) => {
+app.get('/api/map_points_data.js', (request, response) => {
   response.render('api/map_points_data');
 });
 
-app.get('/api/gradient-area-data.csv',(request,response) => {
+app.get('/api/gradient-area-data.csv', (request, response) => {
   response.render('api/gradient_area_data');
 });
 
-app.get('/api/bar-data.json',(request,response) => {
+app.get('/api/bar-data.json', (request, response) => {
   response.render('api/bar_data');
 });
 
-app.get('/api/data',(request,response) => {
+app.get('/api/data', (request, response) => {
   csv()
-  .fromFile(dataFilePath)
-  .then((data) => {
-     //sends csv file as array of county objects
-     response.send(data);
-  });
+    .fromFile(dataFilePath)
+    .then((data) => {
+      //sends csv file as array of county objects
+      response.send(data);
+    });
 });
 
 app.post('/api/updateData', (request, response) => {
 
-  const { longitude, latitude, soilquality, soilcarbon, wateravailability, date, cropquality, vegetation, temperature } = request.body;
+  const {
+    longitude,
+    latitude,
+    soilquality,
+    soilcarbon,
+    wateravailability,
+    date,
+    cropquality,
+    vegetation,
+    temperature
+  } = request.body;
 
   console.log(longitude, latitude, soilquality, soilcarbon, wateravailability, date, cropquality, vegetation, temperature);
 
@@ -84,21 +96,22 @@ app.post('/api/updateData', (request, response) => {
       `-C ${cropquality},-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2`,
       `-v ${vegetation},-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2`,
       `-t ${temperature},-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2`
-    */]
+    */
+    ]
   }
 
-    PythonShell.run(`${pickledStringPath}`, options, function (err, results) {
-      if (err) {
-        console.log(err);
-        response.send(err);
-      }
-      response.status(200).send(results);
+  PythonShell.run(`${pickledStringPath}`, options, function(err, results) {
+    if (err) {
+      console.log(err);
+      response.send(err);
+    }
+    response.status(200).send(results);
 
-    });
+  });
 
 });
 
-app.listen(port, () => console.log('Listening on localhost:3000') );
+app.listen(port, () => console.log('Listening on localhost:3000'));
 console.log('Server listening on port ' + port);
 console.log('srcPath is ' + srcPath);
 console.log('destPath is ' + destPath);
