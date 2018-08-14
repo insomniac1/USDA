@@ -381,6 +381,7 @@ h1, .h1 {
   h1, .h1 {
     font-size: 3rem;
     line-height: 3.750rem;
+    letter-spacing: 2px;
   }
 }
 
@@ -402,6 +403,12 @@ h3, .h3 {
 h4, .h4 {
   font-size: 2.188rem;
   line-height: 1.286em;
+}
+
+@media (max-width: 767.98px) {
+  h4, .h4 {
+    font-size: 1.750rem;
+  }
 }
 
 h5, .h5 {
@@ -10695,6 +10702,10 @@ a.text-greenblue:hover, a.text-greenblue:focus {
   }
 }
 
+.logo-usda {
+  max-height: 24px;
+}
+
 header {
   min-height: 40px;
   background-color: #209481;
@@ -10749,9 +10760,11 @@ footer ul {
   }
 }
 
-.section--country .section--header {
-  background-image: url("/img/bg-select-country.svg");
-  background-position: 104% center;
+@media (min-width: 768px) {
+  .section--country .section--header {
+    background-image: url("/img/bg-select-country.svg");
+    background-position: 104% center;
+  }
 }
 
 .jumbotron-bg-corn {

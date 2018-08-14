@@ -84,9 +84,9 @@
         <div class="section--header d-flex align-items-center">
           <div class="container">
             <div class="row">
-              <div class="col-lg-7 col-md-9 col-sm-11">
+              <div class="col-lg-7 col-md-9 col-sm-11 py-4">
                 <div class="h4 mb-2">How well is <span class="text-primary">selected county</span> equipped for corn production?</div>
-                <p>Blurb…Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed<br>do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                <p class="mb-0">Blurb…Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed<br>do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
                 <div class="zoom-wrapper">
                 </div>
               </div>
@@ -96,24 +96,23 @@
 
         <div class="section--content">
           <div class="container">
-            <div class="row mb-13">
+            <div class="row mb-4 mb-md-13">
               <% include ../partials/temp-vegetation %>
             </div>
 
-            <div class="row mb-13">
+            <div class="row mb-6 mb-md-13">
               <% include ../partials/soil-chemistry %>
             </div>
           </div>
         </div>
       </div>
-      
 
       <div class="section section--range-slider">
         <div class="section--content">
           <div class="bg-green-dark text-white pt-4 pb-6 py-md-10">
             <div class="container">
               <div class="row mb-md-7">
-               <% include ../partials/predicted-yeild %>            
+               <% include ../partials/predicted-yeild %>
               </div>
 
 
@@ -131,14 +130,14 @@
             </div>
           </div>
 
-          <div class="bg-white pt-7 pb-md-13">
+          <div class="bg-white pt-md-7 pt-6 pb-md-13">
             <div class="container">
               <h4 class="mb-2">What is optimal for corn?</h5>
 
-              <p>Use the controls below to create the perfect plot of land for corn production.</p>
+              <p class="mb-4 mb-md-9">Use the controls below to create the perfect plot of land for corn production.</p>
 
-              <div class="row mt-4 mt-md-9">
-                <div class="col-md-4 mb-4 mb-md-0">
+              <div class="row">
+                <div class="col-md-4 mb-5 mb-md-0">
                   <div class="section--range-sliders">
                     <div class="round-sliders">
                       <div class="round-slider-item round-dark-teal"><div id="round-temperature"></div></div>
@@ -147,7 +146,7 @@
                   </div>
                 </div>
 
-                <div class="col-md-4 mb-4 mb-md-0">
+                <div class="col-md-4 mb-6 mb-md-0">
                   <div class="section--range-sliders">
                     <% include ../partials/range-slider %>
                   </div>

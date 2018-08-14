@@ -35,8 +35,10 @@
   }
 
   .section--country & {
-    background-image: url('/img/bg-select-country.svg');
-    background-position: 104% center;
+    @include media-breakpoint-up(md) {
+      background-image: url('/img/bg-select-country.svg');
+      background-position: 104% center;
+    }
   }
 }
 

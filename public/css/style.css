@@ -1,5 +1,5 @@
 body {
-  height: 100vh;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
 }
@@ -14,10 +14,6 @@ body.page--home main {
   display: flex;
   align-items: center;
   justify-content: center;
-}
-
-.page {
-  min-height: 100vh;
 }
 
 .btn-primary {

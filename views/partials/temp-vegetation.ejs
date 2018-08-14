@@ -1,50 +1,48 @@
+<div class="col-12">
+  <h5 class="mb-md-4 mb-2">Temperature and Vegetation</h5>
+</div>
 
-  <div class="col-12">
-    <h5 class="mb-4">Temperature and Vegetation</h5>
+<div class="col-lg-9 col-md-6 mob-full">
+  <img src="/img/temp vegetation.png" class="img-fluid" alt="Temperature">
+
+  <div class="gradient-wrapper">
+    <div id="chart-gradient" class=""></div>
+  </div>
+</div>
+
+<div class="col-lg-3 col-md-4 mt-3 mt-md-0">
+  <div class="mb-15px text-center text-md-left">
+    <button type="button" class="btn btn-width btn-icon btn-icon--corn btn-primary"><img src="/img/icon--corn-yield.svg" alt="Corn Yield">Corn Yield</button>
   </div>
 
-  <div class="col-lg-9 col-md-6 mob-full">
-    <img src="/img/temp vegetation.png" class="img-fluid" alt="Temperature">
-
-    <div class="gradient-wrapper">
-      <div id="chart-gradient" class=""></div>
-    </div>
-
+  <div class="mb-15px text-center text-md-left">
+    <button type="button" class="btn btn-width btn-icon btn-icon--temperature btn-greenblue"><img src="/img/icon--temperature.svg" alt="Temperature">Temperature</button>
   </div>
 
-  <div class="col-lg-3 col-md-4 mt-4 mt-md-0">
-    <div class="mb-15px text-center text-md-left">
-      <button type="button" class="btn btn-width btn-icon btn-icon--corn btn-primary"><img src="/img/icon--corn-yield.svg" alt="Corn Yield">Corn Yield</button>
-    </div>
-
-    <div class="mb-15px text-center text-md-left">
-      <button type="button" class="btn btn-width btn-icon btn-icon--temperature btn-greenblue"><img src="/img/icon--temperature.svg" alt="Temperature">Temperature</button>
-    </div>
-
-    <div class="mb-5 text-center text-md-left">
-      <button type="button" class="btn btn-width btn-icon btn-icon--vegetation btn-outline-warning">
-        <?xml version="1.0" encoding="UTF-8"?>
-        <svg width="17px" height="26px" viewBox="0 0 17 26" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-            <!-- Generator: Sketch 49.3 (51167) - http://www.bohemiancoding.com/sketch -->
-            <title>vegetation-icon</title>
-            <desc>Created with Sketch.</desc>
-            <defs>
-                <path d="M7.74696817,13.3483316 C8.25533708,12.8510142 8.85279721,12.4414337 9.53934857,12.1191652 C11.0097761,11.4291664 12.6224962,11.2658016 14.3770867,11.6290706 C13.5256532,13.2149206 12.3647227,14.3529511 10.8942953,15.0429499 C9.49395849,15.7000207 8.05456514,15.8372557 6.57611521,15.4548672 C3.6578497,20.7029365 1.59143989,24.4146539 1.39615699,25.2567583 C0.964845666,27.1162284 -0.21782983,24.9565833 0.0350879217,24.4975047 C0.805452592,23.4956469 1.78440052,22.0432081 2.82942795,20.4127461 C1.83169065,19.4550755 1.20952987,18.2732827 0.963156732,16.8671553 C0.681527116,15.2592118 0.942045067,13.6495688 1.74471059,12.0382263 C3.04666699,13.2761027 3.83856556,14.6990127 4.12040629,16.3069562 C4.2384205,16.9799599 4.25784323,17.6344815 4.17909672,18.2700961 C4.59415206,17.6013411 5.01026299,16.9232389 5.41877371,16.2512974 C4.38113536,15.2823675 3.7363851,14.0791185 3.48431181,12.6411254 C3.2026822,11.0333943 3.46320015,9.42375134 4.26586567,7.81219639 C5.56782207,9.05028527 6.35972064,10.4731952 6.64156137,12.0809263 C6.7661202,12.7913191 6.78089837,13.4811054 6.6863181,14.1498604 C7.13346318,13.4029282 7.55886324,12.687012 7.94942905,12.0271795 C6.8332553,11.038068 6.14395942,9.79424327 5.8813303,8.29549292 C5.59948957,6.68754942 5.86000752,5.07790641 6.66267304,3.46656389 C7.96484056,4.70465278 8.75673913,6.12735031 9.03836875,7.73529382 C9.1899505,8.59970419 9.17918355,9.43331105 9.0060679,10.2363268 C9.48319154,9.42608816 9.84504548,8.81044272 10.0430729,8.48180108 C9.2317516,7.15087678 8.95751107,5.73646432 9.21992907,4.23813885 C9.5017698,2.63040778 10.3506699,1.21769483 11.7670515,0 C12.6841422,1.63152413 13.0018728,3.25136416 12.7200321,4.85909523 C12.4434693,6.43729741 11.6386926,7.72318485 10.305702,8.71675755 C10.2520784,8.81405417 10.198877,8.91113835 10.1456756,9.0080101 C10.6998568,8.40532339 11.3720522,7.9184154 12.162473,7.54771103 C13.6329005,6.85771228 15.2454095,6.69434743 17,7.05740404 C16.1485665,8.64346643 14.9876361,9.78128455 13.5172086,10.4712833 C12.0930156,11.1396134 10.6282883,11.2702628 9.12323764,10.8634439 M4.17888561,19.8444744 C4.83208053,18.3514599 5.8939973,17.2599532 7.3644248,16.5699545 C8.83485229,15.8799557 10.4473613,15.7165909 12.2019518,16.0798599 C11.3505183,17.6657099 10.1895879,18.8037404 8.71916037,19.4937392" id="path-veg"></path>
-            </defs>
-            <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                <g id="Desktop-WF" transform="translate(-1018.000000, -2216.000000)">
-                    <g id="vegetation-icon" transform="translate(1018.000000, 2216.000000)">
-                        <mask id="mask-veg" fill="white">
-                            <use xlink:href="#path-veg"></use>
-                        </mask>
-                        <g id="Clip-2"></g>
-                        <polyline id="Fill-1" fill="#E8B251" mask="url(#mask-veg)" points="7.00965981 -6 22 2.62818924 4.99034019 32 -10 23.3718108"></polyline>
-                    </g>
-                </g>
-            </g>
-        </svg>
-      Vegetation</button>
-    </div>
-
-    <p>Explanation of soil quality, water, carbon effects Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit ameta</p>
+  <div class="mb-2 mb-md-5 text-center text-md-left">
+    <button type="button" class="btn btn-width btn-icon btn-icon--vegetation btn-outline-warning">
+      <?xml version="1.0" encoding="UTF-8"?>
+      <svg width="17px" height="26px" viewBox="0 0 17 26" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+          <!-- Generator: Sketch 49.3 (51167) - http://www.bohemiancoding.com/sketch -->
+          <title>vegetation-icon</title>
+          <desc>Created with Sketch.</desc>
+          <defs>
+              <path d="M7.74696817,13.3483316 C8.25533708,12.8510142 8.85279721,12.4414337 9.53934857,12.1191652 C11.0097761,11.4291664 12.6224962,11.2658016 14.3770867,11.6290706 C13.5256532,13.2149206 12.3647227,14.3529511 10.8942953,15.0429499 C9.49395849,15.7000207 8.05456514,15.8372557 6.57611521,15.4548672 C3.6578497,20.7029365 1.59143989,24.4146539 1.39615699,25.2567583 C0.964845666,27.1162284 -0.21782983,24.9565833 0.0350879217,24.4975047 C0.805452592,23.4956469 1.78440052,22.0432081 2.82942795,20.4127461 C1.83169065,19.4550755 1.20952987,18.2732827 0.963156732,16.8671553 C0.681527116,15.2592118 0.942045067,13.6495688 1.74471059,12.0382263 C3.04666699,13.2761027 3.83856556,14.6990127 4.12040629,16.3069562 C4.2384205,16.9799599 4.25784323,17.6344815 4.17909672,18.2700961 C4.59415206,17.6013411 5.01026299,16.9232389 5.41877371,16.2512974 C4.38113536,15.2823675 3.7363851,14.0791185 3.48431181,12.6411254 C3.2026822,11.0333943 3.46320015,9.42375134 4.26586567,7.81219639 C5.56782207,9.05028527 6.35972064,10.4731952 6.64156137,12.0809263 C6.7661202,12.7913191 6.78089837,13.4811054 6.6863181,14.1498604 C7.13346318,13.4029282 7.55886324,12.687012 7.94942905,12.0271795 C6.8332553,11.038068 6.14395942,9.79424327 5.8813303,8.29549292 C5.59948957,6.68754942 5.86000752,5.07790641 6.66267304,3.46656389 C7.96484056,4.70465278 8.75673913,6.12735031 9.03836875,7.73529382 C9.1899505,8.59970419 9.17918355,9.43331105 9.0060679,10.2363268 C9.48319154,9.42608816 9.84504548,8.81044272 10.0430729,8.48180108 C9.2317516,7.15087678 8.95751107,5.73646432 9.21992907,4.23813885 C9.5017698,2.63040778 10.3506699,1.21769483 11.7670515,0 C12.6841422,1.63152413 13.0018728,3.25136416 12.7200321,4.85909523 C12.4434693,6.43729741 11.6386926,7.72318485 10.305702,8.71675755 C10.2520784,8.81405417 10.198877,8.91113835 10.1456756,9.0080101 C10.6998568,8.40532339 11.3720522,7.9184154 12.162473,7.54771103 C13.6329005,6.85771228 15.2454095,6.69434743 17,7.05740404 C16.1485665,8.64346643 14.9876361,9.78128455 13.5172086,10.4712833 C12.0930156,11.1396134 10.6282883,11.2702628 9.12323764,10.8634439 M4.17888561,19.8444744 C4.83208053,18.3514599 5.8939973,17.2599532 7.3644248,16.5699545 C8.83485229,15.8799557 10.4473613,15.7165909 12.2019518,16.0798599 C11.3505183,17.6657099 10.1895879,18.8037404 8.71916037,19.4937392" id="path-veg"></path>
+          </defs>
+          <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+              <g id="Desktop-WF" transform="translate(-1018.000000, -2216.000000)">
+                  <g id="vegetation-icon" transform="translate(1018.000000, 2216.000000)">
+                      <mask id="mask-veg" fill="white">
+                          <use xlink:href="#path-veg"></use>
+                      </mask>
+                      <g id="Clip-2"></g>
+                      <polyline id="Fill-1" fill="#E8B251" mask="url(#mask-veg)" points="7.00965981 -6 22 2.62818924 4.99034019 32 -10 23.3718108"></polyline>
+                  </g>
+              </g>
+          </g>
+      </svg>
+    Vegetation</button>
   </div>
+
+  <p>Explanation of soil quality, water, carbon effects Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit ameta</p>
+</div>
