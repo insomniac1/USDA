@@ -2,8 +2,12 @@ const express = require('express');
 const csv = require('csvtojson');
 const bodyParser = require('body-parser');
 const shell = require('shelljs');
-const spawn = require('child_process').spawn;
 const dataFilePath = './data.csv';
+
+const spawn = require("child_process").spawn;
+const pickledStringPath = './yield_model_cli.py';
+
+var PythonShell = require('python-shell');
 
 app = express();
 
@@ -64,23 +68,34 @@ app.get('/api/data',(request,response) => {
 });
 
 app.post('/api/updateData', (request, response) => {
-  console.log(request.body);
 
-  shell.mkdir(`./${request.body.soilcondition}`);
+  const { longitude, latitude, soilquality, soilcarbon, wateravailability, date, cropquality, vegetation, temperature } = request.body;
 
-  //Next steps
-  // 1: Define what data is needed to feed to python script
-  // 2: send data to this endpoint via ajax POST request
-  // 3: Use data to run python script w/ paramaters from request.
-  // 4: await result of python script and send result back
-  // 5: update graphs/visualizations w/ new data
+  console.log(longitude, latitude, soilquality, soilcarbon, wateravailability, date, cropquality, vegetation, temperature);
 
-  // The below is an example of how to run a python program from express using
-  // Node's child process
+  const options = {
+    pythonPath: '/usr/local/bin/python3',
+    args: [`-x ${longitude}`,
+      `-y ${latitude}`,
+      `-q ${soilquality}`,
+      `-c ${soilcarbon}`,
+      `-w ${wateravailability}`,
+      /*
+      `-C ${cropquality},-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2`,
+      `-v ${vegetation},-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2`,
+      `-t ${temperature},-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2`
+    */]
+  }
 
-  // const spawn = require("child_process").spawn;
-  // const pythonProcess = spawn('python',["path/to/script.py", arg1, arg2, ...]);
-  response.send('your data was received');
+    PythonShell.run(`${pickledStringPath}`, options, function (err, results) {
+      if (err) {
+        console.log(err);
+        response.send(err);
+      }
+      response.status(200).send(results);
+
+    });
+
 });
 
 app.listen(port, () => console.log('Listening on localhost:3000') );
