@@ -158,9 +158,12 @@ function drawFinalScatterplot() {
   //Show the tooltip on the hovered over slice
   function showTooltip (d, i) {
     
-    var e = window.event;
+    var e = [];
+    e.clientX = d3.mouse(this)[0];
+    e.clientY = d3.mouse(this)[1];
+
     
-    var cicle_tooltip = '<div id="circle-tooltip" style="left: ' + (e.clientX + 10) + 'px; top: ' + (e.clientY - 20) + 'px;">';
+    var cicle_tooltip = '<div id="circle-tooltip" style="left: ' + (e.clientX + 50) + 'px; top: ' + (e.clientY - 20) + 'px;">';
         cicle_tooltip +=    '<span><strong>Accessible Water</strong></br>' + d.water + 'mm</br><strong>Corn Yield</strong></br>' + d.yield + '</span>';
         cicle_tooltip += '</div>';
 
@@ -178,6 +181,3 @@ function drawFinalScatterplot() {
 }//function drawFinalScatterplot
 
 drawFinalScatterplot();
-
-
-

@@ -34,14 +34,6 @@ var yScale_curve = d3.scale.linear()
     .domain([0, d3.max(dataset_curve, function(d){ return d.y; })])
     .range([height, 0]);
 
-// var xAxis_curve = d3.svg.axis()
-//     .scale(xScale_curve)
-//     .orient("bottom")
-//     .innerTickSize(-height)
-//     .ticks(0)
-//     .outerTickSize(0)
-//     .tickPadding(10);
-
 var xAxis_curve = d3.svg.axis()
     .scale(xScale_curve)
     .orient("bottom")

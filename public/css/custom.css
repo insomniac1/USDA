@@ -2,7 +2,7 @@
 /* START Circle Chart CSS */
 
 #chart-circle-wrapper{
-  /*position: relative;*/
+  position: relative;
 }
 
 #chart-circle-wrapper .scatter-chart-group {
@@ -172,7 +172,7 @@
   border-bottom-color: #ffffff;
 }
 #circle-tooltip{
-  position: fixed;
+  position: absolute;
   display: inline-block;
   top: 0;
   padding: 10px;
@@ -226,7 +226,16 @@
 }
 
 /* START Line Area Chart CSS */
-
+#chart-gradient{
+  position: relative;
+}
+#chart-gradient-tooltip{
+    display: inline-block;
+    position: absolute;
+    border: 1px solid #E1E1E1;
+    background-color: #fff;
+    padding: 10px;
+}
 #chart-gradient .x.axis .domain{
   fill: #777d7b;
 }
@@ -242,7 +251,10 @@
 .gradient-wrapper{
   min-height: 500px;
 }
-
+.focus circle {
+  fill: none;
+  stroke: steelblue;
+}
 
 /* START Bar Chart */ 
 
