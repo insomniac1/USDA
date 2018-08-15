@@ -250,3 +250,42 @@
   fill: #42937f;
   opacity: 0.5;
 }
+
+
+
+
+/* START Curve Line */ 
+
+#curve-line-sp{
+  min-height: 400px;
+}
+#curve-line-sp .axis path,
+#curve-line-sp .axis line{
+  fill: none;
+  stroke: #ffffff4d;
+  stroke: #ffffff80;
+  stroke-width: 0.5;
+}
+#curve-line-sp .x.axis line{
+  display: none;
+}
+
+#curve-line-sp .line{
+  fill: none;
+  stroke-width: 4px;
+  stroke: #44A484;
+}
+
+#curve-line-sp .tick text{
+  font-size: 12px;
+  fill: #FFFFFF;
+  text-align: center;
+  line-height: 16px;
+}
+
+#curve-line-sp .tick line{
+  opacity: 1;
+}
+#curve-line-sp .y.axis .domain{
+  display: none;
+}
