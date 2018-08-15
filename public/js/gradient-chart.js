@@ -1,7 +1,8 @@
+var area_ContainerID = "#chart-gradient";
 var area_chart_sp = $('.gradient-wrapper');
 var margin = {top: 0, right: 0, bottom: 30, left: 0},
-  width_area  = area_chart_sp.width() - margin.left - margin.right,
-  height_area = area_chart_sp.height()  - margin.top  - margin.bottom;
+    width_area  = area_chart_sp.width() - margin.left - margin.right,
+    height_area = area_chart_sp.height()  - margin.top  - margin.bottom;
 
 var x = d3.scale.ordinal()
   .rangeRoundBands([0, width_area], .1);
@@ -12,12 +13,18 @@ var y_area = d3.scale.linear()
 var xAxis_area = d3.svg.axis()
   .scale(x)
   .orient("bottom")
-  .ticks(1)
-  .tickSize(2);
+  .tickSize(1);
 
-// var yAxis_area = d3.svg.axis()
-//   .scale(y_area)
-//   .orient("left");
+var yAxis_area = d3.svg.axis()
+    .scale(y_area)
+    .orient("left")
+    .innerTickSize(-width_area)
+    .outerTickSize(0)
+    .tickPadding(10);
+
+// var line_axis = d3.svg.line()
+//     .x(function(d) { return xScale(d.x); })
+//     .y(function(d) { return yScale(d.y); });
 
 var stack = d3.layout.stack()
   .offset("zero")
@@ -28,23 +35,31 @@ var stack = d3.layout.stack()
 var area = d3.svg.area()
   .interpolate("curveLinear")
   .x(function (d) { return x(d.label) + x.rangeBand() / 2; })
-  .y0(function (d) { return y_area(d.y0); })
-  .y1(function (d) { return y_area(d.y0 + d.y); });
+  // .y0(function (d) { return y_area(d.y0); })
+  .y1(function (d) { return y_area(d.y); });
 
 var color_area = d3.scale.ordinal()
-  .range(["#5ba685", "#88c6cc"]);
+  .range(["#44A484", "#76C6CC"]);
 
-var svg_area = d3.select("#chart-gradient").append("svg")
+// var lineFunction = d3.svg.line()
+//                    .x(function(d) { return d.x; })
+//                    .y(function(d) { return d.y; })
+//                    .interpolate("linear");
+
+var svg_area = d3.select(area_ContainerID).append("svg")
   .attr("width",  width_area  + margin.left + margin.right)
   .attr("height", height_area + margin.top  + margin.bottom)
-.append("g")
+  .append("g")
+  // .attr('viewBox','0 0 '+Math.min(width_area,height_area)+' '+Math.min(width_area,height_area))
   .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
 var area_chart = d3.csv("/api/gradient-area-data.csv", function (error, data) {
 
-    var labelVar = 'quarter';
+    var labelVar = 'year';
+
     var varNames = d3.keys(data[0])
-        .filter(function (key) { return key !== labelVar;});
+      .filter(function (key) { return key !== labelVar;});
+
     color_area.domain(varNames);
 
     var seriesArr = [], series = {};
@@ -59,139 +74,77 @@ var area_chart = d3.csv("/api/gradient-area-data.csv", function (error, data) {
       });
     });
 
-    x.domain(data.map(function (d) { return d.quarter; }));
+    x.domain(data.map(function (d) { return d.year; }));
 
-    stack(seriesArr);
+    stack(seriesArr); // ???
 
     y_area.domain([0, d3.max(seriesArr, function (c) { 
-        return d3.max(c.values, function (d) { return d.y0 + d.y; });
-      })]);
+      console.log(c);
+      return d3.max(c.values, function (d) { return d.y; });
+    })]);
 
     svg_area.append("g")
-        .attr("class", "x axis")
-        .attr("transform", "translate(0," + height_area + ")")
-        .call(xAxis_area);
-
-    // svg_area.append("g")
-    //     .attr("class", "y axis")
-    //     .call(yAxis_area)
-    //   .append("text")
-    //     .attr("transform", "rotate(-90)")
-    //     .attr("y", 6)
-    //     .attr("dy", ".71em")
-    //     .style("text-anchor", "end")
-    //     .text("Number of Rounds");
+      .attr("class", "x axis")
+      .attr("transform", "translate(0," + height_area + ")")
+      .call(xAxis_area)
 
     var selection = svg_area.selectAll(".series")
       .data(seriesArr)
       .enter().append("g")
-        .attr("class", function(d, i) { return "series series-" + i; });
+      .attr("class", function(d, i) { return "series series-" + i; });
 
-    /* QWE => Start GRADIENT */
-
-
-    defs_gradient = selection.append('defs')
-      .append('linearGradient')
-        .attr('gradientUnits', 'userSpaceOnUse')
-        .attr('id', function(d, i) { return "temperature-gradient-" + i; })
-        .attr('x1', 0).attr('y1', 0).attr('x2', 0).attr('y2', y_area(0))
-        // .attr('x1', 0).attr('y1', 0).attr('x2', x(0)).attr('y2', y_area(0))
-        .selectAll('stop')
-          .data([
-            {offset: "0", color: "#"+Math.random(6)+"74"+Math.random(6)+"91"},
-            {offset: "100", color: "#ffffff"}
-          ]) 
-        .enter().append('stop')
-          .attr('offset', function(d) { 
-            // console.log(d.offset);
-            return d.offset + '%'; 
-          })
-          .attr('style', function(d) { 
-            return 'stop-color:' + d.color + ';stop-opacity: 0.5;'; 
-          });
-
-
-
-    /* STOP GRADIENT */
-
+    /* Start GRADIENT */
+    var gradient_svg = $(area_ContainerID).find('svg')[0];
+    createGradient(gradient_svg,'temperature-gradient-0',[ // Create gradient
+        { offset: '0%', 'stop-color': '#76C6CC','stop-opacity': '1' },
+        { offset: '100%', 'stop-color': '#76C6CC', 'stop-opacity': '0.15' }
+    ]);
+    createGradient(gradient_svg,'temperature-gradient-1',[ // Create gradient
+        { offset: '0%', 'stop-color': '#44A484 ', 'stop-opacity': '0.05' },
+        { offset: '100%', 'stop-color': '#44A484', 'stop-opacity': '0.05' }
+    ]);
+    createGradient(gradient_svg,'temperature-gradient-2',[ // Create gradient
+        { offset: '0%', 'stop-color': '#000 ', 'stop-opacity': '0.05' },
+        { offset: '100%', 'stop-color': '#000', 'stop-opacity': '0.05' }
+    ]);
+    /* Stop GRADIENT */
 
     selection.append("path")
-      .attr("class", "streamPath")
       .attr("d", function (d) { return area(d.values); })
-      .style("stroke", function (d) { return color_area(d.name); })
+      // .style("stroke", function (d, i) {return color_area(i); })
+      .attr("class", "streamPath")
       .style("stroke-width", 2)
-      // .style("fill", function (d) { return color_area(d.name); })
       .style('fill', function(d, i) {
         return 'url(#temperature-gradient-' + i + ')';
-      })
-      .on("mouseover", function (d) { showPopover.call(this, d); })
-      .on("mouseout",  function (d) { removePopovers(); });
+      });
 
-    // var points = svg_area.selectAll(".seriesPoints")
-    //   .data(seriesArr)
-    //   .enter().append("g")
-    //     .attr("class", "seriesPoints");
-
-    // points.selectAll(".point")
-    //   .data(function (d) { return d.values; })
-    //   .enter().append("circle")
-    //    .attr("class", "point")
-    //    .attr("cx", function (d) { return x(d.label) + x.rangeBand() / 2; })
-    //    .attr("cy", function (d) { return y_area(d.y0 + d.y); })
-    //    .attr("r", "2px")
-    //    .style("fill",function (d) { return color_area(d.name); })
-    //    .on("mouseover", function (d) { showPopover.call(this, d); })
-    //    .on("mouseout",  function (d) { removePopovers(); })
-
-    // var legend = svg_area.selectAll(".legend")
-    //     .data(varNames.slice().reverse())
-    //   .enter().append("g")
-    //     .attr("class", "legend")
-    //     .attr("transform", function (d, i) { return "translate(55," + i * 20 + ")"; });
-
-    // legend.append("rect")
-    //     .attr("x", width_area - 10)
-    //     .attr("width", 10)
-    //     .attr("height", 10)
-    //     .style("fill", color_area)
-    //     .style("stroke", "grey");
-
-    // legend.append("text")
-    //     .attr("x", width_area - 12)
-    //     .attr("y", 6)
-    //     .attr("dy", ".35em")
-    //     .style("text-anchor", "end")
-    //     .text(function (d) { return d; });
-
-    function removePopovers () {
-      // $('.popover').each(function() {
-      //   $(this).remove();
-      // }); 
-
-      console.log('Close POPOVER');
-      
-    }
-
-    function showPopover (d) {
-      
-      var line = $(this);
-      // line.css("fill", function (d) { return 'red'; });
-      // line.attr("fill", function (d) { return color_area(d.name); });
-      console.log(line);
-
-    	console.log('Open POPOVER');
-
-      // $(this).popover({
-      //   title: d.name,
-      //   placement: 'auto top',
-      //   container: 'body',
-      //   trigger: 'manual',
-      //   html : true,
-      //   content: function() { 
-      //     return "Quarter: " + d.label + 
-      //            "<br/>Rounds: " + d3.format(",")(d.value ? d.value: d.y1 - d.y0); }
-      // });
-      // $(this).popover('show')
-    }
+    function removePopovers (d) {}
+    function showPopover (d) {}
 
 });
+
+function createGradient(svg,id,stops) {
+    var svgNS = svg.namespaceURI;
+
+    var grad  = document.createElementNS(svgNS, 'linearGradient');
+    grad.setAttribute('id',id);
+
+    // make gradient from top to bottom
+    grad.setAttribute('x2', '0%');
+    grad.setAttribute('y2', '100%');
+
+    for (var i = 0; i < stops.length; i++) {
+        var attrs = stops[i];
+        var stop = document.createElementNS(svgNS, 'stop');
+
+        for (var attr in attrs){
+            if (attrs.hasOwnProperty(attr)) stop.setAttribute(attr,attrs[attr]);
+        }
+        grad.appendChild(stop);
+    }
+
+    var defs = svg.querySelector('defs') || svg.insertBefore( document.createElementNS(svgNS,'defs'), svg.firstChild);
+    // var defs = document.createElementNS(svgNS,'defs');
+    // $("#chart-gradient").find('svg .series-0').append(defs);
+    return defs.appendChild(grad);
+}
