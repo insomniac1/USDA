@@ -78,6 +78,17 @@ $(document).ready(function() {
     editableTooltip: false,
     tooltipFormat: "temperatureTooltip"
   });
+  $("#round-vegetation").roundSlider({
+  radius: 150,
+  width: 40,
+  circleShape: "half-top",
+  sliderType: "min-range",
+  value: 75,
+  min: 0,
+  max: 150,
+  editableTooltip: false,
+  tooltipFormat: "vegetationTooltip",
+});
 });
 
 function temperatureTooltip(args) {
