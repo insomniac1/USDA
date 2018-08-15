@@ -10994,3 +10994,37 @@ footer ul {
 #map-counties .county-boundary:hover, #map-counties .state:hover {
   fill: orange;
 }
+
+#chart-gradient .border-line {
+  fill: none;
+  stroke-width: 2px;
+}
+
+#chart-gradient .border-line.line0 {
+  stroke: #76C6CC;
+}
+
+#chart-gradient .border-line.line1 {
+  stroke: #44A484;
+}
+
+#chart-gradient .border-line.line2 {
+  stroke: #E8B251;
+}
+
+#chart-gradient .tick {
+  font-size: 12px;
+}
+
+#chart-gradient .y.axis .tick {
+  stroke: #E1E1E1;
+}
+
+#chart-gradient .overlay-info {
+  width: 130px;
+  height: 60px;
+  fill: #fff;
+  color: #000;
+  stroke: #E1E1E1;
+  stroke-width: 1px;
+}
