@@ -158,12 +158,12 @@ var area_chart = d3.csv("/api/gradient-area-data.csv", function (error, data) {
   // 1. Create gradients
   var gradient_svg = $(area_ContainerID).find('svg')[0];
   createGradient(gradient_svg,'temperature-gradient-0',[ // Create gradient
-      { offset: '0%', 'stop-color': '#76C6CC','stop-opacity': '0.45' },
-      { offset: '75%', 'stop-color': '#76C6CC', 'stop-opacity': '0.05' }
-  ]);
-  createGradient(gradient_svg,'temperature-gradient-1',[ // Create gradient
       { offset: '0%', 'stop-color': '#44A484 ', 'stop-opacity': '0.45' },
       { offset: '75%', 'stop-color': '#44A484', 'stop-opacity': '0.05' }
+  ]);
+  createGradient(gradient_svg,'temperature-gradient-1',[ // Create gradient
+      { offset: '0%', 'stop-color': '#76C6CC','stop-opacity': '0.45' },
+      { offset: '75%', 'stop-color': '#76C6CC', 'stop-opacity': '0.05' }
   ]);
   createGradient(gradient_svg,'temperature-gradient-2',[ // Create gradient
       { offset: '0%', 'stop-color': '#E8B251 ', 'stop-opacity': '0.45' },
@@ -263,10 +263,10 @@ $('.temp-veget-btn').on('click', function(){
       itm.removeClass('active');
 
       if(itm.hasClass('btn-icon--corn')) {
-        d3.selectAll(".series-1").attr("visibility", "hidden");
+        d3.selectAll(".series-0").attr("visibility", "hidden");
       }
       if(itm.hasClass('btn-icon--temperature')) {
-        d3.selectAll(".series-0").attr("visibility", "hidden");
+        d3.selectAll(".series-1").attr("visibility", "hidden");
       }
       if(itm.hasClass('btn-icon--vegetation')) {
         d3.selectAll(".series-2").attr("visibility", "hidden");
@@ -274,10 +274,10 @@ $('.temp-veget-btn').on('click', function(){
     } else {
       itm.addClass('active');
       if(itm.hasClass('btn-icon--corn')) {
-        d3.selectAll(".series-1").attr("visibility", "visible");
+        d3.selectAll(".series-0").attr("visibility", "visible");
       }
       if(itm.hasClass('btn-icon--temperature')) {
-        d3.selectAll(".series-0").attr("visibility", "visible");
+        d3.selectAll(".series-1").attr("visibility", "visible");
       }
       if(itm.hasClass('btn-icon--vegetation')) {
         d3.selectAll(".series-2").attr("visibility", "visible");
