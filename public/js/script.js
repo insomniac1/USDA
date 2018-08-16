@@ -79,16 +79,43 @@ $(document).ready(function() {
     tooltipFormat: "temperatureTooltip"
   });
   $("#round-vegetation").roundSlider({
-  radius: 150,
-  width: 40,
-  circleShape: "half-top",
-  sliderType: "min-range",
-  value: 75,
-  min: 0,
-  max: 150,
-  editableTooltip: false,
-  tooltipFormat: "vegetationTooltip",
-});
+      radius: 150,
+      width: 40,
+      circleShape: "half-top",
+      sliderType: "min-range",
+      value: 75,
+      min: 0,
+      max: 150,
+      editableTooltip: false,
+      tooltipFormat: "vegetationTooltip",
+    });
+    
+    $('.soil-chemistry-btn').on('click', function(){
+        var itm = $(this);
+        if(itm.hasClass('active')){
+            itm.removeClass('active');
+        } else {
+            itm.addClass('active');
+        }
+    });
+
+    $('.temp-veget-btn').on('click', function(){
+        var itm = $(this);
+        if(itm.hasClass('active')){
+            itm.removeClass('active');
+        } else {
+            itm.addClass('active');
+        }
+    });
+
+    $('.map-tab-btn').on('click', function(){
+        var itm = $(this);
+        $('.map-tab-btn').each(function(){
+            $(this).removeClass('active');
+        });
+        itm.addClass('active');
+    });
+
 });
 
 function temperatureTooltip(args) {

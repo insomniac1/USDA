@@ -251,10 +251,20 @@
 .gradient-wrapper{
   min-height: 500px;
 }
-.focus circle {
-  fill: none;
-  stroke: steelblue;
+#chart-gradient .point-paths path {
+  /*
+  fill: #eee;
+  stroke: #aaa;
+  */
+  stroke-opacity: 0;
+  fill-opacity: 0;
 }
+
+
+
+
+
+
 
 /* START Bar Chart */ 
 

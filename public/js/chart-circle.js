@@ -52,6 +52,8 @@ function drawFinalScatterplot() {
     .attr("class", "x axis")
     .attr("transform", "translate(" + 0 + "," + height + ")")
     .call(xAxis);
+
+
       
   //Set the new y axis range
   var yScale = d3.scale.linear()
@@ -151,6 +153,7 @@ function drawFinalScatterplot() {
       .style("pointer-events", "none")
       .style("opacity", 0)
       .style("fill", function(d) {return '#68B1DF';});
+
 
   ///////////////////////////////////////////////////////////////////////////
   /////////////////// Hover functions of the circles ////////////////////////
