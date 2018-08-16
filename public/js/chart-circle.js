@@ -135,7 +135,22 @@ function drawFinalScatterplot() {
       .style("pointer-events", "none")
       .style("opacity", opacityCircles)
       .style("fill", function(d) {return '#c6c6c6';}); // .style("fill", function(d) {return color(d.Region);});
-        
+  
+  var circleGroupShadow = wrapper.append("g")
+    .attr("class", "circleWrapperShadow"); 
+    
+  //Place the name circles
+  circleGroupShadow.selectAll("countries")
+    .data(countries.sort(function(a,b) { return b.GDP > a.GDP; })) //Sort so the biggest circles are below
+    .enter().append("circle")
+      .attr("class", function(d,i) { return "countries-shadow " + d.code; })
+      .attr("cx", function(d) {return xScale(d.yield);})
+      .attr("cy", function(d) {return yScale(d.water);})
+      // .attr("r", function(d) {return rScale(d.GDP);})
+      .attr("r", function(d) {return 13})
+      .style("pointer-events", "none")
+      .style("opacity", 0)
+      .style("fill", function(d) {return '#68B1DF';});
 
   ///////////////////////////////////////////////////////////////////////////
   /////////////////// Hover functions of the circles ////////////////////////
@@ -153,6 +168,8 @@ function drawFinalScatterplot() {
     element.style("opacity", opacityCircles);
     element.style("fill", '#c6c6c6');
       
+    var elementShadow = d3.selectAll("#chart-circle .countries-shadow."+d.code);
+    elementShadow.style("opacity", 0);
   }
 
   //Show the tooltip on the hovered over slice
@@ -171,9 +188,11 @@ function drawFinalScatterplot() {
 
     var element = d3.selectAll("#chart-circle .countries."+d.code);
     element.style("fill", '#68B1DF');
-
-    //Make chosen circle more visible
     element.style("opacity", 1);
+
+    var elementShadow = d3.selectAll("#chart-circle .countries-shadow."+d.code);
+    elementShadow.style("fill", '#68B1DF');
+    elementShadow.style("opacity", .34);
 
             
   }//function showTooltip
