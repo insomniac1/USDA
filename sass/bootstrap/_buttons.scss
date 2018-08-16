@@ -44,6 +44,7 @@
 
   &:not(:disabled):not(.disabled):active,
   &:not(:disabled):not(.disabled).active {
+
     @include box-shadow($btn-active-box-shadow);
 
     &:focus {
@@ -148,13 +149,17 @@ input[type="button"] {
   }
 }
 
-.btn-outline-warning {
-  &:hover {
+.btn-outline-warning,
+.btn-greenblue, {
+  &:hover,
+  &.active {
     color: $white;
   }
 }
 
 .btn-icon {
+  display: flex;
+  align-items: center;
   text-align: left;
   padding-left: 3.467em;
   position: relative;
@@ -178,25 +183,61 @@ input[type="button"] {
   &.btn-icon--carbon svg {
     top: 9px;
   }
-
   &.btn-outline-primary {
-    color: rgba($primary, .5);
+    color: rgba($primary, 1);
     border-color: rgba($primary, .5);
-  }
 
+    polygon,
+    polyline {
+      fill: $primary;
+      opacity: 1;
+    }
+  }
+  &.btn-outline-secondary {
+    color: rgba($blue, 1);
+    border-color: rgba($blue, .5);
+
+    polygon,
+    polyline,
+    path {
+      fill: $blue;
+      opacity: 1;
+    }
+  }
+  &.btn-outline-greenblue {
+    color: rgba($greenblue, 1);
+    border-color: rgba($greenblue, .5);
+
+    polygon,
+    polyline {
+      fill: $greenblue;
+      opacity: 1;
+    } 
+  }
   &.btn-outline-danger {
-    color: rgba($danger, .5);
+    color: rgba($danger, 1);
     border-color: rgba($danger, .5);
+
+    polygon,
+    polyline {
+      fill: $danger;
+      opacity: 1;
+    }
   }
 
   &.btn-outline-primary,
+  &.btn-outline-secondary,
   &.btn-outline-danger,
-  &.btn-outline-warning {
-    &:hover {
+  &.btn-outline-warning,
+  &.btn-outline-greenblue {
+    &:hover,
+    &:not(:disabled):not(.disabled).active,
+    &.active {
       color: $white;
 
       polygon,
-      polyline {
+      polyline,
+      path {
         fill: $white;
         opacity: 1;
       }
