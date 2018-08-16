@@ -229,3 +229,31 @@ function createGradient(svg,id,stops) {
   var defs = svg.querySelector('defs') || svg.insertBefore( document.createElementNS(svgNS,'defs'), svg.firstChild);
   return defs.appendChild(grad);
 }
+
+$('.temp-veget-btn').on('click', function(){
+    var itm = $(this);
+    if(itm.hasClass('active')){
+      itm.removeClass('active');
+
+      if(itm.hasClass('btn-icon--corn')) {
+        d3.selectAll(".series-1").attr("visibility", "hidden");
+      }
+      if(itm.hasClass('btn-icon--temperature')) {
+        d3.selectAll(".series-0").attr("visibility", "hidden");
+      }
+      if(itm.hasClass('btn-icon--vegetation')) {
+        d3.selectAll(".series-2").attr("visibility", "hidden");
+      }
+    } else {
+      itm.addClass('active');
+      if(itm.hasClass('btn-icon--corn')) {
+        d3.selectAll(".series-1").attr("visibility", "visible");
+      }
+      if(itm.hasClass('btn-icon--temperature')) {
+        d3.selectAll(".series-0").attr("visibility", "visible");
+      }
+      if(itm.hasClass('btn-icon--vegetation')) {
+        d3.selectAll(".series-2").attr("visibility", "visible");
+      }
+    }
+});
