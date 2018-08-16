@@ -133,36 +133,43 @@
       height: 37px;
     }
     .range-blue {
-      input[type=range]::-webkit-slider-thumb,
-      input[type=range]::-moz-range-thumb {
-        content: '';
-        border: none;
+      /* Special styling for WebKit/Blink */
+      input[type=range]::-webkit-slider-thumb {
         -webkit-appearance: none;
+        width: 10px;
+        height: 22px;
+        border: 0;
         background: url('/img/range-blue.svg');
         background-size: 100% 100%;
         background-repeat: no-repeat;
-
-
-
-    // content:"";
-    // display: block;
-    // background: url(/svg-filer/header-background.svg);
-    // background-size: 100% 100% !important;
-    // background-repeat: no-repeat;
-    // top: 0;
-    // left:-1%;
-    // width: 102% !important;
-    // height: 90px !important;
-    // position: absolute;
-    // z-index: -1;
-
-    // -ms-transition: top ease .5s;
-    // -moz-transition: top ease .5s;
-    // -webkit-transition: top ease .5s;
-    // transition: top ease .5s;
-
-
+        position: relative;
+        z-index: 9999;
       }
+
+      /* All the same stuff for Firefox */
+      input[type=range]::-moz-range-thumb {
+        width: 10px;
+        height: 22px;
+        border: 0;
+        background: url('/img/range-blue.svg');
+        background-size: 100% 100%;
+        background-repeat: no-repeat;
+        position: relative;
+        z-index: 9999;
+      }
+
+      /* All the same stuff for IE */
+      input[type=range]::-ms-thumb {
+        width: 10px;
+        height: 22px;
+        border: 0;
+        background: url('/img/range-blue.svg');
+        background-size: 100% 100%;
+        background-repeat: no-repeat;
+        position: relative;
+        z-index: 9999;
+      }
+
       .fill {
           background: #2E8BC2;
       }
@@ -171,8 +178,42 @@
       }
     }
     .range-teal {
+
+      /* Special styling for WebKit/Blink */
       input[type='range']::-webkit-slider-thumb {
-        background: url('/img/range-teal.svg') no-repeat;
+        -webkit-appearance: none;
+        width: 10px;
+        height: 22px;
+        border: 0;
+        background: url('/img/range-teal.svg');
+        background-size: 100% 100%;
+        background-repeat: no-repeat;
+        position: relative;
+        z-index: 9999;
+      }
+
+      /* All the same stuff for Firefox */
+      input[type=range]::-moz-range-thumb {
+        width: 10px;
+        height: 22px;
+        border: 0;
+        background: url('/img/range-teal.svg');
+        background-size: 100% 100%;
+        background-repeat: no-repeat;
+        position: relative;
+        z-index: 9999;
+      }
+
+      /* All the same stuff for IE */
+      input[type=range]::-ms-thumb {
+        width: 10px;
+        height: 22px;
+        border: 0;
+        background: url('/img/range-teal.svg');
+        background-size: 100% 100%;
+        background-repeat: no-repeat;
+        position: relative;
+        z-index: 9999;
       }
       .fill {
           background: #58C4B3;        
@@ -182,8 +223,41 @@
       }
     }
     .range-red {
+      /* Special styling for WebKit/Blink */
       input[type='range']::-webkit-slider-thumb {
-        background: url('/img/range-red.svg') no-repeat;
+        -webkit-appearance: none;
+        width: 10px;
+        height: 22px;
+        border: 0;
+        background: url('/img/range-red.svg');
+        background-size: 100% 100%;
+        background-repeat: no-repeat;
+        position: relative;
+        z-index: 9999;
+      }
+
+      /* All the same stuff for Firefox */
+      input[type=range]::-moz-range-thumb {
+        width: 10px;
+        height: 22px;
+        border: 0;
+        background: url('/img/range-red.svg');
+        background-size: 100% 100%;
+        background-repeat: no-repeat;
+        position: relative;
+        z-index: 9999;
+      }
+
+      /* All the same stuff for IE */
+      input[type=range]::-ms-thumb {
+        width: 10px;
+        height: 22px;
+        border: 0;
+        background: url('/img/range-red.svg');
+        background-size: 100% 100%;
+        background-repeat: no-repeat;
+        position: relative;
+        z-index: 9999;
       }
       .fill {
           background: #B6334F;

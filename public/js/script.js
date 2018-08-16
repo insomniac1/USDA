@@ -8,18 +8,24 @@ $(document).ready(function() {
   var slider_water = document.getElementById("slider-water");
   var rangeMaxVal_water = $(slider_water).prop('max');
 
+  
+
   // Default value
   $(slider_water).siblings('.count').text($(slider_water).val() + ' mm').css({
     'left': $(slider_water).val() * (100 / rangeMaxVal_water) + '%',
     'transform': 'translateX(-' + $(slider_water).val() * (100 / rangeMaxVal_water) + '%)'
   });
-  $(slider_water).siblings('.fill').css('width', $(slider_water).val() + '%');
+  $(slider_water).siblings('.fill').css('width', $(slider_water).val() * (100 / rangeMaxVal_water) + '%');
+
+  console.log($(slider_water).val());
+
   slider_water.oninput = function() {
     $(this).siblings('.count').text(this.value + ' mm').css({
       'left': this.value * (100 / rangeMaxVal_water) + '%',
       'transform': 'translateX(-' + this.value * (100 / rangeMaxVal_water) + '%)'
     });
     $(this).siblings('.fill').css('width', this.value * (100 / rangeMaxVal_water) + '%');
+    console.log(this.value);
   }
 
   // Carbon Level
@@ -31,7 +37,8 @@ $(document).ready(function() {
     'left': $(slider_carbon).val() * (100 / rangeMaxVal_carbon) + '%',
     'transform': 'translateX(-' + $(slider_carbon).val() * (100 / rangeMaxVal_carbon) + '%)'
   });
-  $(slider_carbon).siblings('.fill').css('width', $(slider_carbon).val() + '%');
+  $(slider_carbon).siblings('.fill').css('width', $(slider_carbon).val() * (100 / rangeMaxVal_carbon) + '%');
+
   slider_carbon.oninput = function() {
     $(this).siblings('.count').text(this.value + ' g').css({
       'left': this.value * (100 / rangeMaxVal_carbon) + '%',
@@ -55,6 +62,7 @@ $(document).ready(function() {
     'transform': 'translateX(-' + $(slider_soil).val() * (100 / rangeMaxVal_soil) + '%)'
   });
   $(slider_soil).siblings('.fill').css('width', $(slider_soil).val() * (100 / rangeMaxVal_soil) + '%');
+
   slider_soil.oninput = function() {
     $(this).siblings('.count').text(soilValues[this.value]).css({
       'left': this.value * (100 / rangeMaxVal_soil) + '%',
@@ -72,9 +80,9 @@ $(document).ready(function() {
     width: 40,
     circleShape: "half-top",
     sliderType: "min-range",
-    value: 79,
+    value: 50,
     min: 0,
-    max: 158,
+    max: 100,
     editableTooltip: false,
     tooltipFormat: "temperatureTooltip"
   });
@@ -84,8 +92,8 @@ $(document).ready(function() {
     circleShape: "half-top",
     sliderType: "min-range",
     value: 75,
-    min: 0,
-    max: 150,
+    min: -100,
+    max: 100,
     editableTooltip: false,
     tooltipFormat: "vegetationTooltip",
   });

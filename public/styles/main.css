@@ -10925,14 +10925,44 @@ footer ul {
   height: 37px;
 }
 
-.section--range-sliders .slider-container .range-blue input[type=range]::-webkit-slider-thumb,
-.section--range-sliders .slider-container .range-blue input[type=range]::-moz-range-thumb {
-  content: '';
-  border: none;
+.section--range-sliders .slider-container .range-blue {
+  /* Special styling for WebKit/Blink */
+  /* All the same stuff for Firefox */
+  /* All the same stuff for IE */
+}
+
+.section--range-sliders .slider-container .range-blue input[type=range]::-webkit-slider-thumb {
   -webkit-appearance: none;
+  width: 10px;
+  height: 22px;
+  border: 0;
   background: url("/img/range-blue.svg");
   background-size: 100% 100%;
   background-repeat: no-repeat;
+  position: relative;
+  z-index: 9999;
+}
+
+.section--range-sliders .slider-container .range-blue input[type=range]::-moz-range-thumb {
+  width: 10px;
+  height: 22px;
+  border: 0;
+  background: url("/img/range-blue.svg");
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  position: relative;
+  z-index: 9999;
+}
+
+.section--range-sliders .slider-container .range-blue input[type=range]::-ms-thumb {
+  width: 10px;
+  height: 22px;
+  border: 0;
+  background: url("/img/range-blue.svg");
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  position: relative;
+  z-index: 9999;
 }
 
 .section--range-sliders .slider-container .range-blue .fill {
@@ -10943,8 +10973,44 @@ footer ul {
   color: #2E8BC2;
 }
 
+.section--range-sliders .slider-container .range-teal {
+  /* Special styling for WebKit/Blink */
+  /* All the same stuff for Firefox */
+  /* All the same stuff for IE */
+}
+
 .section--range-sliders .slider-container .range-teal input[type='range']::-webkit-slider-thumb {
-  background: url("/img/range-teal.svg") no-repeat;
+  -webkit-appearance: none;
+  width: 10px;
+  height: 22px;
+  border: 0;
+  background: url("/img/range-teal.svg");
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  position: relative;
+  z-index: 9999;
+}
+
+.section--range-sliders .slider-container .range-teal input[type=range]::-moz-range-thumb {
+  width: 10px;
+  height: 22px;
+  border: 0;
+  background: url("/img/range-teal.svg");
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  position: relative;
+  z-index: 9999;
+}
+
+.section--range-sliders .slider-container .range-teal input[type=range]::-ms-thumb {
+  width: 10px;
+  height: 22px;
+  border: 0;
+  background: url("/img/range-teal.svg");
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  position: relative;
+  z-index: 9999;
 }
 
 .section--range-sliders .slider-container .range-teal .fill {
@@ -10955,8 +11021,44 @@ footer ul {
   color: #58C4B3;
 }
 
+.section--range-sliders .slider-container .range-red {
+  /* Special styling for WebKit/Blink */
+  /* All the same stuff for Firefox */
+  /* All the same stuff for IE */
+}
+
 .section--range-sliders .slider-container .range-red input[type='range']::-webkit-slider-thumb {
-  background: url("/img/range-red.svg") no-repeat;
+  -webkit-appearance: none;
+  width: 10px;
+  height: 22px;
+  border: 0;
+  background: url("/img/range-red.svg");
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  position: relative;
+  z-index: 9999;
+}
+
+.section--range-sliders .slider-container .range-red input[type=range]::-moz-range-thumb {
+  width: 10px;
+  height: 22px;
+  border: 0;
+  background: url("/img/range-red.svg");
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  position: relative;
+  z-index: 9999;
+}
+
+.section--range-sliders .slider-container .range-red input[type=range]::-ms-thumb {
+  width: 10px;
+  height: 22px;
+  border: 0;
+  background: url("/img/range-red.svg");
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  position: relative;
+  z-index: 9999;
 }
 
 .section--range-sliders .slider-container .range-red .fill {
