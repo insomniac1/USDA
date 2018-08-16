@@ -89,15 +89,6 @@ $(document).ready(function() {
     editableTooltip: false,
     tooltipFormat: "vegetationTooltip",
   });
-  
-  $('.soil-chemistry-btn').on('click', function(){
-      var itm = $(this);
-      if(itm.hasClass('active')){
-        itm.removeClass('active');
-      } else {
-        itm.addClass('active');
-      }
-  });
 
   $('.map-tab-btn').on('click', function(){
       var itm = $(this);

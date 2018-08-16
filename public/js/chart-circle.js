@@ -182,7 +182,6 @@ function drawFinalScatterplot() {
     e.clientX = d3.mouse(this)[0];
     e.clientY = d3.mouse(this)[1];
 
-    
     var cicle_tooltip = '<div id="circle-tooltip" style="left: ' + (e.clientX + 50) + 'px; top: ' + (e.clientY - 20) + 'px;">';
         cicle_tooltip +=    '<span><strong>Accessible Water</strong></br>' + d.water + 'mm</br><strong>Corn Yield</strong></br>' + d.yield + '</span>';
         cicle_tooltip += '</div>';
@@ -190,12 +189,12 @@ function drawFinalScatterplot() {
     $('#chart-circle-wrapper').append(cicle_tooltip);
 
     var element = d3.selectAll("#chart-circle .countries."+d.code);
-    element.style("fill", '#68B1DF');
-    element.style("opacity", 1);
+      element.style("fill", '#68B1DF');
+      element.style("opacity", 1);
 
     var elementShadow = d3.selectAll("#chart-circle .countries-shadow."+d.code);
-    elementShadow.style("fill", '#68B1DF');
-    elementShadow.style("opacity", .34);
+      elementShadow.style("fill", '#68B1DF');
+      elementShadow.style("opacity", .34);
 
             
   }//function showTooltip
@@ -203,3 +202,34 @@ function drawFinalScatterplot() {
 }//function drawFinalScatterplot
 
 drawFinalScatterplot();
+
+$('.soil-chemistry-btn').on('click', function(){
+    var itm = $(this);
+    if(itm.hasClass('active')){
+      itm.removeClass('active');
+
+      /* TO DO: Add circles groups */
+      // if(itm.hasClass('btn-icon--water')) {
+      //   d3.selectAll(".series-0").attr("visibility", "hidden");
+      // }
+      // if(itm.hasClass('btn-icon--carbon')) {
+      //   d3.selectAll(".series-1").attr("visibility", "hidden");
+      // }
+      // if(itm.hasClass('btn-icon--soil')) {
+      //   d3.selectAll(".series-2").attr("visibility", "hidden");
+      // }
+    } else {
+      itm.addClass('active');
+
+      /* TO DO: Add circles groups */
+      // if(itm.hasClass('btn-icon--water')) {
+      //   d3.selectAll(".series-0").attr("visibility", "visible");
+      // }
+      // if(itm.hasClass('btn-icon--carbon')) {
+      //   d3.selectAll(".series-1").attr("visibility", "visible");
+      // }
+      // if(itm.hasClass('btn-icon--soil')) {
+      //   d3.selectAll(".series-2").attr("visibility", "visible");
+      // }
+    }
+});
