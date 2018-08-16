@@ -10859,8 +10859,14 @@ footer ul {
   height: 37px;
 }
 
-.section--range-sliders .slider-container .range-blue input[type='range']::-webkit-slider-thumb {
-  background: url("/img/range-blue.svg") no-repeat;
+.section--range-sliders .slider-container .range-blue input[type=range]::-webkit-slider-thumb,
+.section--range-sliders .slider-container .range-blue input[type=range]::-moz-range-thumb {
+  content: '';
+  border: none;
+  -webkit-appearance: none;
+  background: url("/img/range-blue.svg");
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
 }
 
 .section--range-sliders .slider-container .range-blue .fill {

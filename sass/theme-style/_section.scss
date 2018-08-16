@@ -133,8 +133,35 @@
       height: 37px;
     }
     .range-blue {
-      input[type='range']::-webkit-slider-thumb {
-        background: url('/img/range-blue.svg') no-repeat;
+      input[type=range]::-webkit-slider-thumb,
+      input[type=range]::-moz-range-thumb {
+        content: '';
+        border: none;
+        -webkit-appearance: none;
+        background: url('/img/range-blue.svg');
+        background-size: 100% 100%;
+        background-repeat: no-repeat;
+
+
+
+    // content:"";
+    // display: block;
+    // background: url(/svg-filer/header-background.svg);
+    // background-size: 100% 100% !important;
+    // background-repeat: no-repeat;
+    // top: 0;
+    // left:-1%;
+    // width: 102% !important;
+    // height: 90px !important;
+    // position: absolute;
+    // z-index: -1;
+
+    // -ms-transition: top ease .5s;
+    // -moz-transition: top ease .5s;
+    // -webkit-transition: top ease .5s;
+    // transition: top ease .5s;
+
+
       }
       .fill {
           background: #2E8BC2;
