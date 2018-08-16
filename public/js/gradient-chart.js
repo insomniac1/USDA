@@ -4,6 +4,12 @@ var margin = {top: 0, right: 15, bottom: 30, left: 15},
     width_area  = area_chart_sp.width() - margin.left - margin.right,
     height_area = area_chart_sp.height()  - margin.top  - margin.bottom;
 
+var seriesLabels = {
+    'yield':'Corn Yield',
+    'temperature':'Temperature',
+    'vegetation':'Vegetation'
+};
+
 // Add scale for x
 var x_area = d3.scale.ordinal()
   .rangeRoundBands([0, width_area], -1.1);
@@ -171,6 +177,32 @@ var area_chart = d3.csv("/api/gradient-area-data.csv", function (error, data) {
       return 'url(#temperature-gradient-' + i + ')';
     })
 
+  
+  /*
+  ** Points for Tooltips 
+  */
+
+  var points = svg_area.selectAll(".seriesPoints")
+    .data(seriesArr)
+    .enter().append("g")
+      .attr("class", "seriesPoints");
+
+  points.selectAll(".point")
+    .data(function (d) { return d.values; })
+    .enter().append("circle")
+     .attr("class", "point")
+     .attr("cx", function (d) { 
+        return x_area(d.year) + x_area.rangeBand() / 2; 
+      })
+     .attr("cy", function (d) { return y_area(d.y); })
+     .attr("r", "10px")
+     .style("opacity", 0)
+     .style("fill",function (d) { return color(d.name); })
+     .on("mouseover", function (d) { showPopover.call(this, d); })
+     .on("mouseout",  function (d) { removePopovers(); })
+
+
+
   /*
   ** Going through series array and adding top border line
   ** Line styles are described in _section.scss:294-307
@@ -185,23 +217,18 @@ var area_chart = d3.csv("/api/gradient-area-data.csv", function (error, data) {
   });
 
   function removePopovers () {
-    /*$('.popover').each(function() {
-      $(this).remove();
-    }); */
+    $('#area-tooltip').remove();
   }
 
   function showPopover (d) {
-    /*$(this).popover({
-      title: d.name,
-      placement: 'auto top',
-      container: 'body',
-      trigger: 'manual',
-      html : true,
-      content: function() { 
-        return "Quarter: " + d.label + 
-               "<br/>Rounds: " + d3.format(",")(d.value ? d.value: d.y1 - d.y0); }
-    });
-    $(this).popover('show')*/
+    var e = [];
+    e.clientX = d3.mouse(this)[0];
+    e.clientY = d3.mouse(this)[1];
+    var area_tooltip = '<div id="area-tooltip" style="left: ' + (e.clientX + 25) + 'px; top: ' + (e.clientY - 50) + 'px;">';
+        area_tooltip +=    '<span><strong>' + seriesLabels[d.name] + '</strong></br>' + d.value + '</span>';
+        area_tooltip += '</div>';
+
+    $('#chart-gradient').append(area_tooltip);
   }
 
 });

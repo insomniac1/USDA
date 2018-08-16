@@ -225,6 +225,7 @@
   opacity: .5;
 }
 
+
 /* START Line Area Chart CSS */
 #chart-gradient{
   position: relative;
@@ -251,13 +252,14 @@
 .gradient-wrapper{
   min-height: 500px;
 }
-#chart-gradient .point-paths path {
-  /*
-  fill: #eee;
-  stroke: #aaa;
-  */
-  stroke-opacity: 0;
-  fill-opacity: 0;
+#area-tooltip {
+    position: absolute;
+    display: inline-block;
+    top: 0;
+    padding: 10px;
+    border: 1px solid #E1E1E1;
+    background-color: #fff;
+    min-width: 150px;
 }
 
 
