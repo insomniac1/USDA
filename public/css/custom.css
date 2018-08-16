@@ -313,3 +313,76 @@
 #curve-line-sp .y.axis .domain{
   display: none;
 }
+
+
+
+/* MAP */
+
+#map-counties{
+  position: relative;
+}
+.map-counties-sp {
+    position: relative;
+    /*min-height: 700px;*/
+}
+.map-counties-sp .tooltip {
+    background: #fff;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    margin: 12px;
+    padding: 2px;
+    pointer-events: none;
+    position: absolute;
+    visibility: hidden;
+}
+.map-counties-sp .tooltip .container {
+    border: 1px solid #666;
+    padding: 8px 16px;
+}
+#tooltip-state {
+    font-weight: bold;
+    font-size: 10px;
+    line-height: 2em;
+    text-transform: uppercase;
+}
+#tooltip-content {
+    font-size: 14px;
+    text-transform: lowercase;
+}
+.map-counties-sp .county {
+    fill: #fff;
+    stroke: #fcfcfc;
+    /* stroke: #fcfcfc; */
+    stroke-width: 0.5;
+}
+.map-counties-sp .state {
+    fill: #fff;
+    fill-opacity: 0.0;
+    stroke: #eee;
+    stroke-width: 1;
+    cursor: pointer;
+}
+.map-counties-sp .highlight-inner {
+  fill: none;
+  pointer-events: none;
+  stroke: #F7AB4E;
+  /*stroke: #074d8a;*/
+  /*stroke: #064780;*/
+  /*stroke: #0ac775;*/
+  /*opacity: 0.9;*/
+  stroke-width: 1;
+  stroke-linejoin: round;
+/*  stroke: #074d8a;
+  stroke-width: 1.5;*/
+}
+.map-counties-sp .highlight-outer {
+  fill: none;
+  pointer-events: none;
+  stroke: #fff;
+  stroke-width: 4.5;
+  /*stroke: #074d8a;*/
+  /*stroke-width: 1.5;*/
+  stroke-linejoin: round;
+}
+.map-counties-sp .state{
+  /*fill-opacity: 1;*/
+}
