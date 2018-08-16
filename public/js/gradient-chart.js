@@ -1,12 +1,15 @@
 var area_ContainerID = "#chart-gradient";
 var area_chart_sp = $('.gradient-wrapper');
-var margin = {top: 0, right: 0, bottom: 30, left: 0},
+var margin = {top: 0, right: 15, bottom: 30, left: 15},
     width_area  = area_chart_sp.width() - margin.left - margin.right,
     height_area = area_chart_sp.height()  - margin.top  - margin.bottom;
 
 // Add scale for x
 var x_area = d3.scale.ordinal()
-  .rangeRoundBands([0, width_area], .1);
+  .rangeRoundBands([0, width_area], -1.1);
+
+var x_ticks = d3.scale.ordinal()
+  .rangeRoundBands([0, width_area], -0.7);
 
 // Add scale for y
 var y_area = d3.scale.linear()
@@ -15,7 +18,9 @@ var y_area = d3.scale.linear()
 // Add x axis
 var xAxis_area = d3.svg.axis()
   .scale(x_area)
+  // .scale(x_ticks)
   .orient("bottom")
+  .tickPadding(12)
   .tickSize(1)
   .tickFormat(function (d) {
     return d;
@@ -44,11 +49,28 @@ var color_area = d3.scale.ordinal()
 
 // Add SVG for the area chart to the relevant container (/views/pages/landing.js)
 var svg_area = d3.select(area_ContainerID).append("svg")
-    .attr("width",  width_area  + margin.left + margin.right)
+    .attr("width",  width_area + margin.left + margin.right)
     .attr("height", height_area + margin.top  + margin.bottom)
   .append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
+/*
+** Output for 'd': {name: "yield", values: Array(..)}; {name: "temperature", values: Array(..)}; {name: "vegetation", values: Array(..)}
+** 'd.values': values:Array(..)
+**               0:{name: "yield", year: 2000, value: 100, y0: 0, y: 100}
+**               1:{name: "yield", year: 2001, value: 847, y0: 0, y: 847}..
+ */
+var stack = d3.layout.stack()
+  .values(function (d) { return d.values; })
+  .x(function (d) { return x_area(d.year) + x_area.rangeBand() / 2; })
+  .y(function (d) { return d.value; });
+
+// console.log(x_area.rangeBand([0, width_area]));
+
+var area = d3.svg.area()
+  .x(function (d) { return x_area(d.year) + x_area.rangeBand() / 2; })
+  .y0(function (d) { return y_area(0); })
+  .y1(function (d) { return y_area(d.y); })
 
 /* Reading data from the csv
 ** Output for 'data':
@@ -57,6 +79,8 @@ var svg_area = d3.select(area_ContainerID).append("svg")
 **    1:{year: "2001", yield: "847", temperature: "388", vegetation: "100"} ..
  */
 var area_chart = d3.csv("/api/gradient-area-data.csv", function (error, data) {
+  margin = {top: 0, right: 0, bottom: 30, left: 0};
+
   var labelVar = 'year';
 
   /*
@@ -95,19 +119,8 @@ var area_chart = d3.csv("/api/gradient-area-data.csv", function (error, data) {
   ** Output for 'x_area.domain()': (..) [2000, 2001, 2002, 2003, ..]
    */
   x_area.domain(data.map(function (d) { return parseInt(d[labelVar]); }));
-
-
-  /*
-  ** Output for 'd': {name: "yield", values: Array(..)}; {name: "temperature", values: Array(..)}; {name: "vegetation", values: Array(..)}
-  ** 'd.values': values:Array(..)
-  **               0:{name: "yield", year: 2000, value: 100, y0: 0, y: 100}
-  **               1:{name: "yield", year: 2001, value: 847, y0: 0, y: 847}..
-   */
-  var stack = d3.layout.stack()
-    .values(function (d) { return d.values; })
-    .x(function (d) { return x_area(d.year); })
-    .y(function (d) { return d.value; });
-
+  // x_ticks.domain(data.map(function (d) { return parseInt(d[labelVar]); }));
+    
   stack(seriesArr);
 
   // Define max value in order to scale y axis
@@ -125,12 +138,6 @@ var area_chart = d3.csv("/api/gradient-area-data.csv", function (error, data) {
     .attr("class", "x axis")
     .attr("transform", "translate(0," + height_area + ")")
     .call(xAxis_area)
-
-  var area = d3.svg.area()
-    // .interpolate("curveLinear") // i think it's unnecessary
-    .x(function (d) { return x_area(d.year); })
-    .y0(function (d) { return y_area(0); })
-    .y1(function (d) { return y_area(d.y); })
 
   //Add relevant classes to each series data
   var selection = svg_area.selectAll(".series")
@@ -173,7 +180,8 @@ var area_chart = d3.csv("/api/gradient-area-data.csv", function (error, data) {
       .append("path")
       .data([seriesArr[i].values])
       .attr("class", "border-line line" + i)
-      .attr("d", area_border);
+      .attr("d", area_border)
+      .attr("transform", "translate(" + x_area.rangeBand() / 2 + ", 0)")
   });
 
   function removePopovers () {
