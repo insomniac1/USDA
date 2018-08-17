@@ -3739,6 +3739,17 @@ input[type="button"].btn-block {
   border-bottom-left-radius: 0;
 }
 
+div#myInputautocomplete-list {
+  position: absolute;
+  top: 3em;
+  background-color: white;
+  z-index: 100;
+  padding: 20px;
+  width: 100%;
+  max-height: 500px;
+  overflow: scroll;
+}
+
 .custom-control {
   position: relative;
   display: block;

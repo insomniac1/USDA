@@ -98,7 +98,7 @@
   }
 
   function initMap() {
-    
+
     var vizDiv = d3.select(".map-counties-sp")[0][0];
     // console.log($(vizDiv));
     tooltipOffset = [vizDiv.offsetLeft, vizDiv.offsetTop];
@@ -180,7 +180,7 @@
           }
         })
         .on("mouseover", function(d) {
-          
+
           showTooltip(d.id);
 
           if ((summary) && (summary.length > 0) && (summary.state.length > 0) && !summary.state.hasOwnProperty(d.id)) {
@@ -301,11 +301,11 @@
   }
 
   function zoomed(state, type = null) {
-    
+
     if(type != 'select'){
       d3.event.stopPropagation()
     }
-   
+
 
     // TO-DO: If no data, return.
 
@@ -333,7 +333,7 @@
       .duration(500)
       .attr('data-zoom', true)
       .attr("transform", "translate(" + translate + ")scale(" + scale + ")");
-    
+
 
     highlight.selectAll('*').remove();
 
@@ -556,7 +556,7 @@
 
       .style("left", d3.event.screenX - tooltipOffset[0]*4 + "px")
       .style("top", d3.event.screenY - tooltipOffset[1]*4 + "px");
-    
+
   }
 
   $(function () {

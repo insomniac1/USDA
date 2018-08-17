@@ -1,148 +1,149 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <title>Corn Production in the U.S.</title>
-    <% include ../partials/head %>
-  </head>
 
-  <body class="page page--landing">
-    <main>
-      <div class="section section--corn-production">
-        <div class="section--header d-flex align-items-center">
-          <div class="container">
-            <div class="row pt-4 pb-15 py-md-0">
-              <div class="col-lg-6 col-md-8 col-sm-10">
-                <div class="h2 mb-3">Corn Production in the U.S.</div>
-                <p>Every year, the United States produces <strong>XXX</strong> tons of corn on average.<br>Explore the map below to find the most productive states.</p>
-              </div>
+<head>
+  <title>Corn Production in the U.S.</title>
+  <% include ../partials/head %>
+</head>
+
+<body class="page page--landing">
+  <main>
+    <div class="section section--corn-production">
+      <div class="section--header d-flex align-items-center">
+        <div class="container">
+          <div class="row pt-4 pb-15 py-md-0">
+            <div class="col-lg-6 col-md-8 col-sm-10">
+              <div class="h2 mb-3">Corn Production in the U.S.</div>
+              <p>Every year, the United States produces <strong>XXX</strong> tons of corn on average.<br>Explore the map below to find the most productive states.</p>
             </div>
           </div>
         </div>
+      </div>
 
-        <div class="section--content">
-          <div class="bg-light">
-            <div class="container">
-              <div class="row justify-content-center pt-md-6 pt-4">
-                <div class="col-lg-6 col-md-8 col-12 mb-2">
-                  <div class="mx-2 mx-md-0">
-                    <div class="input-group input-group-custom">
-                      <input class="form-control form-custom" type="text" placeholder="Search for a county…">
+      <div class="section--content">
+        <div class="bg-light">
+          <div class="container">
+            <div class="row justify-content-center pt-md-6 pt-4">
+              <div class="col-lg-6 col-md-8 col-12 mb-2">
+                <div class="mx-2 mx-md-0">
+                  <div class="input-group input-group-custom autocomplete">
+                    <input id="myInput" class="form-control form-custom" type="text" placeholder="Search for a county…">
 
-                      <div class="input-group-append">
-                        <button type="button" class="btn btn-link pr-0"><i class="fas fa-search"></i></button>
-                      </div>
+                    <div class="input-group-append">
+                      <button type="button" class="btn btn-link pr-0"><i class="fas fa-search"></i></button>
                     </div>
                   </div>
                 </div>
+              </div>
 
-                <div class="col-lg-8 col-md-10 col-12 text-center mb-2 mb-md-3 text-muted text-ex">
-                  Not sure where to start? <span class="text-primary">Try Butler County, Iowa</span>
+              <div class="col-lg-8 col-md-10 col-12 text-center mb-2 mb-md-3 text-muted text-ex">
+                Not sure where to start? <span class="text-primary">Try Butler County, Iowa</span>
+              </div>
+
+              <div class="col-lg-8 col-md-10 col-12 text-center mb-3">
+                <div class="d-inline-block mb-2 mb-md-0 mr-1 mr-md-0">
+                  <button type="button" class="btn btn-sm btn-primary map-tab-btn">Yield</button>
                 </div>
 
-                <div class="col-lg-8 col-md-10 col-12 text-center mb-3">
-                  <div class="d-inline-block mb-2 mb-md-0 mr-1 mr-md-0">
-                    <button type="button" class="btn btn-sm btn-primary map-tab-btn">Yield</button>
-                  </div>
-
-                  <div class="d-inline-block mb-2 mb-md-0 ml-1 ml-md-0">
-                    <button type="button" class="btn btn-sm btn-outline-primary map-tab-btn">Acres Harvested</button>
-                  </div>
-
-                  <div class="d-md-inline-block">
-                    <button type="button" class="btn btn-sm btn-outline-warning map-tab-btn">Production</button>
-                  </div>
+                <div class="d-inline-block mb-2 mb-md-0 ml-1 ml-md-0">
+                  <button type="button" class="btn btn-sm btn-outline-primary map-tab-btn">Acres Harvested</button>
                 </div>
 
-                <div class="col-12 pb-4">
-                    <select id="select_county">
+                <div class="d-md-inline-block">
+                  <button type="button" class="btn btn-sm btn-outline-warning map-tab-btn">Production</button>
+                </div>
+              </div>
+
+              <div class="col-12 pb-4">
+                <select id="select_county">
                         <option value="35">35</option>
                         <option value="48">48</option>
                     </select>
-                    <div class="map-counties-sp">
-                      <div id="map-counties"></div>
-                      <div class="tooltip">
-                        <div class="container">
-                          <div id="tooltip-state"></div>
-                          <div id="tooltip-content"></div>
-                        </div>
-                      </div>
+                <div class="map-counties-sp">
+                  <div id="map-counties"></div>
+                  <div class="tooltip">
+                    <div class="container">
+                      <div id="tooltip-state"></div>
+                      <div id="tooltip-content"></div>
                     </div>
-                </div>
-              </div>
-            </div>
-            
-            <div class="country--pallet text-center pt-2 pt-md-0 pb-4">
-              <img src="/img/pallet.svg" alt="Pallet">
-            </div>
-          </div>
-
-          <div class="bg-white pt-md-5 pt-2 pb-md-3 pb-6">
-            <div class="container">
-
-              <div class="chart">
-                <div class="scatter-chart-group">
-                  <div class="zoom-wrapper">
-                    <h5 class="mb-3">Use slider to change the data range</h5>
-                    <div id="zoom-bar-chart"></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="section section--country">
-        <div class="section--header d-flex align-items-center">
-          <div class="container">
-            <div class="row">
-              <div class="col-lg-7 col-md-9 col-sm-11 py-4">
-                <div class="h4 mb-2">How well is <span class="text-primary">selected county</span> equipped for corn production?</div>
-                <p class="mb-0">Blurb…Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed<br>do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                <div class="zoom-wrapper"></div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="section--content">
-          <div class="container">
-            <div class="row mb-4 mb-md-13">
-              <% include ../partials/temp-vegetation %>
-            </div>
-
-            <div class="row mb-6 mb-md-13">
-              <% include ../partials/soil-chemistry %>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="section section--range-slider">
-        <div class="section--content">
-          <div class="bg-green-dark text-white pt-4 pb-6 py-md-10">
-            <div class="container">
-              <div class="row mb-md-7">
-               <% include ../partials/predicted-yield %>
-              </div>
-
-              <div class="row justify-content-between">
-                <div class="col-lg-8 col-md-10 col-12 mb-15px mb-md-3">
-                  <p class="mb-0">Y/N…Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit ameta</p>
-                </div>
-
-                <div class="col-lg-3 col-md-2 col-12">
-                  <div class="text-ex text-tlight">
-                    Disclaimer Blurb…Lorem ipsum dolor sit amet, consectetur adipisicing elit, eiusmod tempor incididunt ut labore et dolore magna aliqua.
                   </div>
                 </div>
               </div>
             </div>
           </div>
 
-          <div class="bg-white pt-md-7 pt-6 pb-md-13">
-            <div class="container">
-              <h4 class="mb-2">What is optimal for corn?</h5>
+          <div class="country--pallet text-center pt-2 pt-md-0 pb-4">
+            <img src="/img/pallet.svg" alt="Pallet">
+          </div>
+        </div>
+
+        <div class="bg-white pt-md-5 pt-2 pb-md-3 pb-6">
+          <div class="container">
+
+            <div class="chart">
+              <div class="scatter-chart-group">
+                <div class="zoom-wrapper">
+                  <h5 class="mb-3">Use slider to change the data range</h5>
+                  <div id="zoom-bar-chart"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section section--country">
+      <div class="section--header d-flex align-items-center">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-7 col-md-9 col-sm-11 py-4">
+              <div class="h4 mb-2">How well is <span class="text-primary">selected county</span> equipped for corn production?</div>
+              <p class="mb-0">Blurb…Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed<br>do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+              <div class="zoom-wrapper"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section--content">
+        <div class="container">
+          <div class="row mb-4 mb-md-13">
+            <% include ../partials/temp-vegetation %>
+          </div>
+
+          <div class="row mb-6 mb-md-13">
+            <% include ../partials/soil-chemistry %>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section section--range-slider">
+      <div class="section--content">
+        <div class="bg-green-dark text-white pt-4 pb-6 py-md-10">
+          <div class="container">
+            <div class="row mb-md-7">
+              <% include ../partials/predicted-yield %>
+            </div>
+
+            <div class="row justify-content-between">
+              <div class="col-lg-8 col-md-10 col-12 mb-15px mb-md-3">
+                <p class="mb-0">Y/N…Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit ameta</p>
+              </div>
+
+              <div class="col-lg-3 col-md-2 col-12">
+                <div class="text-ex text-tlight">
+                  Disclaimer Blurb…Lorem ipsum dolor sit amet, consectetur adipisicing elit, eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-white pt-md-7 pt-6 pb-md-13">
+          <div class="container">
+            <h4 class="mb-2">What is optimal for corn?</h5>
 
               <p class="mb-4 mb-md-9">Use the controls below to create the perfect plot of land for corn production.</p>
 
