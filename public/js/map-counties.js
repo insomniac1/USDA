@@ -1,15 +1,11 @@
 (function() {
 
-
   var tooltip = d3.select(".tooltip"),
-      tooltipState = tooltip.select("#tooltip-state"),
-      tooltipContent = tooltip.select("#tooltip-content");
+      tooltipState = tooltip.select("#tooltip-state");
   var tooltipOffset = [0][0];
   var loading;
-  var listview, listviewTable;
   var legendIcon;
   var labels = {};
-
 
   // Elements
   var map_counties_sp = $('.map-counties-sp');
@@ -22,13 +18,10 @@
 
   var radius = d3.scale.sqrt()
     .range([2, 40]);
+
   var color_map = d3.scale.threshold()
-      .range(["#FBF0DE", "#F7E2BC", "#F2CC89", "#E9BF77", "#DBAB58", "#A5E7D1", "#8EDAC1", "#64C2A2", "#3FA885", "#20906A"]);
-
-
-
-
-
+    .range(["#FBF0DE", "#F7E2BC", "#F2CC89", "#E9BF77", "#DBAB58", "#A5E7D1", "#8EDAC1", "#64C2A2", "#3FA885", "#20906A"]);
+    // .range(["#20906A", "#FBF0DE", "#F7E2BC", "#F2CC89", "#E9BF77", "#DBAB58", "#A5E7D1", "#8EDAC1", "#64C2A2", "#3FA885"]);
 
   var thousandComma = d3.format('0,000');
   var threePrecision = d3.format('3g');
@@ -38,59 +31,19 @@
   var isMapReady = false; // Don't bind any data unless the map data is loaded.
   var isDataReady = false;
 
-  var dataSelection = {
-    // default
-    commodity: "barley",
-    stat: "planted"
-  };
   var uiState = {
     year: undefined,
     zoom: d3.select(null),
     mode: "NATIONAL",
     state: undefined,
     county: undefined,
-    listview: false
   };
 
   var summary;
 
   function initUI() {
-
-    var statIcons = d3.selectAll(".icon.stat")
-      .on("click", function(d) {
-        var elem = d3.select(this);
-        d3.selectAll(".icon.stat")
-          .classed("active", false);
-        elem.classed("active", true);
-        dataSelection.stat = elem.attr("id");
-        updateData();
-      });
-
-    var modeIcon = d3.select(".icon.mode")
-      .on("click", function(d) {
-        $('.icon.mode').tooltip('hide'); // qwe
-        var elem = d3.select(this);
-        if (elem.classed("icon-list-view")) {
-          elem.classed("icon-list-view", false)
-            .classed("icon-map-view", true)
-            .attr("data-original-title", "Map View");
-          // showList();
-        } else {
-          elem.classed("icon-list-view", true)
-            .classed("icon-map-view", false)
-            .attr("data-original-title", "List View");
-          // hideList();
-        }
-        $('.icon.mode').tooltip('show'); // qwe
-      })
-
-    listview = d3.select(".listview");
-    listviewTable = listview.select(".table-div table");
-
-    labels.commodity = d3.select("#label-commodity");
-    labels.stat = d3.select("#label-stat");
-    labels.number = d3.select("#label-number");
-    labels.unit = d3.select("#label-unit");
+    labels.number = d3.select("#label-number"); // to remove
+    labels.unit = d3.select("#label-unit"); // to remove
     labels.region = d3.select("#label-region");
     labels.year = d3.select("#label-year");
 
@@ -100,14 +53,15 @@
   function initMap() {
 
     var vizDiv = d3.select(".map-counties-sp")[0][0];
-    // console.log($(vizDiv));
+
     tooltipOffset = [vizDiv.offsetLeft, vizDiv.offsetTop];
 
     var width_map_ = width_map - mapMargin.left - mapMargin.right,
         height_map_ = height_map - mapMargin.top - mapMargin.bottom;
 
+    // add svg to our template; specify general map parameters
     var mapDiv = d3.select("#map-counties");
-    svg = mapDiv.append("svg")
+    svg_map = mapDiv.append("svg")
       .attr("class", "map-background")
       .attr("width", width_map)
       .attr("height", height_map)
@@ -115,13 +69,16 @@
         .append("g")
       .attr("transform", "translate(" + mapMargin.left + "," + mapMargin.top + ")");
 
-    counties = svg.append("g")
+    // add class for each county
+    counties = svg_map.append("g")
       .attr("class", "counties");
 
-    states = svg.append("g")
+    // add class for each state
+    states = svg_map.append("g")
       .attr("class", "states");
 
-    highlight = svg.append("g")
+    // add state contour
+    highlight = svg_map.append("g")
       .attr("class", "highlight");
 
     projection = d3.geo.albersUsa()
@@ -131,8 +88,9 @@
     path = d3.geo.path()
       .projection(projection);
 
-    d3.json("/js/us.json", function(err2, us) {
-      if (err2) throw err2;
+    // use json data
+    d3.json("/js/us.json", function(error, us) {
+      if (error) throw error;
 
       counties.selectAll(".county")
         .data(topojson.feature(us, us.objects.counties).features)
@@ -164,6 +122,7 @@
             .attr("class", "highlight-inner")
             .attr("d", path)
             .style("stroke-width", 1 / uiState.zoomScale + "px");
+
           changeCounty(d.id);
         });
 
@@ -171,16 +130,19 @@
         .data(topojson.feature(us, us.objects.states).features)
         .enter()
           .append("path")
-        .attr("class", function(d) { return "state state-id-" +d.id;})
+        .attr("class", function(d) { return "state state-id-" + d.id; })
         .attr("d", path)
         .on("mouseout", function() {
           highlight.selectAll('*').remove();
           if (uiState.mode === 'NATIONAL') {
             changeState(undefined);
           }
+
+          destroyTooltip();
         })
         .on("mouseover", function(d) {
 
+          // show appropriate tooltip on state hover
           showTooltip(d.id);
 
           if ((summary) && (summary.length > 0) && (summary.state.length > 0) && !summary.state.hasOwnProperty(d.id)) {
@@ -274,7 +236,7 @@
     uiState.zoom = d3.select(null);
     highlight.selectAll('*').remove();
 
-    svg.transition()
+    svg_map.transition()
       .duration(500)
       .ease("exp-out")
       .attr('data-zoom', false)
@@ -290,14 +252,6 @@
 
     uiState.mode = 'NATIONAL';
     changeState(undefined);
-
-    if (uiState.listview) {
-      d3.select(".icon.mode")
-        .classed("icon-list-view", true)
-        .classed("icon-map-view", false)
-        .attr("data-original-title", "List View");
-      // hideList();
-    }
   }
 
   function zoomed(state, type = null) {
@@ -329,7 +283,7 @@
 
     uiState.zoomScale = scale;
 
-    svg.transition()
+    svg_map.transition()
       .duration(500)
       .attr('data-zoom', true)
       .attr("transform", "translate(" + translate + ")scale(" + scale + ")");
@@ -376,7 +330,7 @@
     } else {
       labels.region.html(summary.state[stateID].name);
     }
-    updateNumberLabel();
+    updateStateLabel(stateID);
   }
 
   function changeYear(year) {
@@ -385,12 +339,8 @@
     updateMap();
     updateTimeseries(); // TO-DO: Consider removing this.
 
-    if (uiState.listview) {
-      // updateList();
-    }
-
     labels.year.html(year);
-    updateNumberLabel();
+    updateStateLabel();
   }
 
   function changeCounty(countyID) {
@@ -399,39 +349,17 @@
     // console.log(summary.state[uiState.state].name);
     // console.log(summary.county[countyID].name);
     if (uiState.county === undefined) {
-      labels.region.html(summary.state[uiState.state].name);
+      // labels.region.html(summary.state[uiState.state].name);
     } else {
-      labels.region.html(summary.county[countyID].name);
+      // labels.region.html(summary.county[countyID].name);
     }
-    updateNumberLabel()
+    updateStateLabel()
   }
 
-  function updateNumberLabel() {
-    var value;
-    if (uiState.mode == 'NATIONAL') {
-      if (uiState.state) {
-        value = summary.state[uiState.state].data[uiState.year];
-      } else {
-        value = summary.national.data[uiState.year];
-      }
-    } else if (uiState.mode == 'STATE') {
-      if (uiState.county) {
-        value = summary.county[uiState.county].data[uiState.year];
-      } else {
-        value = summary.state[uiState.state].data[uiState.year];
-      }
+  function updateStateLabel(stateID) {
+    if(stateID) { 
+      $('#tooltip-state').html(summary.state[stateID].name);
     }
-
-    if (value === undefined) {
-      labels.number.html("n/a");
-      labels.unit.html("");
-    } else {
-      labels.number.html(thousandComma(value));
-      labels.unit.html(summary.metadata.unit.toLowerCase());
-    }
-
-    $('#tooltip-state').html(summary.metadata.unit.toLowerCase());
-    $('#tooltip-content').html(thousandComma(value));
   }
 
   function updateData() {
@@ -466,10 +394,6 @@
         changeState(uiState.state);
       }
 
-      if (uiState.listview) {
-        // showList();
-      }
-
       if (uiState.year &&
           uiState.year <= summary.metadata.yearRange[1] &&
           uiState.year >= summary.metadata.yearRange[0]) {
@@ -482,7 +406,7 @@
 
       updateMap();
       updateTimeseries();
-      updateNumberLabel();
+      updateStateLabel();
 
       loading.classed("hidden_elem", true);
     });
@@ -545,23 +469,23 @@
     }
   }
 
-
+  function destroyTooltip() {
+    tooltip.style("opacity", 0);
+  }
   function showTooltip(d) {
     if (!isDataReady) return;
 
+    var coordinates = [0, 0];
+    coordinates = d3.mouse(d3.event.currentTarget);
+    var x_mouse = coordinates[0];
+    var y_mouse = coordinates[1];
+
     tooltip.style("visibility", "visible")
       .style("opacity", 1)
-      .style("position", "fixed")
-
-
-      .style("left", d3.event.screenX - tooltipOffset[0]*4 + "px")
-      .style("top", d3.event.screenY - tooltipOffset[1]*4 + "px");
-
+      .style("margin-top", "-50px")
+      .style("left", x_mouse - tooltipOffset[0] + "px")
+      .style("top", y_mouse + "px");
   }
-
-  $(function () {
-    $('[data-toggle="tooltip"]').tooltip() // qwe
-  })
 
   // zoomed(d);states.selectAll(".state")
   $('#select_county').on('change', function(){
@@ -576,7 +500,7 @@
       }
 
       setTimeout(function () {
-          var itm_county = svg.selectAll(".state-id-"+itm_id)
+          var itm_county = svg_map.selectAll(".state-id-"+itm_id)
             .style("fill", "red")
             .attr("data-id", function(d){
               zoomed(d, 'select');
@@ -588,6 +512,6 @@
 
   initUI();
   initMap();
-  window.setTimeout(updateData, 1500);
+  window.setTimeout(updateData, 500);
 
 })();

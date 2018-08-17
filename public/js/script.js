@@ -17,8 +17,6 @@ $(document).ready(function() {
   });
   $(slider_water).siblings('.fill').css('width', $(slider_water).val() * (100 / rangeMaxVal_water) + '%');
 
-  console.log($(slider_water).val());
-
   slider_water.oninput = function() {
     $(this).siblings('.count').text(this.value + ' mm').css({
       'left': this.value * (100 / rangeMaxVal_water) + '%',

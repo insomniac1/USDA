@@ -1,6 +1,4 @@
-
 /* START Circle Chart CSS */
-
 #chart-circle-wrapper{
   position: relative;
 }
@@ -180,13 +178,7 @@
   background-color: #fff;
 }
 
-
-
-
-
 /* START Bar Chart CSS */
-
-
 #zoom-bar-chart svg {
   font: 10px sans-serif;
 }
@@ -240,15 +232,6 @@
 #chart-gradient .x.axis .domain{
   fill: #777d7b;
 }
-
-/*.series-0 path.streamPath{
-    fill: url(#temperature-gradient-0) !important;
-    stroke-width: 0px;
-}
-.series-1 path.streamPath{
-    fill: url(#temperature-gradient-1) !important;
-    stroke-width: 0px;
-}*/
 .gradient-wrapper{
   min-height: 500px;
 }
@@ -262,12 +245,6 @@
     min-width: 150px;
 }
 
-
-
-
-
-
-
 /* START Bar Chart */ 
 
 #zoom-bar-chart .brush{
@@ -275,11 +252,7 @@
   opacity: 0.5;
 }
 
-
-
-
 /* START Curve Line */ 
-
 #curve-line-sp{
   min-height: 400px;
 }
@@ -315,89 +288,3 @@
 }
 
 
-
-/* MAP */
-
-#map-counties{
-  position: relative;
-}
-.map-counties-sp {
-    position: relative;
-    /*min-height: 700px;*/
-}
-.map-counties-sp .tooltip {
-    background: #fff;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.3);
-    margin: 12px;
-    padding: 2px;
-    pointer-events: none;
-    position: absolute;
-    visibility: hidden;
-}
-.map-counties-sp .tooltip .container {
-    border: 1px solid #666;
-    padding: 8px 16px;
-}
-#tooltip-state {
-    font-weight: bold;
-    font-size: 10px;
-    line-height: 2em;
-    text-transform: uppercase;
-}
-#tooltip-content {
-    font-size: 14px;
-    text-transform: lowercase;
-}
-.map-counties-sp .county {
-    fill: #fff;
-    stroke: #fcfcfc;
-    /* stroke: #fcfcfc; */
-    stroke-width: 0.5;
-}
-.map-counties-sp .state {
-    fill: #fff;
-    fill-opacity: 0.0;
-    stroke: #eee;
-    stroke-width: 1;
-    cursor: pointer;
-}
-.map-counties-sp .highlight-inner {
-  fill: none;
-  pointer-events: none;
-  stroke: #F7AB4E;
-  /*stroke: #074d8a;*/
-  /*stroke: #064780;*/
-  /*stroke: #0ac775;*/
-  /*opacity: 0.9;*/
-  stroke-width: 1;
-  stroke-linejoin: round;
-/*  stroke: #074d8a;
-  stroke-width: 1.5;*/
-}
-.map-counties-sp .highlight-outer {
-  fill: none;
-  pointer-events: none;
-  stroke: #fff;
-  stroke-width: 4.5;
-  /*stroke: #074d8a;*/
-  /*stroke-width: 1.5;*/
-  stroke-linejoin: round;
-}
-.map-counties-sp .state{
-  /*fill-opacity: 1;*/
-}
-
-.section--range-sliders .slider-container .range-custom{
-  background: #f5f5f5;
-  border-radius: 6px;
-}
-.section--range-sliders .fill{
-  position: inherit;
-  z-index: inherit;
-}
-.section--range-sliders input[type="range"]{
-  position: absolute;
-  top: 0;
-  cursor: pointer;
-  background: transparent;
-}
