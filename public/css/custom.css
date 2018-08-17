@@ -386,3 +386,18 @@
 .map-counties-sp .state{
   /*fill-opacity: 1;*/
 }
+
+.section--range-sliders .slider-container .range-custom{
+  background: #f5f5f5;
+  border-radius: 6px;
+}
+.section--range-sliders .fill{
+  position: inherit;
+  z-index: inherit;
+}
+.section--range-sliders input[type="range"]{
+  position: absolute;
+  top: 0;
+  cursor: pointer;
+  background: transparent;
+}
