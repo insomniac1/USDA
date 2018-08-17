@@ -475,43 +475,43 @@
   function showTooltip(d) {
     if (!isDataReady) return;
 
-    var coordinates = [0, 0];
-    coordinates = d3.mouse(d3.event.currentTarget);
-    var x_mouse = coordinates[0];
-    var y_mouse = coordinates[1];
-
     tooltip.style("visibility", "visible")
       .style("opacity", 1)
-      .style("margin-top", "-50px")
-      .style("left", x_mouse - tooltipOffset[0] + "px")
-      .style("top", y_mouse + "px");
+      .style("position", "fixed")
+
+
+      .style("left", d3.event.screenX - tooltipOffset[0]*4 + "px")
+      .style("top", d3.event.screenY - tooltipOffset[1]*4 + "px");
+
   }
 
-  // zoomed(d);states.selectAll(".state")
-  $('#select_county').on('change', function(){
-      var itm = $(this),
-          itm_id = itm.val();
-      resetZoom();
+  $(function () {
+    $('[data-toggle="tooltip"]').tooltip() // qwe
+  })
 
-      var first_g = $('[data-zoom="true"]');
-      var zoom_delay = 600;
-      if(first_g.length > 0){
-        zoom_delay = 1000;
-      }
+  $("#searchCounty").on("select2:selecting", function(e) { 
+    var state_id = $(this).val();
+    resetZoom();
 
-      setTimeout(function () {
-          var itm_county = svg_map.selectAll(".state-id-"+itm_id)
-            .style("fill", "red")
-            .attr("data-id", function(d){
-              zoomed(d, 'select');
-              return d.id;
-            });
-      }, zoom_delay);
+    var first_g = $('[data-zoom="true"]');
+    var zoom_delay = 600;
+    if(first_g.length > 0){
+    zoom_delay = 1000;
+    }
 
+    setTimeout(function () {
+    var itm_county = svg_map.selectAll(".state-id-"+state_id)
+      .style("fill", "red")
+      .attr("data-id", function(d){
+        zoomed(d, 'select');
+        return d.id;
+      });
+    }, zoom_delay);
+    
   });
 
   initUI();
   initMap();
-  window.setTimeout(updateData, 500);
+  window.setTimeout(updateData, 1500);
 
 })();

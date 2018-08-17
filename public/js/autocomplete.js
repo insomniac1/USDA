@@ -1,3 +1,22 @@
+// Extend Select2: Added placeholder to Select2 input
+
+(function($) {
+    var Defaults = $.fn.select2.amd.require('select2/defaults');
+    $.extend(Defaults.defaults, {
+        searchInputPlaceholder: ''
+    });
+    var SearchDropdown = $.fn.select2.amd.require('select2/dropdown/search');
+    var _renderSearchDropdown = SearchDropdown.prototype.render;
+    SearchDropdown.prototype.render = function(decorated) {
+        // invoke parent method
+        var $rendered = _renderSearchDropdown.apply(this, Array.prototype.slice.apply(arguments));
+        this.$search.attr('placeholder', this.options.get('searchInputPlaceholder'));
+        return $rendered;
+    };
+})(window.jQuery);
+
+
+
 //Autofill function
 const county_state = [];
 
@@ -22,79 +41,19 @@ const countyNames = countyKeys.forEach((key) => {
   county_state.push(dataObj);
 });
 
-function autocomplete(inp, arr) {
-  var currentFocus;
-  inp.addEventListener("input", function(e) {
-    var a, b, i, val = this.value;
-    closeAllLists();
-    if (!val) {
-      return false;
-    }
-    currentFocus = -1;
-    a = document.createElement("DIV");
-    a.setAttribute("id", this.id + "autocomplete-list");
-    a.setAttribute("class", "autocomplete-items");
-    this.parentNode.appendChild(a);
-    for (i = 0; i < arr.length; i++) {
-
-      if (arr[i]['name'].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
-        b = document.createElement("DIV");
-        b.innerHTML = "<strong>" + arr[i]['name'].substr(0, val.length) + "</strong>";
-        b.innerHTML += arr[i]['name'].substr(val.length);
-        b.innerHTML += `<input type='hidden' value='${arr[i]['name']}'`;
-        b.setAttribute('data-state', arr[i]['state']);
-        b.setAttribute('data-county', arr[i]['originalKey']);
-        b.addEventListener("click", function(e) {
-          closeAllLists();
-        });
-        a.appendChild(b);
-      }
-    }
-  });
-  inp.addEventListener("keydown", function(e) {
-    var x = document.getElementById(this.id + "autocomplete-list");
-    if (x) x = x.getElementsByTagName("div");
-    if (e.keyCode == 40) {
-      currentFocus++;
-      addActive(x);
-    } else if (e.keyCode == 38) {
-      currentFocus--;
-
-      addActive(x);
-    } else if (e.keyCode == 13) {
-      e.preventDefault();
-      if (currentFocus > -1) {
-        if (x) x[currentFocus].click();
-      }
-    }
-  });
-
-  function addActive(x) {
-    if (!x) return false;
-    removeActive(x);
-    if (currentFocus >= x.length) currentFocus = 0;
-    if (currentFocus < 0) currentFocus = (x.length - 1);
-    x[currentFocus].classList.add("autocomplete-active");
-  }
-
-  function removeActive(x) {
-    for (var i = 0; i < x.length; i++) {
-      x[i].classList.remove("autocomplete-active");
-    }
-  }
-
-  function closeAllLists(elmnt) {
-    var x = document.getElementsByClassName("autocomplete-items");
-    for (var i = 0; i < x.length; i++) {
-      if (elmnt != x[i] && elmnt != inp) {
-        x[i].parentNode.removeChild(x[i]);
-      }
-    }
-  }
-  document.addEventListener("click", function(e) {
-    closeAllLists(e.target);
-  });
+var searchCounty = $("#searchCounty");
+var searchOptions = [];
+for (i = 0; i < county_state.length; i++) {
+    searchOptions.push({
+      id: county_state[i].state, 
+      text: county_state[i].name,
+      'data-originalKey': 1
+    });
 }
 
-
-autocomplete(document.getElementById("myInput"), county_state);
+searchCounty.select2({
+  placeholder: "Search for a county…",
+  searchInputPlaceholder: 'Search for a county…',
+  width: '100%',
+  data: searchOptions
+});
