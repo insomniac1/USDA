@@ -64,12 +64,92 @@ app.get('/api/bar-data.json', (request, response) => {
 });
 
 app.get('/api/data', (request, response) => {
+
   csv()
     .fromFile(dataFilePath)
     .then((data) => {
+
       //sends csv file as array of county objects
-      response.send(data);
+      var output = [];
+
+      data.forEach(function(value, i) {
+
+        var existing_old = output.filter(function(v, i) {
+          return v.area_symbol == value.area_symbol;
+        });
+
+        if (!existing_old.length) {
+          var county_itm = {
+            area_symbol: value.area_symbol,
+            years: [],
+            soil_chemistry: []
+
+          };
+          output.push(county_itm);
+        }
+        
+        temperature_amount = 0;
+        for (k = 0; k < 21; k++) {
+          temperature_amount += parseFloat(value["Temperature_" + k]);
+        }
+        
+        vegetation_amount = 0;
+        for (k = 0; k < 21; k++) {
+          vegetation_amount += parseFloat(value["Vegetation_" + k]);
+        }
+
+        var year_itm = {
+          soil_quality : value.soil_quality,
+          carbon : value.carbon,
+          water : value.water,
+          state : value.State,
+          temperature : temperature_amount,
+          vegetation: vegetation_amount
+          /* cropquality: cropquality */ // TO DO
+        };
+        
+        var soil_chemistry_itm = {};
+        
+        if (value.Yield) {
+          if (value.water) {
+            soil_chemistry_itm = {
+              yield: value.Yield,
+              type: 'water',
+              value: value.water,
+              code: value.area_symbol
+            }
+          } else if (value.soil_quality) {
+            soil_chemistry_itm = {
+              yield: value.Yield,
+              type: 'soil_quality',
+              value: value.soil_quality,
+              code: value.area_symbol
+            }
+          } else if (value.carbon) {
+            soil_chemistry_itm = {
+              yield: value.Yield,
+              type: 'carbon',
+              value: value.carbon,
+              code: value.area_symbol
+            }    
+          }
+        }
+       
+        var existing_new = output.filter(function(v, i) {
+          return v.area_symbol == value.area_symbol;
+        });
+
+        var existingIndex = output.indexOf(existing_new[0]);
+
+        output[existingIndex].years.push({[value.Year]: year_itm});
+        output[existingIndex].soil_chemistry.push(soil_chemistry_itm);
+
+      });
+
+      response.send(output);
+
     });
+
 });
 
 app.post('/api/updateData', (request, response) => {
@@ -88,7 +168,7 @@ app.post('/api/updateData', (request, response) => {
 
   console.log(longitude, latitude, soilquality, soilcarbon, wateravailability, date, cropquality, vegetation, temperature);
   const options = {
-    pythonPath: '/usr/local/bin/python3',
+    pythonPath: '/usr/local/bin/python2.7',
     args: [`-x ${longitude}`,
       `-y ${latitude}`,
       `-q ${soilquality}`,
@@ -100,7 +180,7 @@ app.post('/api/updateData', (request, response) => {
       `-t`, `${temperature}`, `${temperature}`, `${temperature}`, `${temperature}`, `${temperature}`, `${temperature}`, `${temperature}`, `${temperature}`, `${temperature}`, `${temperature}`, `${temperature}`, `${temperature}`, `${temperature}`, `${temperature}`, `${temperature}`, `${temperature}`, `${temperature}`, `${temperature}`, `${temperature}`, `${temperature}`, `${temperature}`
     ]
   }
-//Yash said instead of -2 make it the same value the user decides
+  //Yash said instead of -2 make it the same value the user decides
   PythonShell.run(`${pickledStringPath}`, options, function(err, results) {
     if (err) {
       console.log(err);
