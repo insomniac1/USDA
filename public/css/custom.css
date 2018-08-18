@@ -177,7 +177,9 @@
   border: 1px solid #E1E1E1;
   background-color: #fff;
 }
-
+#circle-tooltip span{
+  display: block;
+}
 /* START Bar Chart CSS */
 #zoom-bar-chart svg {
   font: 10px sans-serif;
@@ -379,4 +381,7 @@
 .select2-search--dropdown{
   height: 35px;
   line-height: 31px;
+}
+.hidden{
+  display: none !important;
 }
