@@ -180,6 +180,7 @@
 #circle-tooltip span{
   display: block;
 }
+
 /* START Bar Chart CSS */
 #zoom-bar-chart svg {
   font: 10px sans-serif;
@@ -235,7 +236,7 @@
   fill: #777d7b;
 }
 .gradient-wrapper{
-  min-height: 500px;
+  min-height: 100px;
 }
 #area-tooltip {
     position: absolute;
@@ -246,6 +247,11 @@
     background-color: #fff;
     min-width: 150px;
 }
+#area-tooltip span{
+  display: block;
+}
+
+
 
 /* START Bar Chart */ 
 

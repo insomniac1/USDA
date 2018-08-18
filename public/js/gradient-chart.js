@@ -2,7 +2,13 @@ var area_ContainerID = "#chart-gradient";
 var area_chart_sp = $('.gradient-wrapper');
 var margin = {top: 0, right: 15, bottom: 30, left: 15},
     width_area  = area_chart_sp.width() - margin.left - margin.right,
-    height_area = area_chart_sp.height()  - margin.top  - margin.bottom;
+    height_area = width_area * 0.6  - margin.top  - margin.bottom;
+
+if(width_area <= 500){
+  mobile_area = true;
+} else {
+  mobile_area = false;
+}
 
 var seriesLabels = {
     'yield':'Corn Yield',
@@ -29,8 +35,17 @@ var xAxis_area = d3.svg.axis()
   .tickPadding(12)
   .tickSize(1)
   .tickFormat(function (d) {
-    return d;
+    if(mobile_area){
+      if(d % 3 == 0) return d;
+    } else {
+      return d;
+    }
+
   });
+  
+if(mobile_area){
+  xAxis_area.ticks(1000);
+}
 
 // Creating Y axis background lines
 var yAxis_border = d3.svg.axis()
@@ -51,7 +66,8 @@ var area_border = d3.svg.line()
 
 // Add colors according to the design
 var color_area = d3.scale.ordinal()
-  .range(["#44A484", "#76C6CC", "#E8B251"]);
+  .range(["#2D9280", "#5BABB1",  "#E5B156"])
+  .domain(["yield", "temperature", "vegetation"]);
 
 // Add SVG for the area chart to the relevant container (/views/pages/landing.js)
 var svg_area = d3.select(area_ContainerID).append("svg")
@@ -182,6 +198,8 @@ var area_chart = d3.csv("/api/gradient-area-data.csv", function (error, data) {
   ** Points for Tooltips 
   */
 
+
+  // Visible points
   var points = svg_area.selectAll(".seriesPoints")
     .data(seriesArr)
     .enter().append("g")
@@ -190,16 +208,36 @@ var area_chart = d3.csv("/api/gradient-area-data.csv", function (error, data) {
   points.selectAll(".point")
     .data(function (d) { return d.values; })
     .enter().append("circle")
-     .attr("class", "point")
+     .attr("class", function (d, i) { return "point point-itm-"  + d.name + '-' + i; })
      .attr("cx", function (d) { 
         return x_area(d.year) + x_area.rangeBand() / 2; 
       })
      .attr("cy", function (d) { return y_area(d.y); })
-     .attr("r", "10px")
+     .attr("r", "5px")
      .style("opacity", 0)
-     .style("fill",function (d) { return color(d.name); })
-     .on("mouseover", function (d) { showPopover.call(this, d); })
-     .on("mouseout",  function (d) { removePopovers(); })
+     .style("fill",function (d) { return color_area(d.name); });
+     
+
+
+  // Hidden points
+  var points_hover = svg_area.selectAll(".seriesPointsHover")
+    .data(seriesArr)
+    .enter().append("g")
+      .attr("class", "seriesPointsHover");
+
+  points_hover.selectAll(".point-hover")
+    .data(function (d) { return d.values; })
+    .enter().append("circle")
+     .attr("class", "point-hover")
+     .attr("cx", function (d) { 
+        return x_area(d.year) + x_area.rangeBand() / 2; 
+      })
+     .attr("cy", function (d) { return y_area(d.y); })
+     .attr("r", "25px")
+     .style("opacity", 0)
+     .style("fill",function (d) { return color_area(d.name); })
+     .on("mouseover", function (d, i) { showPopover.call(this, d, i); })
+     .on("mouseout",  function (d, i) { removePopovers.call(this, d, i); })
 
 
 
@@ -216,17 +254,21 @@ var area_chart = d3.csv("/api/gradient-area-data.csv", function (error, data) {
       .attr("transform", "translate(" + x_area.rangeBand() / 2 + ", 0)")
   });
 
-  function removePopovers () {
+  function removePopovers (d, i) {
+    $('.point-itm-' + d.name + '-' + i).css('opacity', 0);
     $('#area-tooltip').remove();
   }
 
-  function showPopover (d) {
+  function showPopover (d, i) {
     var e = [];
     e.clientX = d3.mouse(this)[0];
     e.clientY = d3.mouse(this)[1];
     var area_tooltip = '<div id="area-tooltip" style="left: ' + (e.clientX + 25) + 'px; top: ' + (e.clientY - 50) + 'px;">';
         area_tooltip +=    '<span><strong>' + seriesLabels[d.name] + '</strong></br>' + d.value + '</span>';
+        area_tooltip +=    '<span><strong>Year</strong></br>' + d.year + '</span>';
         area_tooltip += '</div>';
+    
+    $('.point-itm-' + d.name + '-' + i).css('opacity', 1);
 
     $('#chart-gradient').append(area_tooltip);
   }
