@@ -230,7 +230,8 @@ function drawTemperatureVegetation(data) {
     var points_hover = svg_area.selectAll(".seriesPointsHover")
       .data(seriesArr)
       .enter().append("g")
-        .attr("class", "seriesPointsHover");
+        .attr("class", function(d, i){ return "seriesPointsHover seriesPointsHover-"+i; });
+
 
     points_hover.selectAll(".point-hover")
       .data(function (d) { return d.values; })
@@ -312,23 +313,29 @@ $('.temp-veget-btn').on('click', function(){
 
       if(itm.hasClass('btn-icon--corn')) {
         d3.selectAll(".series-0").attr("visibility", "hidden");
+        $(".seriesPointsHover-0").css("display", "none");
       }
       if(itm.hasClass('btn-icon--temperature')) {
         d3.selectAll(".series-1").attr("visibility", "hidden");
+        $(".seriesPointsHover-1").css("display", "none");
       }
       if(itm.hasClass('btn-icon--vegetation')) {
         d3.selectAll(".series-2").attr("visibility", "hidden");
+        $(".seriesPointsHover-2").css("display", "none");
       }
     } else {
       itm.addClass('active');
       if(itm.hasClass('btn-icon--corn')) {
         d3.selectAll(".series-0").attr("visibility", "visible");
+        $(".seriesPointsHover-0").css("display", "initial");
       }
       if(itm.hasClass('btn-icon--temperature')) {
         d3.selectAll(".series-1").attr("visibility", "visible");
+        $(".seriesPointsHover-1").css("display", "initial");
       }
       if(itm.hasClass('btn-icon--vegetation')) {
         d3.selectAll(".series-2").attr("visibility", "visible");
+        $(".seriesPointsHover-2").css("display", "initial");
       }
     }
 });
