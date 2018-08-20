@@ -1,36 +1,35 @@
 function drawFinalScatterplot() {
-  ////////////////////////////////////////////////////////////
-  //////////////////////// Set-up ////////////////////////////
-  ////////////////////////////////////////////////////////////
-
+  /*
+  ** Set up
+   */
 
   var mobileScreen = document.getElementById("chart-circle-wrapper").offsetWidth < 550 ? true : false;
   var circle_chart_sp = $('#chart-circle-wrapper');
 
-  //Scatterplot
+  // Scatterplot
   var margin = {left: 30, top: 20, right: 20, bottom: 30},
     width_circle = circle_chart_sp.width() - margin.left - margin.right,
     height = width_circle*2/3;
 
   var svg_cicle = d3.select("#chart-circle").append("svg")
-        .attr("width", (width_circle + margin.left + margin.right))
-        .attr("height", (height + margin.top + margin.bottom));
-        
-  var wrapper = svg_cicle.append("g").attr("class", "chordWrapper")
-        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+    .attr("width", (width_circle + margin.left + margin.right))
+    .attr("height", (height + margin.top + margin.bottom));
 
-  //////////////////////////////////////////////////////
-  ///////////// Initialize Axes & Scales ///////////////
-  //////////////////////////////////////////////////////
+  var wrapper = svg_cicle.append("g").attr("class", "chordWrapper")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
+
+  /*
+  ** Initialize Axes & Scales 
+   */
 
   var opacityCircles = 0.7,
-    maxDistanceFromPoint = 50;
+      maxDistanceFromPoint = 50;
 
   var color_cicle = d3.scale.ordinal()
-            .range(["#2e8bc2", "#209481", "#B6334F"])
-            .domain(["water", "carbon", "soil_quality"]);
+    .range(["#2e8bc2", "#209481", "#B6334F"])
+    .domain(["water", "carbon", "soil_quality"]);
                  
-  //Set the new x axis range
+  // Set the new x axis range
   var xScale = d3.scale.log()
     .range([0, width_circle])
     .domain([
@@ -38,8 +37,7 @@ function drawFinalScatterplot() {
       d3.max(soil_chemistry_data, function (d) { return d.yield * 1.1}) 
     ]); 
 
-
-  //Set new x-axis
+  // Set new x-axis
   var xAxis = d3.svg.axis()
     .orient("bottom")
     .ticks(2)
@@ -51,15 +49,13 @@ function drawFinalScatterplot() {
     })  
     .scale(xScale); 
   
-  //Append the x-axis
+  // Append the x-axis
   wrapper.append("g")
     .attr("class", "x axis")
     .attr("transform", "translate(" + 0 + "," + height + ")")
     .call(xAxis);
 
-
-      
-  //Set the new y axis range
+  // Set the new y axis range
   var yScale = d3.scale.linear()
     .range([height,0])
     .domain([d3.min(soil_chemistry_data, function(d) { return d.value * 0.9; }), d3.max(soil_chemistry_data, function(d) { return d.value * 1.1; })])
@@ -68,18 +64,17 @@ function drawFinalScatterplot() {
 
   var yAxis = d3.svg.axis()
     .orient("left")
-    .ticks(6)  //Set rough # of ticks
+    .ticks(6)  // Set rough # of ticks
     .scale(yScale); 
       
-  //Scale for the bubble size
+  // Scale for the bubble size
   var rScale = d3.scale.sqrt()
-        .range([mobileScreen ? 1 : 2, mobileScreen ? 10 : 16])
-        .domain(d3.extent(soil_chemistry_data, function(d) { return d.yield; }));
+    .range([mobileScreen ? 1 : 2, mobileScreen ? 10 : 16])
+    .domain(d3.extent(soil_chemistry_data, function(d) { return d.yield; }));
 
-
-  ////////////////////////////////////////////////////////////// 
-  //////////////////// Set-up voronoi ////////////////////////// 
-  ////////////////////////////////////////////////////////////// 
+  /*
+  ** Set-up voronoi
+   */
 
   var voronoi = d3.geom.voronoi()
     .x(function(d) { return xScale(d.yield); })
@@ -88,13 +83,13 @@ function drawFinalScatterplot() {
 
   var voronoiCells = voronoi(soil_chemistry_data);
     
-  ////////////////////////////////////////////////////////////  
-  ///////////// Circles to capture close mouse event /////////
-  ////////////////////////////////////////////////////////////  
+  /*
+  ** Circles to capture close mouse event
+   */
 
-  //Create wrapper for the voronoi clip paths
+  // Create wrapper for the voronoi clip paths
   var clipWrapper = wrapper.append("defs")
-      .attr("class", "clipWrapper");
+    .attr("class", "clipWrapper");
 
   clipWrapper.selectAll(".clip")
     .data(voronoiCells)
@@ -105,11 +100,11 @@ function drawFinalScatterplot() {
       .attr("class", "clip-path-circle")
       .attr("d", function(d) { return "M" + d.join(",") + "Z"; });
 
-  //Initiate a group element for the circles  
+  // Initiate a group element for the circles  
   var circleClipGroup = wrapper.append("g")
     .attr("class", "circleClipWrapper"); 
     
-  //Place the larger circles to eventually capture the mouse
+  // Place the larger circles to eventually capture the mouse
   var circlesOuter = circleClipGroup.selectAll(".circle-wrapper")
     .data(soil_chemistry_data.sort(function(a,b) { return b.yield > a.yield; }))
     .enter().append("circle")
@@ -125,57 +120,54 @@ function drawFinalScatterplot() {
     .on("mouseover", showTooltip)
     .on("mouseout",  removeTooltip);
 
-  ////////////////////////////////////////////////////////////  
-  /////////////////// Scatterplot Circles ////////////////////
-  ////////////////////////////////////////////////////////////  
+  /*
+  ** Scatterplot Circles
+   */
 
-  //Initiate a group element for the circles  
+  // Initiate a group element for the circles  
   var circleGroup = wrapper.append("g")
     .attr("class", "circleWrapper"); 
     
-  //Place the name circles
+  // Place the name circles
   circleGroup.selectAll("countries")
     .data(soil_chemistry_data.sort(function(a,b) { return b.yield > a.yield; })) //Sort so the biggest circles are below
     .enter().append("circle")
       .attr("class", function(d,i) { return "countries circle-type-" + d.type + " " + d.code + " " + ((d.type != "water")?"hidden":""); })
       .attr("cx", function(d) {return xScale(d.yield);})
       .attr("cy", function(d) {return yScale(d.value);})
-      // .attr("r", function(d) {return rScale(d.yield);})
       .attr("r", function(d) {return 5})
       .style("pointer-events", "none")
       .style("opacity", opacityCircles)
-      .style("fill", function(d) {return color_cicle(d.type); /*'#c6c6c6'*/ }); // .style("fill", function(d) {return color_cicle(d.Region);});
+      .style("fill", function(d) { return color_cicle(d.type); });
   
   var circleGroupShadow = wrapper.append("g")
     .attr("class", "circleWrapperShadow"); 
     
-  //Place the name circles
+  // Place the name circles
   circleGroupShadow.selectAll("countries")
-    .data(soil_chemistry_data.sort(function(a,b) { return b.yield > a.yield; })) //Sort so the biggest circles are below
+    .data(soil_chemistry_data.sort(function(a,b) { return b.yield > a.yield; })) // Sort so the biggest circles are below
     .enter().append("circle")
       .attr("class", function(d,i) { return "countries-shadow circle-type-" + d.type + " " + d.code + " " + ((d.type != "water")?"hidden":""); })
       .attr("cx", function(d) {return xScale(d.yield);})
       .attr("cy", function(d) {return yScale(d.value);})
-      // .attr("r", function(d) {return rScale(d.yield);})
       .attr("r", function(d) {return 20})
       .style("pointer-events", "none")
       .style("opacity", 0)
       .style("fill", function(d) { return color_cicle(d.type); });
 
+  /*
+  ** Hover functions of the circles
+   */ 
 
-  ///////////////////////////////////////////////////////////////////////////
-  /////////////////// Hover functions of the circles ////////////////////////
-  ///////////////////////////////////////////////////////////////////////////
-
-  //Hide the tooltip when the mouse moves away
+  // Hide the tooltip when the mouse moves away
   function removeTooltip (d, i) {
 
     $('#circle-tooltip').remove();
 
-    //Save the chosen circle (so not the voronoi)
+    // Save the chosen circle (so not the voronoi)
     var element = d3.selectAll("#chart-circle .countries."+d.code);
       
-    //Fade out the bubble again
+    // Fade out the bubble again
     element.style("opacity", opacityCircles);
     element.style("fill", function(d) { return color_cicle(d.type); });
       
@@ -183,7 +175,7 @@ function drawFinalScatterplot() {
     elementShadow.style("opacity", 0);
   }
 
-  //Show the tooltip on the hovered over slice
+  // Show the tooltip on the hovered over slice
   function showTooltip (d, i) {
     
     var e = [];
@@ -219,26 +211,24 @@ function drawFinalScatterplot() {
       elementShadow.style("opacity", .3);
 
             
-  }//function showTooltip
+  } // function showTooltip
 
-}//function drawFinalScatterplot
+} // function drawFinalScatterplot
 
 drawFinalScatterplot();
 
 $('.soil-chemistry-btn').on('click', function(){
-    var itm = $(this);
-    $('.soil-chemistry-btn').each(function(){
-      $(this).removeClass('active');
-    });
-    itm.addClass('active');
-    
-    $(".circleClipWrapper circle.circle-wrapper").addClass("hidden");
-    $(".circleWrapper circle.countries").addClass("hidden");
-    $(".circleWrapperShadow circle.countries-shadow").addClass("hidden");
-    
-    $(".circleClipWrapper circle.circle-wrapper.circle-type-"+ itm.attr('data-type')).removeClass("hidden");
-    $(".circleWrapper circle.countries.circle-type-"+ itm.attr('data-type')).removeClass("hidden");
-    $(".circleWrapperShadow circle.countries-shadow.circle-type-"+ itm.attr('data-type')).removeClass("hidden");
-    
-
+  var itm = $(this);
+  $('.soil-chemistry-btn').each(function(){
+    $(this).removeClass('active');
+  });
+  itm.addClass('active');
+  
+  $(".circleClipWrapper circle.circle-wrapper").addClass("hidden");
+  $(".circleWrapper circle.countries").addClass("hidden");
+  $(".circleWrapperShadow circle.countries-shadow").addClass("hidden");
+  
+  $(".circleClipWrapper circle.circle-wrapper.circle-type-"+ itm.attr('data-type')).removeClass("hidden");
+  $(".circleWrapper circle.countries.circle-type-"+ itm.attr('data-type')).removeClass("hidden");
+  $(".circleWrapperShadow circle.countries-shadow.circle-type-"+ itm.attr('data-type')).removeClass("hidden");
 });
