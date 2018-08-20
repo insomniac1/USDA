@@ -63,9 +63,12 @@ app.get('/api/bar-data.json', (request, response) => {
   response.render('api/bar_data');
 });
 
-app.get('/api/data/:id', (request, response) => {
+app.get('/api/data/', (request, response) => {
 
-  countyID = request.params.id;
+
+  // console.log(request.body.searchCounty);
+
+  countyID = request.query.id;
 
   csv()
     .fromFile(dataFilePath)
@@ -154,7 +157,7 @@ app.get('/api/data/:id', (request, response) => {
         output[existingIndex].soil_chemistry.push(soil_chemistry_itm);
 
       });
-
+      
       response.send(output);
 
     });

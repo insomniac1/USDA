@@ -490,22 +490,35 @@
 
   $("#searchCounty").on("select2:selecting", function(e) { 
     var state_id = $(this).val();
+
+    $.ajax({
+      type: 'GET',
+      data: { id: 'WI027' },
+      contentType: "application/json; charset=utf-8",
+      url: '/api/data/',
+      success: function(data) {
+
+        console.log('success');
+      }
+    });
+
     resetZoom();
 
     var first_g = $('[data-zoom="true"]');
     var zoom_delay = 600;
     if(first_g.length > 0){
-    zoom_delay = 1000;
+      zoom_delay = 1000;
     }
 
     setTimeout(function () {
-    var itm_county = svg_map.selectAll(".state-id-"+state_id)
-      .style("fill", "red")
-      .attr("data-id", function(d){
-        zoomed(d, 'select');
-        return d.id;
-      });
+      var itm_county = svg_map.selectAll(".state-id-"+state_id)
+        .style("fill", "red")
+        .attr("data-id", function(d){
+          zoomed(d, 'select');
+          return d.id;
+        });
     }, zoom_delay);
+
     
   });
 
