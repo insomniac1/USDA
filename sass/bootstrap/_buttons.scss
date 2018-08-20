@@ -76,6 +76,29 @@ fieldset:disabled a.btn {
   }
 }
 
+@each $color, $value in $theme-colors {
+  .btn-js-#{$color} {
+    &:not(.btn-active) {
+      @include button-outline-variant($value);
+      &:hover,
+      &:not(:disabled):not(.disabled):active {
+        color: $white;
+      }
+    }
+
+    &.btn-active {
+      @include button-variant($value, $value);
+      
+      &,
+      &:hover,
+      &:not(:disabled):not(.disabled):active,
+      &:focus {
+        color: $white;
+      }
+    }
+  }
+}
+
 
 //
 // Link buttons
@@ -150,15 +173,22 @@ input[type="button"] {
 }
 
 .btn-outline-warning,
-.btn-greenblue, {
+.btn-greenblue,
+.btn-montecarlo,
+.btn-outline-montecarlo {
   &:hover,
   &.active {
     color: $white;
   }
 }
 
+.btn-montecarlo {
+  color: $white;
+}
+
+
 .btn-icon {
-  display: flex;
+  display: inline-flex;
   align-items: center;
   text-align: left;
   padding-left: 3.467em;
@@ -183,6 +213,7 @@ input[type="button"] {
   &.btn-icon--carbon svg {
     top: 9px;
   }
+
   &.btn-outline-primary {
     color: rgba($primary, 1);
     border-color: rgba($primary, .5);
@@ -193,6 +224,7 @@ input[type="button"] {
       opacity: 1;
     }
   }
+
   &.btn-outline-secondary {
     color: rgba($blue, 1);
     border-color: rgba($blue, .5);
@@ -204,6 +236,7 @@ input[type="button"] {
       opacity: 1;
     }
   }
+
   &.btn-outline-greenblue {
     color: rgba($greenblue, 1);
     border-color: rgba($greenblue, .5);
@@ -214,6 +247,7 @@ input[type="button"] {
       opacity: 1;
     } 
   }
+
   &.btn-outline-danger {
     color: rgba($danger, 1);
     border-color: rgba($danger, .5);

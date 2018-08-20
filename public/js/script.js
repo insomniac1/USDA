@@ -104,6 +104,15 @@ $(document).ready(function() {
       itm.addClass('active');
   });
 
+  $('button').on('click', function(){
+    var btn = $(this);
+    if(btn.hasClass('btn-active')) {
+      btn.removeClass('btn-active');
+    } else {
+      btn.parents('.btn-js-group').find('.btn-active').removeClass('btn-active');
+      btn.addClass('btn-active');
+    }
+  });
 });
 
 function temperatureTooltip(args) {
