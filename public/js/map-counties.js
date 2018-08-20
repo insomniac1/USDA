@@ -19,8 +19,10 @@
   var radius = d3.scale.sqrt()
     .range([2, 40]);
 
-  var color_map = d3.scale.threshold()
-    .range(["#FBF0DE", "#F7E2BC", "#F2CC89", "#E9BF77", "#DBAB58", "#A5E7D1", "#8EDAC1", "#64C2A2", "#3FA885", "#20906A"]);
+  var color_map = d3.scale.threshold().range([
+      "#FBF0DE", "#F7E2BC", "#F2CC89", "#E9BF77", "#DBAB58", 
+      "#A5E7D1", "#8EDAC1", "#64C2A2", "#3FA885", "#20906A"
+      ]);
     // .range(["#20906A", "#FBF0DE", "#F7E2BC", "#F2CC89", "#E9BF77", "#DBAB58", "#A5E7D1", "#8EDAC1", "#64C2A2", "#3FA885"]);
 
   var thousandComma = d3.format('0,000');
@@ -92,11 +94,16 @@
     d3.json("/js/us.json", function(error, us) {
       if (error) throw error;
 
+      // console.log(topojson.feature(us, us.objects.counties).features);
+
       counties.selectAll(".county")
         .data(topojson.feature(us, us.objects.counties).features)
         .enter()
           .append("path")
         .attr("class", "county")
+        .attr("data-county-id", function(d) { 
+          return d.id; 
+        })
         .attr("d", path)
         .on("mouseout", function() {
           highlight.selectAll('*').remove();
@@ -370,16 +377,13 @@
     loading.select(".error").classed("hidden_elem", true);
     loading.classed("hidden_elem", false);
 
-    var filename;
-
-    filename = '/js/us-data-show.json';
-
-    d3.json(filename, function(err, json) {
+    d3.json('/js/us-data-show.json', function(err, json) {
       if (err) throw err;
 
       summary = json;
 
-      color_map.domain(summary.metadata.colorQuantiles);
+      color_map.range(summary.metadata.colorRange); // From file us-data-show.js
+      color_map.domain(summary.metadata.colorQuantiles); // From file us-data-show.js
 
       x.domain(summary.metadata.yearRange);
       timeseries.select("g.x.axis")
@@ -488,8 +492,9 @@
 
   }
 
-  $("#searchCounty").on("select2:selecting", function(e) { 
-    var state_id = $(this).val();
+  $("#searchCounty").on("select2:select", function(e) { 
+    var originalKey = $(this).val();
+    state_id = Math.floor(originalKey/1000);
 
     $.ajax({
       type: 'GET',
@@ -512,7 +517,7 @@
 
     setTimeout(function () {
       var itm_county = svg_map.selectAll(".state-id-"+state_id)
-        .style("fill", "red")
+        // .style("fill", "red")
         .attr("data-id", function(d){
           zoomed(d, 'select');
           return d.id;

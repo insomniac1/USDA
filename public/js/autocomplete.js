@@ -15,45 +15,49 @@
     };
 })(window.jQuery);
 
+d3.json("/js/us-data-show.json", function(error, data) {
 
+  //Autofill function
+  const county_state = [];
 
-//Autofill function
-const county_state = [];
+  const countiesObj = data.county;
+  const countyKeys = Object.keys(countiesObj)
 
-const countiesObj = data.county;
-const countyKeys = Object.keys(countiesObj)
+  const countyNames = countyKeys.forEach((key) => {
+    const stringKey = key.toString();
+    let sliceValue = 0;
 
-const countyNames = countyKeys.forEach((key) => {
-  const stringKey = key.toString();
-  let sliceValue = 0;
+    if (key < 10000) {
+      sliceValue = 1
+    } else {
+      sliceValue = 2
+    }
 
-  if (key < 10000) {
-    sliceValue = 1
-  } else {
-    sliceValue = 2
+    const dataObj = {
+      name: countiesObj[`${key}`].name,
+      state: stringKey.slice(0, sliceValue),
+      originalKey: key,
+    }
+    county_state.push(dataObj);
+  });
+
+  var searchCounty = $("#searchCounty");
+  var searchOptions = [];
+  for (i = 0; i < county_state.length; i++) {
+      searchOptions.push({
+        // id: county_state[i].state + '-' + county_state[i].originalKey, 
+        id: county_state[i].originalKey, 
+        text: county_state[i].name,
+        originalKey: county_state[i].originalKey,
+      });
   }
 
-  const dataObj = {
-    name: countiesObj[`${key}`].name,
-    state: stringKey.slice(0, sliceValue),
-    originalKey: key,
-  }
-  county_state.push(dataObj);
-});
+  // console.log(searchOptions);
 
-var searchCounty = $("#searchCounty");
-var searchOptions = [];
-for (i = 0; i < county_state.length; i++) {
-    searchOptions.push({
-      id: county_state[i].state, 
-      text: county_state[i].name,
-      'data-originalKey': 1
-    });
-}
-
-searchCounty.select2({
-  placeholder: "Search for a county…",
-  searchInputPlaceholder: 'Search for a county…',
-  width: '100%',
-  data: searchOptions
-});
+  searchCounty.select2({
+    placeholder: "Search for a county…",
+    searchInputPlaceholder: 'Search for a county…',
+    width: '100%',
+    data: searchOptions,
+  });
+})
