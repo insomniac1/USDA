@@ -499,11 +499,23 @@
     $.ajax({
       type: 'GET',
       data: { id: 'WI027' }, // TO DO: make id dinamically
+      dataType: "json",
       contentType: "application/json; charset=utf-8",
       url: '/api/data/',
       success: function(data) {
         console.log('data updated');
         drawTemperatureVegetation(data);
+
+
+        var predictedData = JSON.parse($("#predicted-data").val());
+
+        predictedData.date = 2018;
+        predictedData.longitude = data[0].years[0].longitude;
+        predictedData.latitude = data[0].years[0].latitude;
+        predictedData.cropquality = 0.9;
+
+        var textObject = JSON.stringify(predictedData);
+        $("#predicted-data").text(textObject);
       }
     });
 
@@ -523,7 +535,6 @@
           return d.id;
         });
     }, zoom_delay);
-
   });
 
 
