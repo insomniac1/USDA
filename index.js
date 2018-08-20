@@ -108,6 +108,7 @@ app.get('/api/data/', (request, response) => {
         }
 
         var year_itm = {
+          year: value.Year,
           yield : value.Yield,
           soil_quality : value.soil_quality,
           carbon : value.carbon,
@@ -146,14 +147,14 @@ app.get('/api/data/', (request, response) => {
             }    
           }
         }
-       
+
         var existing_new = output.filter(function(v, i) {
           return v.area_symbol == value.area_symbol;
         });
 
         var existingIndex = output.indexOf(existing_new[0]);
 
-        output[existingIndex].years.push({[value.Year]: year_itm});
+        output[existingIndex].years.push(year_itm);
         output[existingIndex].soil_chemistry.push(soil_chemistry_itm);
 
       });

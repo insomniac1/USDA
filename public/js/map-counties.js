@@ -493,12 +493,12 @@
 
     $.ajax({
       type: 'GET',
-      data: { id: 'WI027' },
+      data: { id: 'WI027' }, // TO DO: make id dinamically
       contentType: "application/json; charset=utf-8",
       url: '/api/data/',
       success: function(data) {
-
-        console.log('success');
+        console.log('data updated');
+        drawTemperatureVegetation(data);
       }
     });
 
@@ -519,8 +519,8 @@
         });
     }, zoom_delay);
 
-    
   });
+
 
   initUI();
   initMap();
