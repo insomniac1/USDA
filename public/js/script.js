@@ -50,7 +50,8 @@ $(document).ready(function() {
   var soilValues = {
     "1": "Poor",
     "2": "Average",
-    "3": "Good"
+    "3": "Good",
+    "4": "Great",
   };
   var rangeMaxVal_soil = $(slider_soil).prop('max');
 
@@ -89,7 +90,7 @@ $(document).ready(function() {
     width: 40,
     circleShape: "half-top",
     sliderType: "min-range",
-    value: 75,
+    value: 0,
     min: -100,
     max: 100,
     editableTooltip: false,
