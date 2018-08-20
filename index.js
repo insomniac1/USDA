@@ -63,7 +63,9 @@ app.get('/api/bar-data.json', (request, response) => {
   response.render('api/bar_data');
 });
 
-app.get('/api/data', (request, response) => {
+app.get('/api/data/:id', (request, response) => {
+
+  countyID = request.params.id;
 
   csv()
     .fromFile(dataFilePath)
@@ -72,7 +74,11 @@ app.get('/api/data', (request, response) => {
       //sends csv file as array of county objects
       var output = [];
 
-      data.forEach(function(value, i) {
+      var requestedData = data.filter(function (n, i) { 
+        return n.area_symbol === countyID;
+      });
+
+      requestedData.forEach(function(value, i) {
 
         var existing_old = output.filter(function(v, i) {
           return v.area_symbol == value.area_symbol;
@@ -99,6 +105,7 @@ app.get('/api/data', (request, response) => {
         }
 
         var year_itm = {
+          yield : value.Yield,
           soil_quality : value.soil_quality,
           carbon : value.carbon,
           water : value.water,
@@ -118,14 +125,16 @@ app.get('/api/data', (request, response) => {
               value: value.water,
               code: value.area_symbol
             }
-          } else if (value.soil_quality) {
+          }
+          if (value.soil_quality) {
             soil_chemistry_itm = {
               yield: value.Yield,
               type: 'soil_quality',
               value: value.soil_quality,
               code: value.area_symbol
             }
-          } else if (value.carbon) {
+          }
+          if (value.carbon) {
             soil_chemistry_itm = {
               yield: value.Yield,
               type: 'carbon',
@@ -193,6 +202,9 @@ app.post('/api/updateData', (request, response) => {
 });
 
 app.listen(port, () => console.log('Listening on localhost:3000'));
+
+
+
 console.log('Server listening on port ' + port);
 console.log('srcPath is ' + srcPath);
 console.log('destPath is ' + destPath);
