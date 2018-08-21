@@ -1,6 +1,7 @@
-import soil_chemistry_data from './soil_chemistry_data';
+export function drawFinalScatterplot(soil_chemistry_data) {
 
-function drawFinalScatterplot() {
+  console.log(soil_chemistry_data);
+
   /*
   ** Set up
    */
@@ -85,6 +86,8 @@ function drawFinalScatterplot() {
 
   var voronoiCells = voronoi(soil_chemistry_data);
 
+  console.log(voronoiCells)
+
   /*
   ** Circles to capture close mouse event
    */
@@ -97,10 +100,10 @@ function drawFinalScatterplot() {
     .data(voronoiCells)
     .enter().append("clipPath")
       .attr("class", "clip")
-      .attr("id", function(d) { return "clip-" + d.point.code; })
+      .attr("id", function(d) { if(d) return "clip-" + d.point.code; })
       .append("path")
       .attr("class", "clip-path-circle")
-      .attr("d", function(d) { return "M" + d.join(",") + "Z"; });
+      .attr("d", function(d) { if(d) return "M" + d.join(",") + "Z"; });
 
   // Initiate a group element for the circles
   var circleClipGroup = wrapper.append("g")
@@ -189,17 +192,17 @@ function drawFinalScatterplot() {
 
     switch(d.type) {
         case 'water':
-            cicle_tooltip +=    '<span class="soil-chemistry-water"><strong>Accessible Water</strong></br>' + Number.parseFloat(d.value).toFixed(1) + 'mm</span>';
+            cicle_tooltip +=  '<span class="soil-chemistry-water"><strong>Accessible Water</strong></br>' + Number.parseFloat(d.value).toFixed(1) + 'mm</span>';
             break;
         case 'carbon':
-            cicle_tooltip +=    '<span class="soil-chemistry-carbon""><strong>Carbon</strong></br>' + Number.parseFloat(d.value).toFixed(1) + '</span>';
+            cicle_tooltip +=  '<span class="soil-chemistry-carbon""><strong>Carbon</strong></br>' + Number.parseFloat(d.value).toFixed(1) + '</span>';
             break;
         case 'soil_quality':
-            cicle_tooltip +=    '<span class="soil-chemistry-soil"><strong>Soil</strong></br>' + Number.parseFloat(d.value).toFixed(1) + '</span>';
+            cicle_tooltip +=  '<span class="soil-chemistry-soil"><strong>Soil</strong></br>' + Number.parseFloat(d.value).toFixed(1) + '</span>';
             break;
         default:
     }
-    cicle_tooltip +=    '<span class="soil-chemistry-yield"><strong>Corn Yield</strong></br>' + Number.parseFloat(d.yield).toFixed(1) + '</span>';
+    cicle_tooltip +=  '<span class="soil-chemistry-yield"><strong>Corn Yield</strong></br>' + Number.parseFloat(d.yield).toFixed(1) + '</span>';
     cicle_tooltip += '</div>';
 
     $('#chart-circle-wrapper').append(cicle_tooltip);
@@ -217,7 +220,7 @@ function drawFinalScatterplot() {
 
 } // function drawFinalScatterplot
 
-drawFinalScatterplot();
+//drawFinalScatterplot();
 
 $('.soil-chemistry-btn').on('click', function(){
   var itm = $(this);

@@ -135,26 +135,29 @@ app.get('/api/data/', (request, response) => {
         if (value.Yield) {
           if (value.water) {
             soil_chemistry_itm = {
+              county: value.county_name,
               yield: value.Yield,
               type: 'water',
               value: value.water,
-              code: value.area_symbol
+              code: value.area_symbol + parseInt(value.Yield.toString().replace('.', ''))
             }
           }
           if (value.soil_quality) {
             soil_chemistry_itm = {
+              county: value.county_name,
               yield: value.Yield,
               type: 'soil_quality',
               value: value.soil_quality,
-              code: value.area_symbol
+              code: value.area_symbol + parseInt(value.Yield.toString().replace('.', ''))
             }
           }
           if (value.carbon) {
             soil_chemistry_itm = {
+              county: value.county_name,
               yield: value.Yield,
               type: 'carbon',
               value: value.carbon,
-              code: value.area_symbol
+              code: value.area_symbol + parseInt(value.Yield.toString().replace('.', ''))
             }    
           }
         }

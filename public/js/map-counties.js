@@ -1,4 +1,5 @@
 import { drawTemperatureVegetation } from './temperature-vegetation';
+import { drawFinalScatterplot } from './soil-chemistry';
 
 (function() {
 
@@ -505,6 +506,7 @@ import { drawTemperatureVegetation } from './temperature-vegetation';
       url: '/api/data/',
       success: function(data) {
         console.log('data updated');
+        drawFinalScatterplot(data[0].soil_chemistry);
         drawTemperatureVegetation(data);
 
         var predictedData = JSON.parse($("#predicted-data").val());
