@@ -74,7 +74,7 @@ app.get('/api/data/', (request, response) => {
       //sends csv file as array of county objects
       var output = [];
 
-      var requestedData = data.filter(function (n, i) {
+      var requestedData = data.filter(function(n, i) {
         return n.area_symbol === countyID;
       });
 
@@ -95,19 +95,23 @@ app.get('/api/data/', (request, response) => {
           output.push(county_itm);
         }
 
-        temperature_amount = 0;
-        vegetation_amount = 0;
+        var temperature_amount = 0;
         for (k = 0; k < 21; k++) {
-          temperature_amount += Number(value["Temperature_" + k]);
-          vegetation_amount += Number(value["Vegetation_" + k]);
+          temperature_amount += parseFloat(value["Temperature_" + k]);
         }
 
-        cropquality_amount = 0;
-        cropquality_excellent = 0;
-        cropquality_fair = 0;
-        cropquality_good = 0;
-        cropquality_poor = 0;
-        cropquality_very_poor = 0;
+        var vegetation_amount = 0;
+        for (k = 0; k < 21; k++) {
+          vegetation_amount += parseFloat(value["Vegetation_" + k]);
+        }
+
+
+        var cropquality_amount = 0;
+      var  cropquality_excellent = 0;
+      var  cropquality_fair = 0;
+      var  cropquality_good = 0;
+      var  cropquality_poor = 0;
+        var cropquality_very_poor = 0;
         for (k = 1; k <= 23; k++) {
           cropquality_excellent += Number(value["% Excellent_" + k]);
           cropquality_fair += Number(value["% Fair_" + k]);
@@ -119,12 +123,12 @@ app.get('/api/data/', (request, response) => {
 
         var year_itm = {
           year: value.Year,
-          yield : value.Yield,
-          soil_quality : value.soil_quality,
-          carbon : value.carbon,
-          water : value.water,
-          state : value.State,
-          temperature : temperature_amount,
+          yield: value.Yield,
+          soil_quality: value.soil_quality,
+          carbon: value.carbon,
+          water: value.water,
+          state: value.State,
+          temperature: temperature_amount,
           vegetation: vegetation_amount,
           cropquality: cropquality_amount,
           longitude: value.x_centroid,
@@ -165,8 +169,7 @@ app.get('/api/data/', (request, response) => {
 
         var map_bar_itm = {
           categorie: value.Year,
-          values: [
-            {
+          values: [{
               value: value.Yield,
               rate: 'Yield'
             },
@@ -215,17 +218,17 @@ app.post('/api/updateData', (request, response) => {
 
   console.log(longitude, latitude, soilquality, soilcarbon, wateravailability, date, cropquality, vegetation, temperature);
   const options = {
-    pythonPath: '/usr/bin/python',
+    pythonPath: '/usr/bin/python3',
     args: [`-x ${longitude}`,
-      `-y ${latitude}`,
-      `-q ${soilquality}`,
-      `-c ${soilcarbon}`,
-      `-w ${wateravailability}`,
-      `-d ${date}`,
-      `-v, ${vegetation}`,
-      `-C, ${cropquality}`,
-      `-t, ${temperature}`
-    ]
+       `-y ${latitude}`,
+       `-q ${soilquality}`,
+       `-c ${soilcarbon}`,
+       `-w ${wateravailability}`,
+       `-d ${date}`,
+       `-C`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`,
+        `-v`, `${vegetation}`, `${vegetation}`, `${vegetation}`, `${vegetation}`, `${vegetation}`, `${vegetation}`, `${vegetation}`, `${vegetation}`, `${vegetation}`, `${vegetation}`, `${vegetation}`, `${vegetation}`, `${vegetation}`, `${vegetation}`, `${vegetation}`, `${vegetation}`, `${vegetation}`, `${vegetation}`, `${vegetation}`, `${vegetation}`, `${vegetation}`,
+       `-t`, `${temperature}`, `${temperature}`, `${temperature}`, `${temperature}`, `${temperature}`, `${temperature}`, `${temperature}`, `${temperature}`, `${temperature}`, `${temperature}`, `${temperature}`, `${temperature}`, `${temperature}`, `${temperature}`, `${temperature}`, `${temperature}`, `${temperature}`, `${temperature}`, `${temperature}`, `${temperature}`, `${temperature}`
+     ]
   }
   // Yash said instead of -2 make it the same value the user decides
   PythonShell.run(`${pickledStringPath}`, options, function(err, results) {
