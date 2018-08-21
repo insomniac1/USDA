@@ -122,6 +122,7 @@ import { drawCurveLine } from './curve-line';
             return;
           }
 
+
           d3.select(this).style("cursor", "pointer");
 
           highlight.append("path")
@@ -136,6 +137,17 @@ import { drawCurveLine } from './curve-line';
             .style("stroke-width", 1 / uiState.zoomScale + "px");
 
           changeCounty(d.id);
+          
+          // if ((summary) && (summary.length > 0) && (summary.state.length > 0) && !summary.state.hasOwnProperty(d.id)) {
+          //   d3.select(this).style("cursor", "not-allowed");
+          //   return;
+          // }
+
+          showTooltip(d.id);
+
+
+          console.log(d);
+
         });
 
       states.selectAll(".state")
@@ -497,8 +509,19 @@ import { drawCurveLine } from './curve-line';
   }
 
   $("#searchCounty").on("select2:select", function(e) {
-    var originalKey = $(this).val();
-    var state_id = Math.floor(originalKey/1000);
+    
+    $('.loading_sp').each(function(){
+      $(this).css('display','block');
+    });
+
+    
+
+    var originalKey_str = $(this).val();
+    
+    var originalKey = originalKey_str.split("-");
+
+    var state_id = Math.floor(originalKey[0]/1000);
+    var countyId = originalKey[1];
 
     var selectedCounty = $(this).find('option[value="' + originalKey + '"]').html();
     $(".selectedCountyName").each(function(){
@@ -508,13 +531,18 @@ import { drawCurveLine } from './curve-line';
 
     $.ajax({
       type: 'GET',
-      data: { id: 'WI027' }, // TO DO: make id dinamic
+      data: { id: countyId }, // TO DO: make id dinamic
       dataType: "json",
       contentType: "application/json; charset=utf-8",
       url: '/api/data/',
       success: function(data) {
+        console.log(data);
         console.log('data updated');
         
+        $('.loading_sp').each(function(){
+          $(this).css('display','none');
+        });
+
         drawBarZoomMap(data[0].bar_map);
         drawSoilChemistry(data[0].soil_chemistry);
         drawTemperatureVegetation(data);

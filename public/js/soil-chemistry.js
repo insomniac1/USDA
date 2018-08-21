@@ -31,131 +31,135 @@ export function drawSoilChemistry(soil_chemistry_data) {
     .range(["#2e8bc2", "#209481", "#B6334F"])
     .domain(["water", "carbon", "soil_quality"]);
 
-  // Set the new x axis range
-  var xScale = d3.scale.log()
-    .range([0, width_circle])
-    .domain([
-      d3.min(soil_chemistry_data, function (d) { return d.yield * 0.9}),
-      d3.max(soil_chemistry_data, function (d) { return d.yield * 1.1})
-    ]);
+  if(soil_chemistry_data){
 
-  // Set new x-axis
-  var xAxis = d3.svg.axis()
-    .orient("bottom")
-    .ticks(2)
-    .tickFormat(function (d) {
-      return xScale.tickFormat((mobileScreen ? 4 : 8),function(d) {
-        var prefix = d3.formatPrefix(d);
-        return prefix.scale(d) + prefix.symbol;
-      })(d);
-    })
-    .scale(xScale);
+      // Set the new x axis range
+      var xScale = d3.scale.log()
+        .range([0, width_circle])
+        .domain([
+          d3.min(soil_chemistry_data, function (d) { return d.yield * 0.9}),
+          d3.max(soil_chemistry_data, function (d) { return d.yield * 1.1})
+        ]);
 
-  // Append the x-axis
-  wrapper.append("g")
-    .attr("class", "x axis")
-    .attr("transform", "translate(" + 0 + "," + height + ")")
-    .call(xAxis);
+      // Set new x-axis
+      var xAxis = d3.svg.axis()
+        .orient("bottom")
+        .ticks(2)
+        .tickFormat(function (d) {
+          return xScale.tickFormat((mobileScreen ? 4 : 8),function(d) {
+            var prefix = d3.formatPrefix(d);
+            return prefix.scale(d) + prefix.symbol;
+          })(d);
+        })
+        .scale(xScale);
 
-  // Set the new y axis range
-  var yScale = d3.scale.linear()
-    .range([height,0])
-    .domain([d3.min(soil_chemistry_data, function(d) { return d.value * 0.9; }), d3.max(soil_chemistry_data, function(d) { return d.value * 1.1; })])
-    .nice();
+      // Append the x-axis
+      wrapper.append("g")
+        .attr("class", "x axis")
+        .attr("transform", "translate(" + 0 + "," + height + ")")
+        .call(xAxis);
+
+      // Set the new y axis range
+      var yScale = d3.scale.linear()
+        .range([height,0])
+        .domain([d3.min(soil_chemistry_data, function(d) { return d.value * 0.9; }), d3.max(soil_chemistry_data, function(d) { return d.value * 1.1; })])
+        .nice();
 
 
-  var yAxis = d3.svg.axis()
-    .orient("left")
-    .ticks(6)  // Set rough # of ticks
-    .scale(yScale);
+      var yAxis = d3.svg.axis()
+        .orient("left")
+        .ticks(6)  // Set rough # of ticks
+        .scale(yScale);
 
-  // Scale for the bubble size
-  var rScale = d3.scale.sqrt()
-    .range([mobileScreen ? 1 : 2, mobileScreen ? 10 : 16])
-    .domain(d3.extent(soil_chemistry_data, function(d) { return d.yield; }));
+      // Scale for the bubble size
+      var rScale = d3.scale.sqrt()
+        .range([mobileScreen ? 1 : 2, mobileScreen ? 10 : 16])
+        .domain(d3.extent(soil_chemistry_data, function(d) { return d.yield; }));
 
-  /*
-  ** Set-up voronoi
-   */
+      /*
+      ** Set-up voronoi
+       */
 
-  var voronoi = d3.geom.voronoi()
-    .x(function(d) { return xScale(d.yield); })
-    .y(function(d) { return yScale(d.value); })
-    .clipExtent([[0, 0], [width_circle, height]]);
+      var voronoi = d3.geom.voronoi()
+        .x(function(d) { return xScale(d.yield); })
+        .y(function(d) { return yScale(d.value); })
+        .clipExtent([[0, 0], [width_circle, height]]);
 
-  var voronoiCells = voronoi(soil_chemistry_data);
+      var voronoiCells = voronoi(soil_chemistry_data);
 
-  /*
-  ** Circles to capture close mouse event
-   */
+      /*
+      ** Circles to capture close mouse event
+       */
 
-  // Create wrapper for the voronoi clip paths
-  var clipWrapper = wrapper.append("defs")
-    .attr("class", "clipWrapper");
+      // Create wrapper for the voronoi clip paths
+      var clipWrapper = wrapper.append("defs")
+        .attr("class", "clipWrapper");
 
-  clipWrapper.selectAll(".clip")
-    .data(voronoiCells)
-    .enter().append("clipPath")
-      .attr("class", "clip")
-      .attr("id", function(d) { if(d) return "clip-" + d.point.code; })
-      .append("path")
-      .attr("class", "clip-path-circle")
-      .attr("d", function(d) { if(d) return "M" + d.join(",") + "Z"; });
+      clipWrapper.selectAll(".clip")
+        .data(voronoiCells)
+        .enter().append("clipPath")
+          .attr("class", "clip")
+          .attr("id", function(d) { if(d) return "clip-" + d.point.code; })
+          .append("path")
+          .attr("class", "clip-path-circle")
+          .attr("d", function(d) { console.log(d); if(d) return "M" + d.join(",") + "Z"; });
 
-  // Initiate a group element for the circles
-  var circleClipGroup = wrapper.append("g")
-    .attr("class", "circleClipWrapper");
+      // Initiate a group element for the circles
+      var circleClipGroup = wrapper.append("g")
+        .attr("class", "circleClipWrapper");
 
-  // Place the larger circles to eventually capture the mouse
-  var circlesOuter = circleClipGroup.selectAll(".circle-wrapper")
-    .data(soil_chemistry_data.sort(function(a,b) { return b.yield > a.yield; }))
-    .enter().append("circle")
-    .attr("class", function(d,i) { return "circle-wrapper circle-type-" + d.type + " " + d.code + " " + ((d.type != "water")?"hidden":""); })
-    .attr("visibility", function(d,i) {
-      if(d.type == 'water'){ return "visible"; } else { return "hidden" }
-    })
-    .attr("clip-path", function(d) { return "url(#clip-" + d.code + ")"; })
-      .style("clip-path", function(d) { return "url(#clip-" + d.code + ")"; })
-    .attr("cx", function(d) {return xScale(d.yield);})
-    .attr("cy", function(d) {return yScale(d.value);})
-    .attr("r", maxDistanceFromPoint)
-    .on("mouseover", showTooltip)
-    .on("mouseout",  removeTooltip);
+      // Place the larger circles to eventually capture the mouse
+      var circlesOuter = circleClipGroup.selectAll(".circle-wrapper")
+        .data(soil_chemistry_data.sort(function(a,b) { return b.yield > a.yield; }))
+        .enter().append("circle")
+        .attr("class", function(d,i) { return "circle-wrapper circle-type-" + d.type + " " + d.code + " " + ((d.type != "water")?"hidden":""); })
+        .attr("visibility", function(d,i) {
+          if(d.type == 'water'){ return "visible"; } else { return "hidden" }
+        })
+        .attr("clip-path", function(d) { return "url(#clip-" + d.code + ")"; })
+          .style("clip-path", function(d) { return "url(#clip-" + d.code + ")"; })
+        .attr("cx", function(d) {return xScale(d.yield);})
+        .attr("cy", function(d) {return yScale(d.value);})
+        .attr("r", maxDistanceFromPoint)
+        .on("mouseover", showTooltip)
+        .on("mouseout",  removeTooltip);
 
-  /*
-  ** Scatterplot Circles
-   */
+      /*
+      ** Scatterplot Circles
+       */
 
-  // Initiate a group element for the circles
-  var circleGroup = wrapper.append("g")
-    .attr("class", "circleWrapper");
+      // Initiate a group element for the circles
+      var circleGroup = wrapper.append("g")
+        .attr("class", "circleWrapper");
 
-  // Place the name circles
-  circleGroup.selectAll("countries")
-    .data(soil_chemistry_data.sort(function(a,b) { return b.yield > a.yield; })) //Sort so the biggest circles are below
-    .enter().append("circle")
-      .attr("class", function(d,i) { return "countries circle-type-" + d.type + " " + d.code + " " + ((d.type != "water")?"hidden":""); })
-      .attr("cx", function(d) {return xScale(d.yield);})
-      .attr("cy", function(d) {return yScale(d.value);})
-      .attr("r", function(d) {return 5})
-      .style("pointer-events", "none")
-      .style("opacity", opacityCircles)
-      .style("fill", function(d) { return color_cicle(d.type); });
+      // Place the name circles
+      circleGroup.selectAll("countries")
+        .data(soil_chemistry_data.sort(function(a,b) { return b.yield > a.yield; })) //Sort so the biggest circles are below
+        .enter().append("circle")
+          .attr("class", function(d,i) { return "countries circle-type-" + d.type + " " + d.code + " " + ((d.type != "water")?"hidden":""); })
+          .attr("cx", function(d) {return xScale(d.yield);})
+          .attr("cy", function(d) {return yScale(d.value);})
+          .attr("r", function(d) {return 5})
+          .style("pointer-events", "none")
+          .style("opacity", opacityCircles)
+          .style("fill", function(d) { return color_cicle(d.type); });
 
-  var circleGroupShadow = wrapper.append("g")
-    .attr("class", "circleWrapperShadow");
+      var circleGroupShadow = wrapper.append("g")
+        .attr("class", "circleWrapperShadow");
 
-  // Place the name circles
-  circleGroupShadow.selectAll("countries")
-    .data(soil_chemistry_data.sort(function(a,b) { return b.yield > a.yield; })) // Sort so the biggest circles are below
-    .enter().append("circle")
-      .attr("class", function(d,i) { return "countries-shadow circle-type-" + d.type + " " + d.code + " " + ((d.type != "water")?"hidden":""); })
-      .attr("cx", function(d) {return xScale(d.yield);})
-      .attr("cy", function(d) {return yScale(d.value);})
-      .attr("r", function(d) {return 20})
-      .style("pointer-events", "none")
-      .style("opacity", 0)
-      .style("fill", function(d) { return color_cicle(d.type); });
+      // Place the name circles
+      circleGroupShadow.selectAll("countries")
+        .data(soil_chemistry_data.sort(function(a,b) { return b.yield > a.yield; })) // Sort so the biggest circles are below
+        .enter().append("circle")
+          .attr("class", function(d,i) { return "countries-shadow circle-type-" + d.type + " " + d.code + " " + ((d.type != "water")?"hidden":""); })
+          .attr("cx", function(d) {return xScale(d.yield);})
+          .attr("cy", function(d) {return yScale(d.value);})
+          .attr("r", function(d) {return 20})
+          .style("pointer-events", "none")
+          .style("opacity", 0)
+          .style("fill", function(d) { return color_cicle(d.type); });
+  }
+
 
   /*
   ** Hover functions of the circles
