@@ -18,6 +18,12 @@ $(document).ready(function() {
   $(slider_water).siblings('.fill').css('width', $(slider_water).val() * (100 / rangeMaxVal_water) + '%');
 
   slider_water.oninput = function() {
+
+    var predictedData = JSON.parse($("#predicted-data").val()); 
+    predictedData.wateravailability = this.value; 
+    var textObject = JSON.stringify(predictedData); 
+    $("#predicted-data").text(textObject);
+
     $(this).siblings('.count').text(this.value + ' mm').css({
       'left': this.value * (100 / rangeMaxVal_water) + '%',
       'transform': 'translateX(-' + this.value * (100 / rangeMaxVal_water) + '%)'
@@ -38,6 +44,11 @@ $(document).ready(function() {
   $(slider_carbon).siblings('.fill').css('width', $(slider_carbon).val() * (100 / rangeMaxVal_carbon) + '%');
 
   slider_carbon.oninput = function() {
+    var predictedData = JSON.parse($("#predicted-data").val()); 
+    predictedData.soilcarbon = this.value;  
+    var textObject = JSON.stringify(predictedData); 
+    $("#predicted-data").text(textObject);
+
     $(this).siblings('.count').text(this.value + ' g').css({
       'left': this.value * (100 / rangeMaxVal_carbon) + '%',
       'transform': 'translateX(-' + this.value * (100 / rangeMaxVal_carbon) + '%)'
@@ -63,6 +74,11 @@ $(document).ready(function() {
   $(slider_soil).siblings('.fill').css('width', $(slider_soil).val() * (100 / rangeMaxVal_soil) + '%');
 
   slider_soil.oninput = function() {
+    var predictedData = JSON.parse($("#predicted-data").val()); 
+    predictedData.soilquality = this.value; 
+    var textObject = JSON.stringify(predictedData); 
+    $("#predicted-data").text(textObject);
+
     $(this).siblings('.count').text(soilValues[this.value]).css({
       'left': this.value * (100 / rangeMaxVal_soil) + '%',
       'transform': 'translateX(-' + this.value * (100 / rangeMaxVal_soil) + '%)'
@@ -83,7 +99,7 @@ $(document).ready(function() {
     min: 0,
     max: 100,
     editableTooltip: false,
-    tooltipFormat: "temperatureTooltip"
+    tooltipFormat: temperatureTooltip
   });
   $("#round-vegetation").roundSlider({
     radius: 150,
@@ -94,7 +110,20 @@ $(document).ready(function() {
     min: -100,
     max: 100,
     editableTooltip: false,
-    tooltipFormat: "vegetationTooltip",
+    tooltipFormat: vegetationTooltip,
+  });
+
+  $("#round-temperature").on('change', function() { 
+    var predictedData = JSON.parse($("#predicted-data").val()); 
+    predictedData.temperature = $(this).find('input').val();  
+    var textObject = JSON.stringify(predictedData); 
+    $("#predicted-data").text(textObject);  
+  }); 
+   $("#round-vegetation").on('change', function() { 
+    var predictedData = JSON.parse($("#predicted-data").val()); 
+    predictedData.vegetation = $(this).find('input').val() / 100; 
+    var textObject = JSON.stringify(predictedData); 
+    $("#predicted-data").text(textObject);      
   });
 
   $('.map-tab-btn').on('click', function(){

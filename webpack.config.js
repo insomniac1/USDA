@@ -21,5 +21,6 @@ var path = require('path');
      stats: {
          colors: true
      },
-     devtool: 'source-map'
+     devtool: 'source-map',
+     watch: true
  };
