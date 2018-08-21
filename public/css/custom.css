@@ -226,7 +226,6 @@
 #zoom-bar-chart .resize.w rect{
   display: inherit !important;
   visibility: initial !important;
-  fill:#212629;
 }
 
 /* START Line Area Chart CSS */
