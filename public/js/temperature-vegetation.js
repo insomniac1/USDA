@@ -1,107 +1,113 @@
-var area_ContainerID = "#chart-gradient";
-var area_chart_sp = $('.gradient-wrapper');
-var margin = {top: 0, right: 15, bottom: 30, left: 15},
-    width_area  = area_chart_sp.width() - margin.left - margin.right,
-    height_area = width_area * 0.6  - margin.top  - margin.bottom;
+export function drawTemperatureVegetation(data) {
+    
+    $('#chart-gradient').html('');
 
-let mobile_area = false;
-if (width_area <= 500) {
-  mobile_area = true;
-}
 
-var seriesLabels = {
-  'yield':'Corn Yield',
-  'temperature':'Temperature',
-  'vegetation':'Vegetation'
-};
+    var area_ContainerID = "#chart-gradient";
+    var area_chart_sp = $('.gradient-wrapper');
+    var margin = {top: 0, right: 15, bottom: 30, left: 15},
+        width_area  = area_chart_sp.width() - margin.left - margin.right,
+        height_area = width_area * 0.6  - margin.top  - margin.bottom;
 
-// Add scale for x
-var x_area = d3.scale.ordinal()
-  .rangeRoundBands([0, width_area], -1.1);
-
-var x_ticks = d3.scale.ordinal()
-  .rangeRoundBands([0, width_area], -0.7);
-
-// Add scale for y
-var y_area = d3.scale.linear()
-  .rangeRound([height_area, 0]);
-
-// Add x axis
-var xAxis_area = d3.svg.axis()
-  .scale(x_area)
-  // .scale(x_ticks)
-  .orient("bottom")
-  .tickPadding(12)
-  .tickSize(1)
-  .tickFormat(function (d) {
-    if(mobile_area){
-      if(d % 3 == 0) return d;
-    } else {
-      return d;
+    let mobile_area = false;
+    if (width_area <= 500) {
+      mobile_area = true;
     }
 
-  });
+    var seriesLabels = {
+      'yield':'Corn Yield',
+      'temperature':'Temperature',
+      'vegetation':'Vegetation'
+    };
 
-if(mobile_area){
-  xAxis_area.ticks(1000);
-}
+    // Add scale for x
+    var x_area = d3.scale.ordinal()
+      .rangeRoundBands([0, width_area], -1.1);
 
-// Creating Y axis background lines
-var yAxis_border = d3.svg.axis()
-  .scale(y_area)
-  .orient("left")
-  .innerTickSize(-width_area)
-  .outerTickSize(0)
-  .tickPadding(10)
-  .ticks(5)
-  .tickFormat(function (d) {
-    return '';
-  });
+    var x_ticks = d3.scale.ordinal()
+      .rangeRoundBands([0, width_area], -0.7);
 
-// Create area border
-var area_border = d3.svg.line()
-    .x(function(d, i) { return x_area(d.year); })
-    .y(function(d) { return y_area(d.value); });
+    // Add scale for y
+    var y_area = d3.scale.linear()
+      .rangeRound([height_area, 0]);
 
-// Add colors according to the design
-var color_area = d3.scale.ordinal()
-  .range(["#2D9280", "#5BABB1",  "#E5B156"])
-  .domain(["yield", "temperature", "vegetation"]);
+    // Add x axis
+    var xAxis_area = d3.svg.axis()
+      .scale(x_area)
+      // .scale(x_ticks)
+      .orient("bottom")
+      .tickPadding(12)
+      .tickSize(1)
+      .tickFormat(function (d) {
+        if(mobile_area){
+          if(d % 3 == 0) return d;
+        } else {
+          return d;
+        }
 
-// Add SVG for the area chart to the relevant container (/views/pages/landing.js)
-var svg_area = d3.select(area_ContainerID).append("svg")
-    .attr("width",  width_area + margin.left + margin.right)
-    .attr("height", height_area + margin.top  + margin.bottom)
-  .append("g")
-    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+      });
 
-/*
-** Output for 'd': {name: "yield", values: Array(..)}; {name: "temperature", values: Array(..)}; {name: "vegetation", values: Array(..)}
-** 'd.values': values:Array(..)
-**               0:{name: "yield", year: 2000, value: 100, y0: 0, y: 100}
-**               1:{name: "yield", year: 2001, value: 847, y0: 0, y: 847}..
- */
-var stack = d3.layout.stack()
-  .values(function (d) { return d.values; })
-  .x(function (d) { return x_area(d.year) + x_area.rangeBand() / 2; })
-  .y(function (d) { return d.value; });
+    if(mobile_area){
+      xAxis_area.ticks(1000);
+    }
 
-// console.log(x_area.rangeBand([0, width_area]));
+    // Creating Y axis background lines
+    var yAxis_border = d3.svg.axis()
+      .scale(y_area)
+      .orient("left")
+      .innerTickSize(-width_area)
+      .outerTickSize(0)
+      .tickPadding(10)
+      .ticks(5)
+      .tickFormat(function (d) {
+        return '';
+      });
 
-var area = d3.svg.area()
-  .x(function (d) { return x_area(d.year) + x_area.rangeBand() / 2; })
-  .y0(function (d) { return y_area(0); })
-  .y1(function (d) { return y_area(d.y); })
+    // Create area border
+    var area_border = d3.svg.line()
+        .x(function(d, i) { return x_area(d.year); })
+        .y(function(d) { return y_area(d.value); });
 
-/* Reading data from the csv
-** Output for 'data':
-**  [{…}, {…}, ..]:
-**    0:{year: "2000", yield: "100", temperature: "700", vegetation: "100"}
-**    1:{year: "2001", yield: "847", temperature: "388", vegetation: "100"} ..
- */
+    // Add colors according to the design
+    var color_area = d3.scale.ordinal()
+      .range(["#2D9280", "#5BABB1",  "#E5B156"])
+      .domain(["yield", "temperature", "vegetation"]);
+
+    // Add SVG for the area chart to the relevant container (/views/pages/landing.js)
+    var svg_area = d3.select(area_ContainerID).append("svg")
+        .attr("width",  width_area + margin.left + margin.right)
+        .attr("height", height_area + margin.top  + margin.bottom)
+      .append("g")
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+    /*
+    ** Output for 'd': {name: "yield", values: Array(..)}; {name: "temperature", values: Array(..)}; {name: "vegetation", values: Array(..)}
+    ** 'd.values': values:Array(..)
+    **               0:{name: "yield", year: 2000, value: 100, y0: 0, y: 100}
+    **               1:{name: "yield", year: 2001, value: 847, y0: 0, y: 847}..
+     */
+    var stack = d3.layout.stack()
+      .values(function (d) { return d.values; })
+      .x(function (d) { return x_area(d.year) + x_area.rangeBand() / 2; })
+      .y(function (d) { return d.value; });
+
+    // console.log(x_area.rangeBand([0, width_area]));
+
+    var area = d3.svg.area()
+      .x(function (d) { return x_area(d.year) + x_area.rangeBand() / 2; })
+      .y0(function (d) { return y_area(0); })
+      .y1(function (d) { return y_area(d.y); })
+
+    /* Reading data from the csv
+    ** Output for 'data':
+    **  [{…}, {…}, ..]:
+    **    0:{year: "2000", yield: "100", temperature: "700", vegetation: "100"}
+    **    1:{year: "2001", yield: "847", temperature: "388", vegetation: "100"} ..
+     */
 
 
-export function drawTemperatureVegetation(data) {
+
+
 
     margin = {top: 0, right: 0, bottom: 30, left: 0};
 

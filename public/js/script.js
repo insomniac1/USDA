@@ -143,6 +143,13 @@ $(document).ready(function() {
       btn.addClass('btn-active');
     }
   });
+
+  
+  // Temporary solution in order to show county on first page load
+  setTimeout(function() {
+     $('#searchCounty').val('55027-WI027').trigger('change.select2');
+   }, 3000);
+
 });
 
 function temperatureTooltip(args) {
@@ -174,3 +181,5 @@ function updatePredictedData() {
       }
     });
 };
+
+

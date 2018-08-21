@@ -112,7 +112,7 @@ export function drawBarZoomMap(data) {
                                   domain[selected_end],
                                 ];
 
-                                // console.log(selected_brush);
+                                console.log(selected_brush);
 
                         });
 

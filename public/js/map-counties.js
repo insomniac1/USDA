@@ -508,7 +508,7 @@ import { drawCurveLine } from './curve-line';
 
   }
 
-  $("#searchCounty").on("select2:select", function(e) {
+  $("#searchCounty").on("select2:select change.select2", function(e) {
     
     $('.loading_sp').each(function(){
       $(this).css('display','block');
@@ -523,11 +523,12 @@ import { drawCurveLine } from './curve-line';
     var state_id = Math.floor(originalKey[0]/1000);
     var countyId = originalKey[1];
 
-    var selectedCounty = $(this).find('option[value="' + originalKey + '"]').html();
+    var selectedCounty = $(this).find('option[value="' + originalKey_str + '"]').html();
     $(".selectedCountyName").each(function(){
       $(this).text(selectedCounty);
     });
     // console.log(selectedCounty);
+    // console.log(countyId);
 
     $.ajax({
       type: 'GET',
@@ -538,6 +539,16 @@ import { drawCurveLine } from './curve-line';
       success: function(data) {
         console.log(data);
         console.log('data updated');
+        
+        if(data.length == 0){
+          data.push({
+            area_symbol: countyId,
+            years: [],
+            soil_chemistry: [],
+            bar_map: []
+          })
+        }
+
         
         $('.loading_sp').each(function(){
           $(this).css('display','none');

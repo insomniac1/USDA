@@ -102,7 +102,7 @@ export function drawSoilChemistry(soil_chemistry_data) {
           .attr("id", function(d) { if(d) return "clip-" + d.point.code; })
           .append("path")
           .attr("class", "clip-path-circle")
-          .attr("d", function(d) { console.log(d); if(d) return "M" + d.join(",") + "Z"; });
+          .attr("d", function(d) { if(d) return "M" + d.join(",") + "Z"; });
 
       // Initiate a group element for the circles
       var circleClipGroup = wrapper.append("g")
