@@ -1,3 +1,5 @@
+import { drawTemperatureVegetation } from './temperature-vegetation';
+
 (function() {
 
   var tooltip = d3.select(".tooltip"),
@@ -493,7 +495,7 @@
 
   $("#searchCounty").on("select2:select", function(e) {
     var originalKey = $(this).val();
-    state_id = Math.floor(originalKey/1000);
+    var state_id = Math.floor(originalKey/1000);
 
     $.ajax({
       type: 'GET',
