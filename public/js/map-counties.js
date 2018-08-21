@@ -6,7 +6,7 @@
   var loading;
   var legendIcon;
   var labels = {};
-
+  let svg_map;
   // Elements
   var map_counties_sp = $('.map-counties-sp');
   var width_map = map_counties_sp.width();
@@ -20,7 +20,7 @@
     .range([2, 40]);
 
   var color_map = d3.scale.threshold().range([
-      "#FBF0DE", "#F7E2BC", "#F2CC89", "#E9BF77", "#DBAB58", 
+      "#FBF0DE", "#F7E2BC", "#F2CC89", "#E9BF77", "#DBAB58",
       "#A5E7D1", "#8EDAC1", "#64C2A2", "#3FA885", "#20906A"
       ]);
     // .range(["#20906A", "#FBF0DE", "#F7E2BC", "#F2CC89", "#E9BF77", "#DBAB58", "#A5E7D1", "#8EDAC1", "#64C2A2", "#3FA885"]);
@@ -101,8 +101,8 @@
         .enter()
           .append("path")
         .attr("class", "county")
-        .attr("data-county-id", function(d) { 
-          return d.id; 
+        .attr("data-county-id", function(d) {
+          return d.id;
         })
         .attr("d", path)
         .on("mouseout", function() {
@@ -261,8 +261,7 @@
     changeState(undefined);
   }
 
-  function zoomed(state, type = null) {
-
+  function zoomed(state, type) {
     if(type != 'select'){
       d3.event.stopPropagation()
     }
@@ -334,7 +333,7 @@
     updateTimeseries();
     if (uiState.state === undefined) {
       labels.region.html('United States');
-    } else {
+    } else if (summary) {
       labels.region.html(summary.state[stateID].name);
     }
     updateStateLabel(stateID);
@@ -364,7 +363,7 @@
   }
 
   function updateStateLabel(stateID) {
-    if(stateID) { 
+    if(stateID && summary) {
       $('#tooltip-state').html(summary.state[stateID].name);
     }
   }
@@ -485,37 +484,25 @@
     var y_mouse = coordinates[1];
 
     tooltip.style("visibility", "visible")
-      .style("opacity", 1)      
+      .style("opacity", 1)
       .style("margin-top", "-50px")
       .style("left", x_mouse - tooltipOffset[0] + "px")
       .style("top", y_mouse + "px")
 
   }
 
-  $("#searchCounty").on("select2:select", function(e) { 
+  $("#searchCounty").on("select2:select", function(e) {
     var originalKey = $(this).val();
     state_id = Math.floor(originalKey/1000);
 
     $.ajax({
       type: 'GET',
       data: { id: 'WI027' }, // TO DO: make id dinamically
-      dataType: "json",
       contentType: "application/json; charset=utf-8",
       url: '/api/data/',
       success: function(data) {
         console.log('data updated');
         drawTemperatureVegetation(data);
-
-
-        var predictedData = JSON.parse($("#predicted-data").val());
-
-        predictedData.date = 2018;
-        predictedData.longitude = data[0].years[0].longitude;
-        predictedData.latitude = data[0].years[0].latitude;
-        predictedData.cropquality = 0.9;
-
-        var textObject = JSON.stringify(predictedData);
-        $("#predicted-data").text(textObject);
       }
     });
 
@@ -535,6 +522,7 @@
           return d.id;
         });
     }, zoom_delay);
+
   });
 
 

@@ -18,17 +18,12 @@ $(document).ready(function() {
   $(slider_water).siblings('.fill').css('width', $(slider_water).val() * (100 / rangeMaxVal_water) + '%');
 
   slider_water.oninput = function() {
-
-    var predictedData = JSON.parse($("#predicted-data").val());
-    predictedData.wateravailability = this.value;
-    var textObject = JSON.stringify(predictedData);
-    $("#predicted-data").text(textObject);
-
     $(this).siblings('.count').text(this.value + ' mm').css({
       'left': this.value * (100 / rangeMaxVal_water) + '%',
       'transform': 'translateX(-' + this.value * (100 / rangeMaxVal_water) + '%)'
     });
     $(this).siblings('.fill').css('width', this.value * (100 / rangeMaxVal_water) + '%');
+    console.log(this.value);
   }
 
   // Carbon Level
@@ -43,12 +38,6 @@ $(document).ready(function() {
   $(slider_carbon).siblings('.fill').css('width', $(slider_carbon).val() * (100 / rangeMaxVal_carbon) + '%');
 
   slider_carbon.oninput = function() {
-
-    var predictedData = JSON.parse($("#predicted-data").val());
-    predictedData.soilcarbon = this.value;
-    var textObject = JSON.stringify(predictedData);
-    $("#predicted-data").text(textObject);
-
     $(this).siblings('.count').text(this.value + ' g').css({
       'left': this.value * (100 / rangeMaxVal_carbon) + '%',
       'transform': 'translateX(-' + this.value * (100 / rangeMaxVal_carbon) + '%)'
@@ -74,12 +63,6 @@ $(document).ready(function() {
   $(slider_soil).siblings('.fill').css('width', $(slider_soil).val() * (100 / rangeMaxVal_soil) + '%');
 
   slider_soil.oninput = function() {
-
-    var predictedData = JSON.parse($("#predicted-data").val());
-    predictedData.soilquality = this.value;
-    var textObject = JSON.stringify(predictedData);
-    $("#predicted-data").text(textObject);
-
     $(this).siblings('.count').text(soilValues[this.value]).css({
       'left': this.value * (100 / rangeMaxVal_soil) + '%',
       'transform': 'translateX(-' + this.value * (100 / rangeMaxVal_soil) + '%)'
@@ -114,20 +97,6 @@ $(document).ready(function() {
     tooltipFormat: "vegetationTooltip",
   });
 
-  $("#round-temperature").on('change', function() {
-    var predictedData = JSON.parse($("#predicted-data").val());
-    predictedData.temperature = $(this).find('input').val();
-    var textObject = JSON.stringify(predictedData);
-    $("#predicted-data").text(textObject);
-  });
-
-  $("#round-vegetation").on('change', function() {
-    var predictedData = JSON.parse($("#predicted-data").val());
-    predictedData.vegetation = $(this).find('input').val() / 100;
-    var textObject = JSON.stringify(predictedData);
-    $("#predicted-data").text(textObject);    
-  });
-
   $('.map-tab-btn').on('click', function(){
       var itm = $(this);
       $('.map-tab-btn').each(function(){
@@ -154,39 +123,3 @@ function temperatureTooltip(args) {
 function vegetationTooltip(args) {
   return args.value / 100 + '<div class="tooltip-label">Vegetation Level</div>';
 }
-
-
-$("#slider-water").focusout(function() {
-  updatePredictedData();
-});
-
-function updatePredictedData() {
-
-    // var predictedData = $("#predicted-data").val();
-
-    var predictedData = '{"cropquality":0.9,"temperature":"88","date":2018,"longitude":"587205.5362","latitude":"2291709.79","vegetation":0.55,"soilcarbon":"4396","soilquality":"3","wateravailability":"5001"}';
-
-    console.log(predictedData);
-
-    // var predictedData = '{"MyKey":"My Value"}';
-
-    // console.log(predictedData)
-
-    $.ajax({
-      url: '/api/updateData/',
-      type: 'POST',
-      data: predictedData, // TO DO: make id dinamically
-      // dataType: "json",
-      // contentType: "application/json; charset=utf-8",
-      headers: {
-          "Content-Type":"application/json",
-      },
-      success: function(data) {
-        console.log('predicted data updated');
-      }
-    });
-};
-
-
-
-// curl -d '{"MyKey":"My Value"}' -H "Content-Type: application/json" http://127.0.0.1:3000/

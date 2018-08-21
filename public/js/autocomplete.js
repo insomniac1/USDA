@@ -43,10 +43,10 @@ d3.json("/js/us-data-show.json", function(error, data) {
 
   var searchCounty = $("#searchCounty");
   var searchOptions = [];
-  for (i = 0; i < county_state.length; i++) {
+  for (let i = 0; i < county_state.length; i++) {
       searchOptions.push({
-        // id: county_state[i].state + '-' + county_state[i].originalKey, 
-        id: county_state[i].originalKey, 
+        // id: county_state[i].state + '-' + county_state[i].originalKey,
+        id: county_state[i].originalKey,
         text: county_state[i].name,
         originalKey: county_state[i].originalKey,
       });

@@ -12351,3 +12351,22 @@ footer ul {
   stroke: #E1E1E1;
   stroke-width: 1px;
 }
+
+@media screen and (-ms-high-contrast: active), screen and (-ms-high-contrast: none) {
+  body.page--home .pb-md-5, body.page--home .pb-3 {
+    position: absolute;
+    bottom: 0%;
+    left: 0px;
+    right: 0px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  body.page--home .container {
+    position: absolute;
+    left: 0px;
+    right: 0px;
+    bottom: 41%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}

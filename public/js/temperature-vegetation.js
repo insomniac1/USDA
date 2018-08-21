@@ -4,10 +4,9 @@ var margin = {top: 0, right: 15, bottom: 30, left: 15},
     width_area  = area_chart_sp.width() - margin.left - margin.right,
     height_area = width_area * 0.6  - margin.top  - margin.bottom;
 
-if(width_area <= 500){
+let mobile_area = false;
+if (width_area <= 500){
   mobile_area = true;
-} else {
-  mobile_area = false;
 }
 
 var seriesLabels = {
@@ -42,7 +41,7 @@ var xAxis_area = d3.svg.axis()
     }
 
   });
-  
+
 if(mobile_area){
   xAxis_area.ticks(1000);
 }
@@ -149,11 +148,11 @@ function drawTemperatureVegetation(data) {
       }));
     });
 
-      
+
     stack(seriesArr);
 
     // Define max value in order to scale y axis
-    y_area.domain([0, d3.max(seriesArr, function (c) { 
+    y_area.domain([0, d3.max(seriesArr, function (c) {
       return d3.max(c.values, function (d) { return d.y + d.y * 0.1});
     })]);
 
@@ -175,7 +174,7 @@ function drawTemperatureVegetation(data) {
       .attr("class", function(d, i) { return "series series-" + i; })
 
     /*
-    ** Fill each area with the relevant color 
+    ** Fill each area with the relevant color
      */
 
     // 1. Create gradients
@@ -200,9 +199,9 @@ function drawTemperatureVegetation(data) {
         return 'url(#temperature-gradient-' + i + ')';
       })
 
-    
+
     /*
-    ** Points for Tooltips 
+    ** Points for Tooltips
     */
 
 
@@ -216,14 +215,14 @@ function drawTemperatureVegetation(data) {
       .data(function (d) { return d.values; })
       .enter().append("circle")
        .attr("class", function (d, i) { return "point point-itm-"  + d.name + '-' + i; })
-       .attr("cx", function (d) { 
-          return x_area(d.year) + x_area.rangeBand() / 2; 
+       .attr("cx", function (d) {
+          return x_area(d.year) + x_area.rangeBand() / 2;
         })
        .attr("cy", function (d) { return y_area(d.y); })
        .attr("r", "5px")
        .style("opacity", 0)
        .style("fill",function (d) { return color_area(d.name); });
-       
+
 
 
     // Hidden points
@@ -237,8 +236,8 @@ function drawTemperatureVegetation(data) {
       .data(function (d) { return d.values; })
       .enter().append("circle")
        .attr("class", "point-hover")
-       .attr("cx", function (d) { 
-          return x_area(d.year) + x_area.rangeBand() / 2; 
+       .attr("cx", function (d) {
+          return x_area(d.year) + x_area.rangeBand() / 2;
         })
        .attr("cy", function (d) { return y_area(d.y); })
        .attr("r", "25px")
@@ -253,7 +252,7 @@ function drawTemperatureVegetation(data) {
     ** Going through series array and adding top border line
     ** Line styles are described in _section.scss:294-307
      */
-    seriesArr.forEach(function(d, i) {      
+    seriesArr.forEach(function(d, i) {
       svg_area.select(".series-" + i)
         .append("path")
         .data([seriesArr[i].values])
@@ -275,7 +274,7 @@ function drawTemperatureVegetation(data) {
           area_tooltip +=    '<span><strong>' + seriesLabels[d.name] + '</strong></br>' + d.value + '</span>';
           area_tooltip +=    '<span><strong>Year</strong></br>' + d.year + '</span>';
           area_tooltip += '</div>';
-      
+
       $('.point-itm-' + d.name + '-' + i).css('opacity', 1);
 
       $('#chart-gradient').append(area_tooltip);

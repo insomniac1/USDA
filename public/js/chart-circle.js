@@ -1,3 +1,5 @@
+import soil_chemistry_data from './soil_chemistry_data';
+
 function drawFinalScatterplot() {
   /*
   ** Set up
@@ -19,7 +21,7 @@ function drawFinalScatterplot() {
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
 
   /*
-  ** Initialize Axes & Scales 
+  ** Initialize Axes & Scales
    */
 
   var opacityCircles = 0.7,
@@ -28,27 +30,27 @@ function drawFinalScatterplot() {
   var color_cicle = d3.scale.ordinal()
     .range(["#2e8bc2", "#209481", "#B6334F"])
     .domain(["water", "carbon", "soil_quality"]);
-                 
+
   // Set the new x axis range
   var xScale = d3.scale.log()
     .range([0, width_circle])
     .domain([
-      d3.min(soil_chemistry_data, function (d) { return d.yield * 0.9}), 
-      d3.max(soil_chemistry_data, function (d) { return d.yield * 1.1}) 
-    ]); 
+      d3.min(soil_chemistry_data, function (d) { return d.yield * 0.9}),
+      d3.max(soil_chemistry_data, function (d) { return d.yield * 1.1})
+    ]);
 
   // Set new x-axis
   var xAxis = d3.svg.axis()
     .orient("bottom")
     .ticks(2)
     .tickFormat(function (d) {
-      return xScale.tickFormat((mobileScreen ? 4 : 8),function(d) { 
-        var prefix = d3.formatPrefix(d); 
+      return xScale.tickFormat((mobileScreen ? 4 : 8),function(d) {
+        var prefix = d3.formatPrefix(d);
         return prefix.scale(d) + prefix.symbol;
       })(d);
-    })  
-    .scale(xScale); 
-  
+    })
+    .scale(xScale);
+
   // Append the x-axis
   wrapper.append("g")
     .attr("class", "x axis")
@@ -59,14 +61,14 @@ function drawFinalScatterplot() {
   var yScale = d3.scale.linear()
     .range([height,0])
     .domain([d3.min(soil_chemistry_data, function(d) { return d.value * 0.9; }), d3.max(soil_chemistry_data, function(d) { return d.value * 1.1; })])
-    .nice();  
-    
+    .nice();
+
 
   var yAxis = d3.svg.axis()
     .orient("left")
     .ticks(6)  // Set rough # of ticks
-    .scale(yScale); 
-      
+    .scale(yScale);
+
   // Scale for the bubble size
   var rScale = d3.scale.sqrt()
     .range([mobileScreen ? 1 : 2, mobileScreen ? 10 : 16])
@@ -82,7 +84,7 @@ function drawFinalScatterplot() {
     .clipExtent([[0, 0], [width_circle, height]]);
 
   var voronoiCells = voronoi(soil_chemistry_data);
-    
+
   /*
   ** Circles to capture close mouse event
    */
@@ -100,17 +102,17 @@ function drawFinalScatterplot() {
       .attr("class", "clip-path-circle")
       .attr("d", function(d) { return "M" + d.join(",") + "Z"; });
 
-  // Initiate a group element for the circles  
+  // Initiate a group element for the circles
   var circleClipGroup = wrapper.append("g")
-    .attr("class", "circleClipWrapper"); 
-    
+    .attr("class", "circleClipWrapper");
+
   // Place the larger circles to eventually capture the mouse
   var circlesOuter = circleClipGroup.selectAll(".circle-wrapper")
     .data(soil_chemistry_data.sort(function(a,b) { return b.yield > a.yield; }))
     .enter().append("circle")
     .attr("class", function(d,i) { return "circle-wrapper circle-type-" + d.type + " " + d.code + " " + ((d.type != "water")?"hidden":""); })
-    .attr("visibility", function(d,i) { 
-      if(d.type == 'water'){ return "visible"; } else { return "hidden" } 
+    .attr("visibility", function(d,i) {
+      if(d.type == 'water'){ return "visible"; } else { return "hidden" }
     })
     .attr("clip-path", function(d) { return "url(#clip-" + d.code + ")"; })
       .style("clip-path", function(d) { return "url(#clip-" + d.code + ")"; })
@@ -124,10 +126,10 @@ function drawFinalScatterplot() {
   ** Scatterplot Circles
    */
 
-  // Initiate a group element for the circles  
+  // Initiate a group element for the circles
   var circleGroup = wrapper.append("g")
-    .attr("class", "circleWrapper"); 
-    
+    .attr("class", "circleWrapper");
+
   // Place the name circles
   circleGroup.selectAll("countries")
     .data(soil_chemistry_data.sort(function(a,b) { return b.yield > a.yield; })) //Sort so the biggest circles are below
@@ -139,10 +141,10 @@ function drawFinalScatterplot() {
       .style("pointer-events", "none")
       .style("opacity", opacityCircles)
       .style("fill", function(d) { return color_cicle(d.type); });
-  
+
   var circleGroupShadow = wrapper.append("g")
-    .attr("class", "circleWrapperShadow"); 
-    
+    .attr("class", "circleWrapperShadow");
+
   // Place the name circles
   circleGroupShadow.selectAll("countries")
     .data(soil_chemistry_data.sort(function(a,b) { return b.yield > a.yield; })) // Sort so the biggest circles are below
@@ -157,7 +159,7 @@ function drawFinalScatterplot() {
 
   /*
   ** Hover functions of the circles
-   */ 
+   */
 
   // Hide the tooltip when the mouse moves away
   function removeTooltip (d, i) {
@@ -166,18 +168,18 @@ function drawFinalScatterplot() {
 
     // Save the chosen circle (so not the voronoi)
     var element = d3.selectAll("#chart-circle .countries."+d.code);
-      
+
     // Fade out the bubble again
     element.style("opacity", opacityCircles);
     element.style("fill", function(d) { return color_cicle(d.type); });
-      
+
     var elementShadow = d3.selectAll("#chart-circle .countries-shadow."+d.code);
     elementShadow.style("opacity", 0);
   }
 
   // Show the tooltip on the hovered over slice
   function showTooltip (d, i) {
-    
+
     var e = [];
     e.clientX = d3.mouse(this)[0];
     e.clientY = d3.mouse(this)[1];
@@ -210,7 +212,7 @@ function drawFinalScatterplot() {
       elementShadow.style("fill", function(d) { return color_cicle(d.type); });
       elementShadow.style("opacity", .3);
 
-            
+
   } // function showTooltip
 
 } // function drawFinalScatterplot
@@ -223,11 +225,11 @@ $('.soil-chemistry-btn').on('click', function(){
     $(this).removeClass('active');
   });
   itm.addClass('active');
-  
+
   $(".circleClipWrapper circle.circle-wrapper").addClass("hidden");
   $(".circleWrapper circle.countries").addClass("hidden");
   $(".circleWrapperShadow circle.countries-shadow").addClass("hidden");
-  
+
   $(".circleClipWrapper circle.circle-wrapper.circle-type-"+ itm.attr('data-type')).removeClass("hidden");
   $(".circleWrapper circle.countries.circle-type-"+ itm.attr('data-type')).removeClass("hidden");
   $(".circleWrapperShadow circle.countries-shadow.circle-type-"+ itm.attr('data-type')).removeClass("hidden");
