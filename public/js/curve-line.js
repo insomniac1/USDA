@@ -1,8 +1,9 @@
 export function drawCurveLine(dataset_curve) {
 
-  console.log(dataset_curve);
-
+  $("#curve-line").html('');
+  
   var curve_sp = $('#curve-line-sp');
+
   var margin = {top: 20, right: 15, bottom: 30, left: 15},
       width = curve_sp.width() - margin.left - margin.right,
       height = curve_sp.height() - margin.top - margin.bottom;
@@ -42,7 +43,6 @@ export function drawCurveLine(dataset_curve) {
       .tickFormat(function(d) { 
         return '';
       });
-
 
   var line_curve = d3.svg.line()
       .x(function(d) { return xScale_curve(d.year); })

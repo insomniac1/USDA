@@ -5,14 +5,14 @@ var margin = {top: 0, right: 15, bottom: 30, left: 15},
     height_area = width_area * 0.6  - margin.top  - margin.bottom;
 
 let mobile_area = false;
-if (width_area <= 500){
+if (width_area <= 500) {
   mobile_area = true;
 }
 
 var seriesLabels = {
-    'yield':'Corn Yield',
-    'temperature':'Temperature',
-    'vegetation':'Vegetation'
+  'yield':'Corn Yield',
+  'temperature':'Temperature',
+  'vegetation':'Vegetation'
 };
 
 // Add scale for x

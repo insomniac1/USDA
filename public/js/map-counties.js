@@ -499,6 +499,12 @@ import { drawCurveLine } from './curve-line';
     var originalKey = $(this).val();
     var state_id = Math.floor(originalKey/1000);
 
+    var selectedCounty = $(this).find('option[value="' + originalKey + '"]').html();
+    $(".selectedCountyName").each(function(){
+      $(this).text(selectedCounty);
+    });
+    // console.log(selectedCounty);
+
     $.ajax({
       type: 'GET',
       data: { id: 'WI027' }, // TO DO: make id dinamic
@@ -507,6 +513,7 @@ import { drawCurveLine } from './curve-line';
       url: '/api/data/',
       success: function(data) {
         console.log('data updated');
+        
         drawFinalScatterplot(data[0].soil_chemistry);
         drawTemperatureVegetation(data);
         drawCurveLine(data[0].years);

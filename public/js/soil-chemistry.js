@@ -3,6 +3,8 @@ export function drawFinalScatterplot(soil_chemistry_data) {
   ** Set up
    */
 
+  $("#chart-circle").html('');
+
   var mobileScreen = document.getElementById("chart-circle-wrapper").offsetWidth < 550 ? true : false;
   var circle_chart_sp = $('#chart-circle-wrapper');
 
