@@ -123,3 +123,25 @@ function temperatureTooltip(args) {
 function vegetationTooltip(args) {
   return args.value / 100 + '<div class="tooltip-label">Vegetation Level</div>';
 }
+
+$("#slider-water").focusout(function() {
+  updatePredictedData();
+});
+
+function updatePredictedData() {
+
+    var predictedData = $("#predicted-data").val();
+
+    $.ajax({
+      url: '/api/updateData/',
+      type: 'POST',
+      data: predictedData, // TO DO: make id dinamic
+      headers: {
+          "Content-Type" : "application/json",
+      },
+      success: function(data) {
+        console.log('predicted data updated');
+        $("#predicted-yield").text(data);
+      }
+    });
+};

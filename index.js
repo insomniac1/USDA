@@ -65,9 +65,6 @@ app.get('/api/bar-data.json', (request, response) => {
 
 app.get('/api/data/', (request, response) => {
 
-
-  // console.log(request.body.searchCounty);
-
   countyID = request.query.id;
 
   csv()
@@ -98,14 +95,26 @@ app.get('/api/data/', (request, response) => {
         }
         
         temperature_amount = 0;
-        for (k = 0; k < 21; k++) {
-          temperature_amount += parseFloat(value["Temperature_" + k]);
-        }
-        
         vegetation_amount = 0;
         for (k = 0; k < 21; k++) {
-          vegetation_amount += parseFloat(value["Vegetation_" + k]);
+          temperature_amount += Number(value["Temperature_" + k]);
+          vegetation_amount += Number(value["Vegetation_" + k]);
         }
+        
+        cropquality_amount = 0;
+        cropquality_excellent = 0;
+        cropquality_fair = 0;
+        cropquality_good = 0;
+        cropquality_poor = 0;
+        cropquality_very_poor = 0;
+        for (k = 1; k <= 23; k++) {
+          cropquality_excellent += Number(value["% Excellent_" + k]);
+          cropquality_fair += Number(value["% Fair_" + k]);
+          cropquality_good += Number(value["% Good_" + k]);
+          cropquality_poor += Number(value["% Poor_" + k]);
+          cropquality_very_poor += Number(value["% Very Poor_" + k]);
+        }
+        cropquality_amount = cropquality_excellent + cropquality_fair + cropquality_good + cropquality_poor + cropquality_very_poor;
 
         var year_itm = {
           year: value.Year,
@@ -115,8 +124,10 @@ app.get('/api/data/', (request, response) => {
           water : value.water,
           state : value.State,
           temperature : temperature_amount,
-          vegetation: vegetation_amount
-          /* cropquality: cropquality */ // TO DO
+          vegetation: vegetation_amount,
+          cropquality: cropquality_amount,
+          longitude: value.x_centroid,
+          latitude: value.y_centroid
         };
         
         var soil_chemistry_itm = {};
@@ -181,19 +192,19 @@ app.post('/api/updateData', (request, response) => {
 
   console.log(longitude, latitude, soilquality, soilcarbon, wateravailability, date, cropquality, vegetation, temperature);
   const options = {
-    pythonPath: '/usr/local/bin/python2.7',
+    pythonPath: '/usr/local/bin/python3',
     args: [`-x ${longitude}`,
       `-y ${latitude}`,
       `-q ${soilquality}`,
       `-c ${soilcarbon}`,
       `-w ${wateravailability}`,
       `-d ${date}`,
-      `-v`, `${vegetation}`, `${vegetation}`, `${vegetation}`, `${vegetation}`, `${vegetation}`, `${vegetation}`, `${vegetation}`, `${vegetation}`, `${vegetation}`, `${vegetation}`, `${vegetation}`, `${vegetation}`, `${vegetation}`, `${vegetation}`, `${vegetation}`, `${vegetation}`, `${vegetation}`, `${vegetation}`, `${vegetation}`, `${vegetation}`, `${vegetation}`,
-      `-C`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`, `${cropquality}`,
-      `-t`, `${temperature}`, `${temperature}`, `${temperature}`, `${temperature}`, `${temperature}`, `${temperature}`, `${temperature}`, `${temperature}`, `${temperature}`, `${temperature}`, `${temperature}`, `${temperature}`, `${temperature}`, `${temperature}`, `${temperature}`, `${temperature}`, `${temperature}`, `${temperature}`, `${temperature}`, `${temperature}`, `${temperature}`
+      `-v`, `${vegetation}`,
+      `-C`, `${cropquality}`,
+      `-t`, `${temperature}`
     ]
   }
-  //Yash said instead of -2 make it the same value the user decides
+  // Yash said instead of -2 make it the same value the user decides
   PythonShell.run(`${pickledStringPath}`, options, function(err, results) {
     if (err) {
       console.log(err);
@@ -202,6 +213,8 @@ app.post('/api/updateData', (request, response) => {
     response.status(200).send(results);
 
   });
+
+  // response.status(200).send('179.2135');
 
 });
 

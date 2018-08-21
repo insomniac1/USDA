@@ -138,6 +138,8 @@
 
               <p class="mb-4 mb-md-9">Use the controls below to create the perfect plot of land for corn production.</p>
 
+              <textarea name="predicted-data" type="hidden" id="predicted-data" style="display: none;">{}</textarea>
+    
               <div class="row">
                 <div class="col-md-6 col-lg-4 mb-5 mb-lg-0">
                   <div class="section--range-sliders">
@@ -156,7 +158,7 @@
 
                 <div class="col-lg-4 mob-full">
                   <div class="jumbotron h-100 jumbotron-bg-corn pb-15 pb-lg-0">
-                    <h5 class="mb-2 text-uppercase">Corn Yield is <span class="text-danger">Average</span></h5>
+                    <h5 class="mb-2 text-uppercase">Corn Yield is <span class="text-danger" id="predicted-yield">Average</span></h5>
                     <p>Blurb…Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
                   </div>
                 </div>

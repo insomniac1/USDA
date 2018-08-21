@@ -499,12 +499,28 @@ import { drawTemperatureVegetation } from './temperature-vegetation';
 
     $.ajax({
       type: 'GET',
-      data: { id: 'WI027' }, // TO DO: make id dinamically
+      data: { id: 'WI027' }, // TO DO: make id dinamic
+      dataType: "json",
       contentType: "application/json; charset=utf-8",
       url: '/api/data/',
       success: function(data) {
         console.log('data updated');
         drawTemperatureVegetation(data);
+
+        var predictedData = JSON.parse($("#predicted-data").val());
+
+        predictedData.date = 2018;
+        predictedData.longitude = data[0].years[0].longitude;
+        predictedData.latitude = data[0].years[0].latitude;
+        predictedData.cropquality = data[0].years[0].cropquality;
+        predictedData.wateravailability = $("#slider-water").val();
+        predictedData.temperature = $("#round-temperature").find('input').val();
+        predictedData.vegetation = $("#round-vegetation").find('input').val() / 100;
+        predictedData.soilcarbon = $("#slider-carbon").val();
+        predictedData.soilquality = $("#slider-soil").val();
+
+        var textObject = JSON.stringify(predictedData);
+        $("#predicted-data").text(textObject);
       }
     });
 
@@ -518,7 +534,6 @@ import { drawTemperatureVegetation } from './temperature-vegetation';
 
     setTimeout(function () {
       var itm_county = svg_map.selectAll(".state-id-"+state_id)
-        // .style("fill", "red")
         .attr("data-id", function(d){
           zoomed(d, 'select');
           return d.id;
