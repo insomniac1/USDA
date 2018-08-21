@@ -219,7 +219,14 @@
 #zoom-bar-chart .point:hover{
   opacity: .5;
 }
-
+#zoom-bar-chart .resize.e,
+#zoom-bar-chart .resize.w,
+#zoom-bar-chart .resize.e rect,
+#zoom-bar-chart .resize.w rect{
+  display: inherit !important;
+  visibility: initial !important;
+  fill:#212629;
+}
 
 /* START Line Area Chart CSS */
 #chart-gradient{

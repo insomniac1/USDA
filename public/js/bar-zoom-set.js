@@ -1,5 +1,5 @@
 var bar_zoom_sp = $('#zoom-bar-chart');
-var margin = {top: 20, right: 20, bottom: 30, left: 40},
+var margin = {top: 20, right: 0, bottom: 30, left: 0},
     width_bar = bar_zoom_sp.width() - margin.left - margin.right,
     height_bar = 120 - margin.top - margin.bottom;
 
@@ -63,12 +63,12 @@ var bar_chart = d3.json("/api/bar-data.json", function(error, data) {
             .attr("y", function(d) { return y(0); })
             .attr("height", function(d) { return height_bar - y(0); })
             .on("mouseover", function(d) {
-                d3.select(this).style("fill", d3.rgb(color(d.rate)).darker(2));
+                // d3.select(this).style("fill", d3.rgb(color(d.rate)).darker(2));
             })
             .attr("rx", 2) 
             .attr("ry", 2)
         .on("mouseout", function(d) {
-            d3.select(this).style("fill", color(d.rate));
+            // d3.select(this).style("fill", color(d.rate));
         });
     
 
@@ -79,23 +79,38 @@ var bar_chart = d3.json("/api/bar-data.json", function(error, data) {
         .attr("y", function(d) { return y(d.value); })
         .attr("height", function(d) { return height_bar - y(d.value); });
         // .attr("d", function(d,i){ 
-            // return rectangleBarRadius(10+40*i,100-d.value,20,d.value,20);
+        //     return rectangleBarRadius(10+40*i,100-d.value,20,d.value,20);
         // });
 
+    // function rectangleBarRadius(x, y, width, height, radius){
+    //   return "M" + x + "," + y
+    //        + "h" + (width - radius)
+    //        + "a" + radius + "," + radius + " 0 0 1 " + radius + "," + radius
+    //        + "v" + (height_bar - 2 * radius)
+    //        + "a" + radius + "," + radius + " 0 0 1 " + -radius + "," + radius
+    //        + "h" + (radius - width)
+    //        + "z";
+    // };
   
 
     // Add BRUSH 
     var brush = d3.svg.brush()
-                          .x(x0)
-                          .on("brush", function(){
+                  .x(x0)
+                  .on("brush", function(){
+                          
+                          var domain = x0.domain();
+                          var domain_rate = width_bar/domain.length;
+                          var selected = (brush.empty())?[0, width_bar]:brush.extent();
 
-                              console.log('Brushed');
+                          var selected_brush = [
+                            domain[Math.floor(selected[0]/domain_rate)],
+                            domain[Math.floor(selected[1]/domain_rate)]
+                          ];
 
-                              // console.log(brush.empty());
-                              // console.log(brush.extent());
-                              // console.log(x0.domain());
-                              // console.log(brush);
-                          });
+                          console.log(selected_brush);
+
+                  });
+
     svg_bar.append("g")
                     .attr("class", "x brush")
                     .call(brush)
@@ -103,17 +118,11 @@ var bar_chart = d3.json("/api/bar-data.json", function(error, data) {
                         .attr("y", 0)
                         .attr("height", height_bar);  
 
+    brush.extent([10, width_bar-10]);
+    brush(svg_bar.select(".brush").transition());
+    brush.event(svg_bar.select(".brush").transition().delay(1000))
 
-    function rectangleBarRadius(x, y, width, height, radius){
 
-      return "M" + x + "," + y
-           + "h" + (width - radius)
-           + "a" + radius + "," + radius + " 0 0 1 " + radius + "," + radius
-           + "v" + (height_bar - 2 * radius)
-           + "a" + radius + "," + radius + " 0 0 1 " + -radius + "," + radius
-           + "h" + (radius - width)
-           + "z";
-    };
 });
 
 
