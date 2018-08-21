@@ -107,7 +107,7 @@ var bar_chart = d3.json("/api/bar-data.json", function(error, data) {
                             domain[Math.floor(selected[1]/domain_rate)]
                           ];
 
-                          console.log(selected_brush);
+                          // console.log(selected_brush);
 
                   });
 

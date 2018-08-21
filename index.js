@@ -88,7 +88,8 @@ app.get('/api/data/', (request, response) => {
           var county_itm = {
             area_symbol: value.area_symbol,
             years: [],
-            soil_chemistry: []
+            soil_chemistry: [],
+            bar_map: []
 
           };
           output.push(county_itm);
@@ -162,6 +163,24 @@ app.get('/api/data/', (request, response) => {
           }
         }
 
+        var map_bar_itm = {
+          categorie: value.Year,
+          values: [
+            {
+              value: value.Yield,
+              rate: 'Yield'
+            },
+            {
+              value: value.area_harvested,
+              rate: 'Acres'
+            },
+            {
+              value: value.Yield,
+              rate: 'Production'
+            }
+          ]
+        };
+
         var existing_new = output.filter(function(v, i) {
           return v.area_symbol == value.area_symbol;
         });
@@ -170,6 +189,7 @@ app.get('/api/data/', (request, response) => {
 
         output[existingIndex].years.push(year_itm);
         output[existingIndex].soil_chemistry.push(soil_chemistry_itm);
+        output[existingIndex].bar_map.push(map_bar_itm);
 
       });
       
