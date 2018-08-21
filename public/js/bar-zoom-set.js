@@ -1,5 +1,6 @@
 export function drawBarZoomMap(data) {
-
+  
+  $('#zoom-bar-chart').html('');
   // console.log(data);
 
   var bar_zoom_sp = $('#zoom-bar-chart');

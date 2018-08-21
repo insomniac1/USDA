@@ -8,8 +8,7 @@ export function drawCurveLine(dataset_curve) {
       width = curve_sp.width() - margin.left - margin.right,
       height = curve_sp.height() - margin.top - margin.bottom;
   
-  if(dataset_curve){
-
+ 
     var xScale_curve = d3.scale.linear()
         .domain([
           d3.min(dataset_curve, function(d){ return d.year; }), 
@@ -71,6 +70,5 @@ export function drawCurveLine(dataset_curve) {
           .data([dataset_curve])
           .attr("class", "line")
           .attr("d", line_curve);
-  }
 
 }
