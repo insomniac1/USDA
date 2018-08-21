@@ -1,5 +1,6 @@
 import { drawTemperatureVegetation } from './temperature-vegetation';
 import { drawFinalScatterplot } from './soil-chemistry';
+import { drawCurveLine } from './curve-line';
 
 (function() {
 
@@ -508,6 +509,7 @@ import { drawFinalScatterplot } from './soil-chemistry';
         console.log('data updated');
         drawFinalScatterplot(data[0].soil_chemistry);
         drawTemperatureVegetation(data);
+        drawCurveLine(data[0].years);
 
         var predictedData = JSON.parse($("#predicted-data").val());
 

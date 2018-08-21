@@ -1,7 +1,4 @@
 export function drawFinalScatterplot(soil_chemistry_data) {
-
-  console.log(soil_chemistry_data);
-
   /*
   ** Set up
    */
@@ -85,8 +82,6 @@ export function drawFinalScatterplot(soil_chemistry_data) {
     .clipExtent([[0, 0], [width_circle, height]]);
 
   var voronoiCells = voronoi(soil_chemistry_data);
-
-  console.log(voronoiCells)
 
   /*
   ** Circles to capture close mouse event
