@@ -74,7 +74,7 @@ app.get('/api/data/', (request, response) => {
       //sends csv file as array of county objects
       var output = [];
 
-      var requestedData = data.filter(function (n, i) { 
+      var requestedData = data.filter(function (n, i) {
         return n.area_symbol === countyID;
       });
 
@@ -94,14 +94,14 @@ app.get('/api/data/', (request, response) => {
           };
           output.push(county_itm);
         }
-        
+
         temperature_amount = 0;
         vegetation_amount = 0;
         for (k = 0; k < 21; k++) {
           temperature_amount += Number(value["Temperature_" + k]);
           vegetation_amount += Number(value["Vegetation_" + k]);
         }
-        
+
         cropquality_amount = 0;
         cropquality_excellent = 0;
         cropquality_fair = 0;
@@ -130,9 +130,9 @@ app.get('/api/data/', (request, response) => {
           longitude: value.x_centroid,
           latitude: value.y_centroid
         };
-        
+
         var soil_chemistry_itm = {};
-        
+
         if (value.Yield) {
           if (value.water) {
             soil_chemistry_itm = {
@@ -159,7 +159,7 @@ app.get('/api/data/', (request, response) => {
               type: 'carbon',
               value: value.carbon,
               code: value.area_symbol + parseInt(value.Yield.toString().replace('.', ''))
-            }    
+            }
           }
         }
 
@@ -192,7 +192,7 @@ app.get('/api/data/', (request, response) => {
         output[existingIndex].bar_map.push(map_bar_itm);
 
       });
-      
+
       response.send(output);
 
     });
@@ -222,9 +222,9 @@ app.post('/api/updateData', (request, response) => {
       `-c ${soilcarbon}`,
       `-w ${wateravailability}`,
       `-d ${date}`,
-      `-v`, `${vegetation}`,
-      `-C`, `${cropquality}`,
-      `-t`, `${temperature}`
+      `-v, ${vegetation}`,
+      `-C, ${cropquality}`,
+      `-t, ${temperature}`
     ]
   }
   // Yash said instead of -2 make it the same value the user decides
