@@ -1,35 +1,37 @@
-var bar_zoom_sp = $('#zoom-bar-chart');
-var margin = {top: 20, right: 0, bottom: 30, left: 0},
-    width_bar = bar_zoom_sp.width() - margin.left - margin.right,
-    height_bar = 120 - margin.top - margin.bottom;
+export function drawBarZoomMap(data) {
 
-var x0 = d3.scale.ordinal()
+  console.log(data);
+
+  var bar_zoom_sp = $('#zoom-bar-chart');
+  var margin = {top: 20, right: 0, bottom: 30, left: 0},
+      width_bar = bar_zoom_sp.width() - margin.left - margin.right,
+      height_bar = 120 - margin.top - margin.bottom;
+
+  var x0 = d3.scale.ordinal()
     .rangeRoundBands([0, width_bar], .1);
 
-var x1 = d3.scale.ordinal();
+  var x1 = d3.scale.ordinal();
 
-var y = d3.scale.linear()
+  var y = d3.scale.linear()
     .range([height_bar, 0]);
 
-var xAxis = d3.svg.axis()
+  var xAxis = d3.svg.axis()
     .scale(x0)
     .tickSize(0)
     .orient("bottom");
 
-var yAxis = d3.svg.axis()
+  var yAxis = d3.svg.axis()
     .scale(y)
     .orient("left");
 
-var color = d3.scale.ordinal()
+  var color = d3.scale.ordinal()
     .range(["#76c6cc", "#e8b251", "#44a484"]);
 
-var svg_bar = d3.select('#zoom-bar-chart').append("svg")
-    .attr("width", width_bar + margin.left + margin.right)
-    .attr("height", height_bar + margin.top + margin.bottom)
-  .append("g")
-    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-var bar_chart = d3.json("/api/bar-data.json", function(error, data) {
+  var svg_bar = d3.select('#zoom-bar-chart').append("svg")
+      .attr("width", width_bar + margin.left + margin.right)
+      .attr("height", height_bar + margin.top + margin.bottom)
+    .append("g")
+      .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
     var categoriesNames_bar = data.map(function(d) { return d.categorie; });
     var rateNames = data[0].values.map(function(d) { return d.rate; });
@@ -44,9 +46,6 @@ var bar_chart = d3.json("/api/bar-data.json", function(error, data) {
         .call(xAxis);
 
     svg_bar.select('.y').transition().duration(500).delay(1300).style('opacity','1');
-
-
-    
 
     var slice = svg_bar.selectAll(".slice")
         .data(data)
@@ -91,7 +90,7 @@ var bar_chart = d3.json("/api/bar-data.json", function(error, data) {
     //        + "h" + (radius - width)
     //        + "z";
     // };
-  
+
 
     // Add BRUSH 
     var brush = d3.svg.brush()
@@ -112,17 +111,16 @@ var bar_chart = d3.json("/api/bar-data.json", function(error, data) {
                   });
 
     svg_bar.append("g")
-                    .attr("class", "x brush")
-                    .call(brush)
-                    .selectAll("rect")
-                        .attr("y", 0)
-                        .attr("height", height_bar);  
+    .attr("class", "x brush")
+    .call(brush)
+    .selectAll("rect")
+        .attr("y", 0)
+        .attr("height", height_bar);  
 
     brush.extent([10, width_bar-10]);
     brush(svg_bar.select(".brush").transition());
     brush.event(svg_bar.select(".brush").transition().delay(1000))
 
 
-});
-
+}
 

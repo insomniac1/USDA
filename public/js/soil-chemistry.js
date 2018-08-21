@@ -1,4 +1,4 @@
-export function drawFinalScatterplot(soil_chemistry_data) {
+export function drawSoilChemistry(soil_chemistry_data) {
   /*
   ** Set up
    */

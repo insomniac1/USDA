@@ -1,5 +1,6 @@
+import { drawBarZoomMap } from './bar-zoom-set';
 import { drawTemperatureVegetation } from './temperature-vegetation';
-import { drawFinalScatterplot } from './soil-chemistry';
+import { drawSoilChemistry } from './soil-chemistry';
 import { drawCurveLine } from './curve-line';
 
 (function() {
@@ -514,7 +515,8 @@ import { drawCurveLine } from './curve-line';
       success: function(data) {
         console.log('data updated');
         
-        drawFinalScatterplot(data[0].soil_chemistry);
+        drawBarZoomMap(data[0].bar_map);
+        drawSoilChemistry(data[0].soil_chemistry);
         drawTemperatureVegetation(data);
         drawCurveLine(data[0].years);
 
