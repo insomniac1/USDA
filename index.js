@@ -135,34 +135,34 @@ app.get('/api/data/', (request, response) => {
           latitude: value.y_centroid
         };
 
-        var soil_chemistry_itm = {};
+        // var soil_chemistry_itm = {};
 
         if (value.Yield) {
           if (value.water) {
-            soil_chemistry_itm = {
+            var soil_chemistry_itm_water = {
               county: (value.county_name)?value.county_name:'',
               yield: (value.Yield)?value.Yield:0,
               type: 'water',
               value: (value.water)?value.water:0,
-              code: value.area_symbol + parseInt(value.Yield.toString().replace('.', ''))
+              code: value.area_symbol + '-water-' + Number(value.Yield.toString().replace('.', ''))
             }
           }
           if (value.soil_quality) {
-            soil_chemistry_itm = {
+            var soil_chemistry_itm_soil = {
               county: (value.county_name)?value.county_name:'',
               yield: (value.Yield)?value.Yield:0,
               type: 'soil_quality',
               value: (value.soil_quality)?Number(value.soil_quality):0,
-              code: value.area_symbol + Number(value.Yield.toString().replace('.', ''))
+              code: value.area_symbol + '-soil_quality-' + Number(value.Yield.toString().replace('.', ''))
             }
           }
           if (value.carbon) {
-            soil_chemistry_itm = {
+            var soil_chemistry_itm_carbon = {
               county: (value.county_name)?value.county_name:'',
               yield: (value.Yield)?value.Yield:0,
               type: 'carbon',
-              value: (value.carbon)?value.carbon:0,
-              code: value.area_symbol + parseInt(value.Yield.toString().replace('.', ''))
+              value: (value.carbon)?Number(value.carbon):0,
+              code: value.area_symbol + '-carbon-' + Number(value.Yield.toString().replace('.', ''))
             }
           }
         }
@@ -192,7 +192,15 @@ app.get('/api/data/', (request, response) => {
         var existingIndex = output.indexOf(existing_new[0]);
 
         output[existingIndex].years.push(year_itm);
-        output[existingIndex].soil_chemistry.push(soil_chemistry_itm);
+        if(soil_chemistry_itm_water){
+          output[existingIndex].soil_chemistry.push(soil_chemistry_itm_water);
+        }
+        if(soil_chemistry_itm_soil){
+          output[existingIndex].soil_chemistry.push(soil_chemistry_itm_soil);
+        }
+        if(soil_chemistry_itm_carbon){
+          output[existingIndex].soil_chemistry.push(soil_chemistry_itm_carbon);
+        }
         output[existingIndex].bar_map.push(map_bar_itm);
 
       });
