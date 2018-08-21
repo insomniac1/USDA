@@ -33,12 +33,12 @@ export function drawBarZoomMap(data) {
     .append("g")
       .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-    var categoriesNames_bar = data.map(function(d) { return d.categorie; });
+    var yearsNames_bar = data.map(function(d) { return d.year; });
     var rateNames = data[0].values.map(function(d) { return d.rate; });
 
-    x0.domain(categoriesNames_bar);
+    x0.domain(yearsNames_bar);
     x1.domain(rateNames).rangeRoundBands([0, x0.rangeBand()]);
-    y.domain([0, d3.max(data, function(categorie) { return d3.max(categorie.values, function(d) { return d.value; }); })]);
+    y.domain([0, d3.max(data, function(year) { return d3.max(year.values, function(d) { return d.value; }); })]);
 
     svg_bar.append("g")
         .attr("class", "x axis")
@@ -51,7 +51,7 @@ export function drawBarZoomMap(data) {
         .data(data)
         .enter().append("g")
         .attr("class", "g")
-        .attr("transform",function(d) { return "translate(" + x0(d.categorie) + ",0)"; });
+        .attr("transform",function(d) { return "translate(" + x0(d.year) + ",0)"; });
 
     slice.selectAll("rect")
         .data(function(d) { return d.values; })
@@ -98,12 +98,17 @@ export function drawBarZoomMap(data) {
                   .on("brush", function(){
                           
                           var domain = x0.domain();
+
                           var domain_rate = width_bar/domain.length;
                           var selected = (brush.empty())?[0, width_bar]:brush.extent();
 
+                          var selected_start = Math.floor(selected[0]/domain_rate);
+                          var selected_end = Math.floor(selected[1]/domain_rate);
+                          selected_end = (selected_end < (domain.length - 1))?selected_end:(domain.length - 1);
+
                           var selected_brush = [
-                            domain[Math.floor(selected[0]/domain_rate)],
-                            domain[Math.floor(selected[1]/domain_rate)]
+                            domain[selected_start],
+                            domain[selected_end],
                           ];
 
                           // console.log(selected_brush);

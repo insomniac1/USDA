@@ -323,7 +323,9 @@
 *        Autocomplete 
 *
 *  *  *  *  *  *  *  *  *  */
-
+#searchCounty{
+  display: none;
+}
 .autocomplete-active{
     background-color: #d2d2d2;
 }
