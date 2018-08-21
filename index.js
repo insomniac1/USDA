@@ -192,7 +192,7 @@ app.post('/api/updateData', (request, response) => {
 
   console.log(longitude, latitude, soilquality, soilcarbon, wateravailability, date, cropquality, vegetation, temperature);
   const options = {
-    pythonPath: '/usr/local/bin/python3',
+    pythonPath: '/usr/bin/python',
     args: [`-x ${longitude}`,
       `-y ${latitude}`,
       `-q ${soilquality}`,
