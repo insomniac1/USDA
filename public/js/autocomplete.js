@@ -37,6 +37,7 @@ d3.json("/js/us-data-show.json", function(error, data) {
       name: countiesObj[`${key}`].name,
       state: stringKey.slice(0, sliceValue),
       originalKey: key,
+      countyId: (countiesObj[`${key}`].countyId)?countiesObj[`${key}`].countyId:0,
     }
     county_state.push(dataObj);
   });
@@ -46,7 +47,7 @@ d3.json("/js/us-data-show.json", function(error, data) {
   for (let i = 0; i < county_state.length; i++) {
       searchOptions.push({
         // id: county_state[i].state + '-' + county_state[i].originalKey,
-        id: county_state[i].originalKey,
+        id: county_state[i].originalKey+'-'+county_state[i].countyId,
         text: county_state[i].name,
         originalKey: county_state[i].originalKey,
       });

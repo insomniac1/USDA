@@ -119,10 +119,10 @@ app.get('/api/data/', (request, response) => {
 
         var year_itm = {
           year: value.Year,
-          yield : value.Yield,
-          soil_quality : value.soil_quality,
-          carbon : value.carbon,
-          water : value.water,
+          yield : (value.Yield)?value.Yield:0,
+          soil_quality : (value.soil_quality)?value.soil_quality:0,
+          carbon : (value.carbon)?value.carbon:0,
+          water : (value.water)?value.water:0,
           state : value.State,
           temperature : temperature_amount,
           vegetation: vegetation_amount,
@@ -136,46 +136,46 @@ app.get('/api/data/', (request, response) => {
         if (value.Yield) {
           if (value.water) {
             soil_chemistry_itm = {
-              county: value.county_name,
-              yield: value.Yield,
+              county: (value.county_name)?value.county_name:'',
+              yield: (value.Yield)?value.Yield:0,
               type: 'water',
-              value: value.water,
+              value: (value.water)?value.water:0,
               code: value.area_symbol + parseInt(value.Yield.toString().replace('.', ''))
             }
           }
           if (value.soil_quality) {
             soil_chemistry_itm = {
-              county: value.county_name,
-              yield: value.Yield,
+              county: (value.county_name)?value.county_name:'',
+              yield: (value.Yield)?value.Yield:0,
               type: 'soil_quality',
-              value: value.soil_quality,
+              value: (value.soil_quality)?value.soil_quality:0,
               code: value.area_symbol + parseInt(value.Yield.toString().replace('.', ''))
             }
           }
           if (value.carbon) {
             soil_chemistry_itm = {
-              county: value.county_name,
-              yield: value.Yield,
+              county: (value.county_name)?value.county_name:'',
+              yield: (value.Yield)?value.Yield:0,
               type: 'carbon',
-              value: value.carbon,
+              value: (value.carbon)?value.carbon:0,
               code: value.area_symbol + parseInt(value.Yield.toString().replace('.', ''))
             }
           }
         }
 
         var map_bar_itm = {
-          categorie: value.Year,
+          year: value.Year,
           values: [
             {
-              value: value.Yield,
+              value: (value.Yield)?value.Yield:0,
               rate: 'Yield'
             },
             {
-              value: value.area_harvested,
+              value: (value.area_harvested)?value.area_harvested:0,
               rate: 'Acres'
             },
             {
-              value: value.Yield,
+              value: (value.Yield)?value.Yield:0,
               rate: 'Production'
             }
           ]
@@ -188,7 +188,9 @@ app.get('/api/data/', (request, response) => {
         var existingIndex = output.indexOf(existing_new[0]);
 
         output[existingIndex].years.push(year_itm);
-        output[existingIndex].soil_chemistry.push(soil_chemistry_itm);
+        if(soil_chemistry_itm.length>1){
+          output[existingIndex].soil_chemistry.push(soil_chemistry_itm);
+        }
         output[existingIndex].bar_map.push(map_bar_itm);
 
       });

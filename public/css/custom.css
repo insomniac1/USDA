@@ -1,6 +1,7 @@
 /* START Circle Chart CSS */
 #chart-circle-wrapper{
   position: relative;
+  min-height: 360px;
 }
 
 #chart-circle-wrapper .scatter-chart-group {
@@ -399,4 +400,31 @@
 }
 .hidden{
   display: none !important;
+}
+
+/*  *  *  *  *  *  *  *  *  *
+*
+*        LOADING ... 
+*
+*  *  *  *  *  *  *  *  *  */
+.loading_sp{
+  display: none;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 99998;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background-color: #00000017;
+}
+.loading{
+  position: absolute;
+  z-index: 99999;
+  left: calc( 50% - 30px);
+  top: calc( 50% - 30px);
+}
+.loading svg path{
+  fill: #ffffff;
 }
