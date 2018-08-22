@@ -17,7 +17,7 @@ export function drawCurveLine(dataset_curve) {
         .range([0, width]);
 
     var yScale_curve = d3.scale.linear()
-        .domain([0, d3.max(dataset_curve, function(d){ return d.yield; })])
+        .domain([0, d3.max(dataset_curve, function(d){ return d.yield * 1.1; })])
         .range([height, 0]);
 
     var xAxis_curve = d3.svg.axis()

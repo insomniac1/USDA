@@ -21,6 +21,7 @@ d3.json("/js/us-data-show.json", function(error, data) {
   const county_state = [];
 
   const countiesObj = data.county;
+  const stateObj = data.state;
   
   // console.log(data.county);
 
@@ -36,14 +37,20 @@ d3.json("/js/us-data-show.json", function(error, data) {
       sliceValue = 2
     }
 
-    const dataObj = {
-      name: countiesObj[`${key}`].name,
-      state: stringKey.slice(0, sliceValue),
-      originalKey: key,
-      countyID: (countiesObj[`${key}`].countyID)?countiesObj[`${key}`].countyID:0,
+    var stateID = stringKey.slice(0, sliceValue);
+    if(stateObj[stateID]){
+
+        var stateName = stateObj[stateID].name.toUpperCase().replace(' ', '_');
+        const dataObj = {
+          name: countiesObj[`${key}`].name,
+          state: stateID,
+          stateName: stateName,
+          originalKey: key,
+          countyID: (countiesObj[`${key}`].countyID)?countiesObj[`${key}`].countyID:0,
+        }
+        county_state.push(dataObj);
     }
-    
-    county_state.push(dataObj);
+
   });
 
   var searchCounty = $("#searchCounty");
@@ -51,7 +58,7 @@ d3.json("/js/us-data-show.json", function(error, data) {
   for (let i = 0; i < county_state.length; i++) {
       searchOptions.push({
         // id: county_state[i].state + '-' + county_state[i].originalKey,
-        id: county_state[i].originalKey+'-'+county_state[i].countyID,
+        id: county_state[i].originalKey + '-' + county_state[i].countyID + '-' + county_state[i].stateName,
         text: county_state[i].name,
         originalKey: county_state[i].originalKey,
       });

@@ -147,7 +147,7 @@ $(document).ready(function() {
 
   // Temporary solution in order to show county on first page load
   setTimeout(function() {
-     $('#searchCounty').val('55027-WI027').trigger('change.select2');
+     $('#searchCounty').val('55027-WI027-WISCONSIN').trigger('change.select2');
    }, 3000);
 
 });

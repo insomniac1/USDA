@@ -510,19 +510,18 @@ import { drawCurveLine } from './curve-line';
 
   $("#searchCounty").on("select2:select change.select2", function(e) {
     
+    var originalKey_str = $(this).val();
+    
     $('.loading_sp').each(function(){
       $(this).css('display','block');
     });
 
     
-
-    var originalKey_str = $(this).val();
-    
     var originalKey = originalKey_str.split("-");
 
     var state_id = Math.floor(originalKey[0]/1000);
     var countyID = originalKey[1];
-    var stateName = originalKey[2];
+    var stateName = originalKey[2].replace('_', ' ');
 
     var selectedCounty = $(this).find('option[value="' + originalKey_str + '"]').html();
     $(".selectedCountyName").each(function(){

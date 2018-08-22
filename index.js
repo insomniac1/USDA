@@ -68,7 +68,7 @@ app.get('/api/bar-data.json', (request, response) => {
 app.get('/api/data/', (request, response) => {
 
   countyID = request.query.id;
-  stateName = request.query.state.replace('_', ' ');
+  stateName = request.query.state;
 
   csv()
     .fromFile(stateDataFilePath + stateName + '.csv')
