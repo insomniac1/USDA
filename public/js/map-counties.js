@@ -549,10 +549,51 @@ import { drawCurveLine } from './curve-line';
           })
         }
 
+        if(data[0].years.length == 0){
+          data[0].years = [
+              {
+                carbon:0,
+                cropquality:0,
+                latitude:0,
+                longitude:0,
+                soil_quality:0,
+                state:'',
+                temperature:0,
+                vegetation:0,
+                water:0,
+                year: "2017",
+                yield:0
+              }
+          ]
+        }
+
+        if(data[0].bar_map.length == 0){
+          data[0].bar_map = [
+              {
+                year:"2001",
+                values: [
+                  {
+                    rate:"Yield",
+                    value: 0
+                  },
+                  {
+                    rate:"Acres",
+                    value: 0
+                  },
+                  {
+                    rate:"Production",
+                    value: 0
+                  }
+                ]
+              }
+          ]
+        }
         
+
         $('.loading_sp').each(function(){
           $(this).css('display','none');
         });
+
 
         drawBarZoomMap(data[0].bar_map);
         drawSoilChemistry(data[0].soil_chemistry);

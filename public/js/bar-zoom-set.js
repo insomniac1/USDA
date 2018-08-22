@@ -1,5 +1,6 @@
 export function drawBarZoomMap(data) {
-
+  
+  $('#zoom-bar-chart').html('');
   // console.log(data);
 
   var bar_zoom_sp = $('#zoom-bar-chart');
@@ -45,6 +46,29 @@ export function drawBarZoomMap(data) {
               .attr("class", "x axis")
               .attr("transform", "translate(0," + height_bar + ")")
               .call(xAxis);
+
+          svg_bar.append("defs")
+            .append("pattern")
+              .attr("id", "img1")
+              .attr("patternUnits", "objectBoundingBox")
+              .attr("width", "7")
+              .attr("height", "68")
+              .append("image")
+                .attr("xlink:href", "/img/zoom-bar.png")
+                .attr("width", "7")
+                .attr("height", "68")
+
+          svg_bar.append("defs")
+            .append("pattern")
+              .attr("id", "img2")
+              .attr("patternUnits", "objectBoundingBox")
+              .attr("width", "7")
+              .attr("height", "68")
+              .append("image")
+                .attr("xlink:href", "/img/zoom-bar-right.png")
+                .attr("width", "7")
+                .attr("height", "68")
+
 
           svg_bar.select('.y').transition().duration(500).delay(1300).style('opacity','1');
 
@@ -95,33 +119,37 @@ export function drawBarZoomMap(data) {
 
           // Add BRUSH 
           var brush = d3.svg.brush()
-                        .x(x0)
-                        .on("brush", function(){
-                                
-                                var domain = x0.domain();
+            .x(x0)
+            .on("brush", function(){
+              var domain = x0.domain();
 
-                                var domain_rate = width_bar/domain.length;
-                                var selected = (brush.empty())?[0, width_bar]:brush.extent();
+              var domain_rate = width_bar/domain.length;
+              var selected = (brush.empty())?[0, width_bar]:brush.extent();
 
-                                var selected_start = Math.floor(selected[0]/domain_rate);
-                                var selected_end = Math.floor(selected[1]/domain_rate);
-                                selected_end = (selected_end < (domain.length - 1))?selected_end:(domain.length - 1);
+              var selected_start = Math.floor(selected[0]/domain_rate);
+              var selected_end = Math.floor(selected[1]/domain_rate);
+              selected_end = (selected_end < (domain.length - 1))?selected_end:(domain.length - 1);
 
-                                var selected_brush = [
-                                  domain[selected_start],
-                                  domain[selected_end],
-                                ];
+              var selected_brush = [
+                domain[selected_start],
+                domain[selected_end],
+              ];
 
-                                console.log(selected_brush);
-
-                        });
+              // console.log(selected_brush);
+            });
 
           svg_bar.append("g")
           .attr("class", "x brush")
           .call(brush)
           .selectAll("rect")
-              .attr("y", 0)
-              .attr("height", height_bar);  
+            .attr("y", 0)
+            .attr("height", height_bar);  
+
+          svg_bar.select('.resize.w')
+            .attr("fill", "url(#img1)")
+
+          svg_bar.select('.resize.e')
+            .attr("fill", "url(#img2)")
 
           brush.extent([10, width_bar-10]);
           brush(svg_bar.select(".brush").transition());
