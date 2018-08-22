@@ -29,7 +29,6 @@ $(document).ready(function() {
       'transform': 'translateX(-' + this.value * (100 / rangeMaxVal_water) + '%)'
     });
     $(this).siblings('.fill').css('width', this.value * (100 / rangeMaxVal_water) + '%');
-    console.log(this.value);
   }
 
   // Carbon Level
@@ -144,7 +143,6 @@ $(document).ready(function() {
     }
   });
 
-
   // Temporary solution in order to show county on first page load
   setTimeout(function() {
      $('#searchCounty').val('55027-WI027-WISCONSIN').trigger('change.select2');
@@ -160,7 +158,19 @@ function vegetationTooltip(args) {
   return args.value / 100 + '<div class="tooltip-label">Vegetation Level</div>';
 }
 
-$("#slider-water").focusout(function() {
+$("#slider-water").mouseup(function() {
+  updatePredictedData();
+});
+$("#slider-carbon").mouseup(function() {
+  updatePredictedData();
+});
+$("#slider-soil").mouseup(function() {
+  updatePredictedData();
+});
+$("#round-temperature").on('change', function() {
+  updatePredictedData();
+});
+$("#round-vegetation").on('change', function() {
   updatePredictedData();
 });
 
@@ -173,7 +183,7 @@ function updatePredictedData() {
       url: '/api/updateData',
       data: predictedData, // TO DO: make id dinamic
       headers: {
-          "Content-Type" : "application/json",
+        "Content-Type" : "application/json",
       },
       success: function(data) {
         console.log('predicted data updated');
