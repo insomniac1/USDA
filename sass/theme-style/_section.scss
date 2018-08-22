@@ -12,11 +12,9 @@
     @include media-breakpoint-up(md) {
       height: 40px;
     }
-
     @include media-breakpoint-down(sm) {
       height: 20px;
     }
-    
     background-color: $primary;
     display: block;
   }
@@ -26,7 +24,7 @@
   overflow: hidden;
 
   .section--corn-production & {
-    background-image: url('/img/corn-production.svg');
+    background-image: url("/img/corn-production.svg");
     background-position: 97% 143px;
     @include media-breakpoint-down(sm) {
       background-size: 300px;
@@ -36,18 +34,17 @@
 
   .section--country & {
     @include media-breakpoint-up(md) {
-      background-image: url('/img/bg-select-country.svg');
+      background-image: url("/img/bg-select-country.svg");
       background-position: 104% center;
     }
   }
 }
 
 .jumbotron-bg-corn {
-  background-image: url('/img/bg-jumbotron.svg');
+  background-image: url("/img/bg-jumbotron.svg");
   background-repeat: no-repeat;
   background-position: right 20px bottom 20px;
 }
-
 //chart
 .section--range-sliders {
   display: flex;
@@ -59,8 +56,8 @@
     position: relative;
     z-index: 1000;
     -webkit-appearance: none;
-       -moz-appearance: none;
-            appearance: none;
+    -moz-appearance: none;
+    appearance: none;
     background: transparent;
     height: 37px;
     border-radius: 5px;
@@ -69,6 +66,7 @@
     padding: 0;
     width: 100%;
   }
+
   input[type='range'] {
     position: relative;
     -webkit-appearance: none;
@@ -86,7 +84,7 @@
     &::-webkit-slider-thumb {
       position: relative;
       -webkit-appearance: none;
-              appearance: none;
+      appearance: none;
       width: 10px;
       height: 22px;
       cursor: pointer;
@@ -94,8 +92,8 @@
       z-index: 9999;
       position: relative;
 
-      &:hover,
-      &:active {}
+      &:active,
+      &:hover {}
     }
 
     &::-moz-range-track {
@@ -106,11 +104,12 @@
   .fill {
     bottom: 0;
     height: 37px;
-    width: 0%;
+    width: 0;
     border-radius: 6px;
     position: inherit;
     z-index: inherit;
   }
+
   .count {
     position: absolute;
     top: -21px;
@@ -118,9 +117,10 @@
     color: #000;
     padding: 2px 5px;
     text-align: center;
-    margin-left: 0px;
+    margin-left: 0;
     font-size: 11px;
   }
+
   .slider-container {
     display: inline-block;
     position: relative;
@@ -134,12 +134,14 @@
       background: #f5f5f5;
       border-radius: 6px;
     }
+
     input[type="range"] {
       position: absolute;
       top: 0;
       cursor: pointer;
       background: transparent;
     }
+
     .range-blue {
       /* Special styling for WebKit/Blink */
       input[type=range]::-webkit-slider-thumb {
@@ -147,31 +149,29 @@
         width: 10px;
         height: 22px;
         border: 0;
-        background: url('/img/range-blue.svg');
+        background: url("/img/range-blue.svg");
         background-size: 100% 100%;
         background-repeat: no-repeat;
         position: relative;
         z-index: 9999;
       }
-
       /* All the same stuff for Firefox */
       input[type=range]::-moz-range-thumb {
         width: 10px;
         height: 22px;
         border: 0;
-        background: url('/img/range-blue.svg');
+        background: url("/img/range-blue.svg");
         background-size: 100% 100%;
         background-repeat: no-repeat;
         position: relative;
         z-index: 9999;
       }
-
       /* All the same stuff for IE */
       input[type=range]::-ms-thumb {
         width: 10px;
         height: 22px;
         border: 0;
-        background: url('/img/range-blue.svg');
+        background: url("/img/range-blue.svg");
         background-size: 100% 100%;
         background-repeat: no-repeat;
         position: relative;
@@ -181,55 +181,57 @@
       .fill {
         background: #2E8BC2;
       }
+
       .count {
         color: #2E8BC2;
       }
     }
-    .range-teal {
 
+    .range-teal {
       /* Special styling for WebKit/Blink */
       input[type='range']::-webkit-slider-thumb {
         -webkit-appearance: none;
         width: 10px;
         height: 22px;
         border: 0;
-        background: url('/img/range-teal.svg');
+        background: url("/img/range-teal.svg");
         background-size: 100% 100%;
         background-repeat: no-repeat;
         position: relative;
         z-index: 9999;
       }
-
       /* All the same stuff for Firefox */
       input[type=range]::-moz-range-thumb {
         width: 10px;
         height: 22px;
         border: 0;
-        background: url('/img/range-teal.svg');
+        background: url("/img/range-teal.svg");
+        background-size: 100% 100%;
+        background-repeat: no-repeat;
+        position: relative;
+        z-index: 9999;
+      }
+      /* All the same stuff for IE */
+      input[type=range]::-ms-thumb {
+        width: 10px;
+        height: 22px;
+        border: 0;
+        background: url("/img/range-teal.svg");
         background-size: 100% 100%;
         background-repeat: no-repeat;
         position: relative;
         z-index: 9999;
       }
 
-      /* All the same stuff for IE */
-      input[type=range]::-ms-thumb {
-        width: 10px;
-        height: 22px;
-        border: 0;
-        background: url('/img/range-teal.svg');
-        background-size: 100% 100%;
-        background-repeat: no-repeat;
-        position: relative;
-        z-index: 9999;
-      }
       .fill {
-        background: #58C4B3;        
+        background: #58C4B3;
       }
+
       .count {
         color: #58C4B3;
       }
     }
+
     .range-red {
       /* Special styling for WebKit/Blink */
       input[type='range']::-webkit-slider-thumb {
@@ -237,39 +239,39 @@
         width: 10px;
         height: 22px;
         border: 0;
-        background: url('/img/range-red.svg');
+        background: url("/img/range-red.svg");
         background-size: 100% 100%;
         background-repeat: no-repeat;
         position: relative;
         z-index: 9999;
       }
-
       /* All the same stuff for Firefox */
       input[type=range]::-moz-range-thumb {
         width: 10px;
         height: 22px;
         border: 0;
-        background: url('/img/range-red.svg');
+        background: url("/img/range-red.svg");
+        background-size: 100% 100%;
+        background-repeat: no-repeat;
+        position: relative;
+        z-index: 9999;
+      }
+      /* All the same stuff for IE */
+      input[type=range]::-ms-thumb {
+        width: 10px;
+        height: 22px;
+        border: 0;
+        background: url("/img/range-red.svg");
         background-size: 100% 100%;
         background-repeat: no-repeat;
         position: relative;
         z-index: 9999;
       }
 
-      /* All the same stuff for IE */
-      input[type=range]::-ms-thumb {
-        width: 10px;
-        height: 22px;
-        border: 0;
-        background: url('/img/range-red.svg');
-        background-size: 100% 100%;
-        background-repeat: no-repeat;
-        position: relative;
-        z-index: 9999;
-      }
       .fill {
         background: #B6334F;
       }
+
       .count {
         color: #B6334F;
       }
@@ -284,18 +286,22 @@
         margin-bottom: 0;
       }
     }
+
     .rs-path-color {
       background: #f5f5f5;
     }
+
     .rs-handle {
       width: 14px !important;
       height: 27px !important;
       transform: rotate(90deg);
-      margin: -12.5px 0px 0 14px !important;
+      margin: -12.5px 0 0 14px !important;
     }
-    .rs-border  {
-        border-color: transparent;
+
+    .rs-border {
+      border-color: transparent;
     }
+
     .rs-tooltip-text {
       font-size: 50px;
       font-weight: bold;
@@ -304,6 +310,7 @@
         font-size: 30px;
         font-weight: normal;
       }
+
       .tooltip-label {
         font-size: 12px;
         font-weight: bold;
@@ -311,31 +318,37 @@
         color: #030502;
       }
     }
+
     .round-dark-teal {
       .rs-handle {
-        background: url('/img/range-teal-dark.svg') no-repeat;
+        background: url("/img/range-teal-dark.svg") no-repeat;
       }
+
       .rs-range-color {
         background: #56ADB3;
       }
+
       .rs-tooltip-text {
         color: #56ADB3;
       }
     }
+
     .round-yellow {
       .rs-handle {
-        background: url('/img/range-yellow.svg') no-repeat;
+        background: url("/img/range-yellow.svg") no-repeat;
       }
+
       .rs-range-color {
         background: #E8B251;
       }
+
       .rs-tooltip-text {
         color: #E8B251;
       }
     }
   }
-
 }
+
 .map-counties-sp {
   position: relative;
 
@@ -353,7 +366,7 @@
     }
 
     #states .active {
-      display:none;
+      display: none;
     }
 
     #state-borders {
@@ -368,20 +381,22 @@
     .county-boundary {
       fill: #aaa;
       stroke: #fff;
-      stroke-width: .5px;
+      stroke-width: 0.5px;
     }
 
-    .county-boundary:hover, .state:hover {
+    .county-boundary:hover,
+    .state:hover {
       fill: orange;
     }
   }
+
   .tooltip {
     background: #fff;
     margin: 12px;
     pointer-events: none;
     position: absolute;
     visibility: hidden;
-    box-shadow: 0px 1px 12px 0px rgba(0,0,0, 0.1);
+    box-shadow: 0 1px 12px 0 rgba(0,0,0, 0.1);
     padding: 0;
     border-radius: 5px;
 
@@ -389,21 +404,25 @@
       padding: 5px 9px;
     }
   }
+
   #tooltip-state {
-      font-weight: bold;
-      font-size: 12px;
-      line-height: 2em;
-      text-transform: uppercase;
+    font-weight: bold;
+    font-size: 12px;
+    line-height: 2em;
+    text-transform: uppercase;
   }
+
   #tooltip-content {
-      font-size: 14px;
-      text-transform: lowercase;
+    font-size: 14px;
+    text-transform: lowercase;
   }
+
   .county {
     fill: #fff;
     stroke: #fcfcfc;
     stroke-width: 0.5;
   }
+
   .state {
     fill: #fff;
     fill-opacity: 0.0;
@@ -411,6 +430,7 @@
     stroke-width: 1;
     cursor: pointer;
   }
+
   .highlight-inner {
     fill: none;
     pointer-events: none;
@@ -418,6 +438,7 @@
     stroke-width: 1;
     stroke-linejoin: round;
   }
+
   .highlight-outer {
     fill: none;
     pointer-events: none;
@@ -435,19 +456,24 @@
     &.line0 {
       stroke: #44A484;
     }
+
     &.line1 {
       stroke: #76C6CC;
     }
+
     &.line2 {
       stroke: #E8B251;
     }
   }
+
   .tick {
     font-size: 12px;
   }
-  .y.axis .tick {  
+
+  .y.axis .tick {
     stroke: #E1E1E1;
   }
+
   .overlay-info {
     width: 130px;
     height: 60px;
@@ -457,27 +483,36 @@
     stroke-width: 1px;
   }
 }
-
 //Internet Explorer Fixes
-
 @media screen and (-ms-high-contrast: active), screen and (-ms-high-contrast: none) {
   body.page--home {
-    .pb-md-5, .pb-3{
+    .pb-3,
+    .pb-md-5 {
       position: absolute;
-      bottom: 0%;
-      left: 0px;
-      right: 0px;
+      bottom: 0;
+      left: 0;
+      right: 0;
       margin-left: auto;
       margin-right: auto;
-
     }
-    .container{
+
+    .container {
       position: absolute;
-      left: 0px;
-      right: 0px;
+      left: 0;
+      right: 0;
       bottom: 41%;
       margin-left: auto;
       margin-right: auto;
+    }
+  }
+
+  body.page--landing {
+    .section--corn-production .section--header {
+      padding-top: 7em;
+    }
+
+    .section--country .section--header {
+      padding-top: 5em;
     }
   }
 }
