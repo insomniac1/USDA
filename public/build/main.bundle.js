@@ -12092,6 +12092,9 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.drawSoilChemistry = drawSoilChemistry;
+
+var _functions = __webpack_require__(/*! ./functions */ "./public/js/functions.js");
+
 function drawSoilChemistry(soil_chemistry_data) {
   /*
   ** Set up
@@ -12180,6 +12183,13 @@ function drawSoilChemistry(soil_chemistry_data) {
 
   // Initiate a group element for the circles
   var circleClipGroup = wrapper.append("g").attr("class", "circleClipWrapper");
+
+  // 1. Create gradients
+  var gradient_soil_chemistry = $("#chart-circle").find('svg')[0];
+  (0, _functions.createGradient)(gradient_soil_chemistry, 'soil-chemistry-gradient', [// Create gradient
+  { offset: '0%', 'stop-color': '#FFFFFF ', 'stop-opacity': '0.1' }, { offset: '75%', 'stop-color': '#EEEEEE', 'stop-opacity': '0.35' }]);
+
+  circleClipGroup.append("rect").attr("width", "100%").attr("height", "calc(100% - 50px)").attr("fill", "url(#soil-chemistry-gradient)");
 
   // Place the larger circles to eventually capture the mouse
   var circlesOuter = circleClipGroup.selectAll(".circle-wrapper").data(soil_chemistry_data.sort(function (a, b) {
