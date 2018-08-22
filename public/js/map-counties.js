@@ -482,7 +482,6 @@ import { drawCurveLine } from './curve-line';
         return {x: +d, y: dat.data[d]};
       });
 
-    console.log('updateTimeseries()');
     y.domain(dat.yRange);
     timeseries.select("g.y.axis")
       .call(yAxis);

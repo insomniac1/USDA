@@ -56,10 +56,11 @@ d3.json("/js/us-data-show.json", function(error, data) {
   var searchCounty = $("#searchCounty");
   var searchOptions = [];
   for (let i = 0; i < county_state.length; i++) {
+      var new_name = county_state[i].name;
       searchOptions.push({
         // id: county_state[i].state + '-' + county_state[i].originalKey,
         id: county_state[i].originalKey + '-' + county_state[i].countyID + '-' + county_state[i].stateName,
-        text: county_state[i].name,
+        text: new_name.substring(0, new_name.length - 2),
         originalKey: county_state[i].originalKey,
       });
   }
