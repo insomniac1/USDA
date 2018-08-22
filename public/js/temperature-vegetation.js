@@ -6,7 +6,7 @@ export function drawTemperatureVegetation(data) {
 
     var area_ContainerID = "#chart-gradient";
     var area_chart_sp = $('.gradient-wrapper');
-    var margin = {top: 0, right: 15, bottom: 30, left: 15},
+    var margin = {top: 0, right: 0, bottom: 30, left: 0},
         width_area  = area_chart_sp.width() - margin.left - margin.right,
         height_area = width_area * 0.6  - margin.top  - margin.bottom;
 
@@ -25,8 +25,13 @@ export function drawTemperatureVegetation(data) {
     var x_area = d3.scale.ordinal()
       .rangeRoundBands([0, width_area], -1.1);
 
-    var x_ticks = d3.scale.ordinal()
-      .rangeRoundBands([0, width_area], -0.7);
+    if(mobile_area) {
+      var x_ticks = d3.scale.ordinal()
+        .rangeRoundBands([0, width_area], 0);
+    } else {
+      var x_ticks = d3.scale.ordinal()
+        .rangeRoundBands([0, width_area], -0.7);
+    }
 
     // Add scale for y
     var y_area = d3.scale.linear()
@@ -34,8 +39,8 @@ export function drawTemperatureVegetation(data) {
 
     // Add x axis
     var xAxis_area = d3.svg.axis()
-      .scale(x_area)
-      // .scale(x_ticks)
+      // .scale(x_area)
+      .scale(x_ticks)
       .orient("bottom")
       .tickPadding(12)
       .tickSize(1)
@@ -107,9 +112,6 @@ export function drawTemperatureVegetation(data) {
      */
 
 
-
-
-
     margin = {top: 0, right: 0, bottom: 30, left: 0};
 
     var labelVar = 'year';
@@ -151,6 +153,10 @@ export function drawTemperatureVegetation(data) {
      */
     data.forEach(function (d, i) {
       x_area.domain(d.years.map(function (year_itm) {
+        return parseInt(year_itm[labelVar]);
+      }));
+
+      x_ticks.domain(d.years.map(function (year_itm) {
         return parseInt(year_itm[labelVar]);
       }));
     });
@@ -239,9 +245,6 @@ export function drawTemperatureVegetation(data) {
         .attr("class", function(d, i){ return "seriesPointsHover seriesPointsHover-"+i; });
 
     if((data[0].years.length != 1) && (data[0].years[0].state != "")){
-      console.log("Temperature DATA");
-      console.log(data);
-
       points_hover.selectAll(".point-hover")
         .data(function (d) { return d.values; })
         .enter().append("circle")
@@ -256,8 +259,6 @@ export function drawTemperatureVegetation(data) {
          .on("mouseover", function (d, i) { showPopover.call(this, d, i); })
          .on("mouseout",  function (d, i) { removePopovers.call(this, d, i); })
     }
-
-
 
     /*
     ** Going through series array and adding top border line
@@ -281,6 +282,7 @@ export function drawTemperatureVegetation(data) {
       var e = [];
       e.clientX = d3.mouse(this)[0];
       e.clientY = d3.mouse(this)[1];
+
       var area_tooltip = '<div id="area-tooltip" style="left: ' + (e.clientX + 25) + 'px; top: ' + (e.clientY - 50) + 'px;">';
           area_tooltip +=    '<span><strong>' + seriesLabels[d.name] + '</strong></br>' + d.value + '</span>';
           area_tooltip +=    '<span><strong>Year</strong></br>' + d.year + '</span>';
