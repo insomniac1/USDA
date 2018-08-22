@@ -1,3 +1,4 @@
+require("./functions.js");
 require("./autocomplete.js");
 require("./map-counties.js");
 require("./bar-zoom-set.js");
