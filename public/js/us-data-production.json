@@ -272,6 +272,6 @@
 		"unit": "ACRES",
 		"yearRange": ["2002", "2017"],
 		"colorQuantiles": [0, 20000, 50000, 100000, 150000],
-		"colorRange": ["#A5E7D1", "#8EDAC1", "#64C2A2", "#3FA885", "#20906A"]
+		"colorRange": ["#FBF0DE", "#F7E2BC", "#F2CC89", "#E9BF77", "#DBAB58"]
 	}
 }

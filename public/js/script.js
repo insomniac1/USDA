@@ -151,13 +151,7 @@ $(document).ready(function() {
     var type = btn.attr('data-type');
 
     updateDataMap(type);
-
-    // if(btn.hasClass('btn-active')) {
-    //   btn.removeClass('btn-active');
-    // } else {
-    //   btn.parents('.btn-js-group').find('.btn-active').removeClass('btn-active');
-    //   btn.addClass('btn-active');
-    // }
+ 
   });
   
 

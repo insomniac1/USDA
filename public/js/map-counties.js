@@ -111,7 +111,7 @@ import { drawCurveLine } from './curve-line';
         })
         .attr("d", path)
         .on("mouseout", function() {
-          destroyTooltip();
+          destroyTooltip();  
           highlight.selectAll('*').remove();
           if (uiState.mode === 'STATE') {
             changeCounty(undefined);
@@ -348,7 +348,9 @@ import { drawCurveLine } from './curve-line';
     if (uiState.state === undefined) {
       labels.region.html('United States');
     } else if (summary) {
-      labels.region.html(summary.state[stateID].name);
+      if(summary && summary.state && summary.state[stateID]){
+        labels.region.html(summary.state[stateID].name);
+      }
     }
     updateStateLabel(stateID);
   }
@@ -377,9 +379,10 @@ import { drawCurveLine } from './curve-line';
   }
 
   function updateStateLabel(stateID) {
-    // console.log(summary);
     if(stateID && summary) {
-      $('#tooltip-state').html(summary.state[stateID].name);
+      if(summary && summary.state && summary.state[stateID]){
+        $('#tooltip-state').html(summary.state[stateID].name);
+      }
     }
   }
 
@@ -399,9 +402,6 @@ import { drawCurveLine } from './curve-line';
     loading.select(".error").classed("hidden_elem", true);
     loading.classed("hidden_elem", false);
 
-    // d3.json('/js/us-data-yield.json', function(err, json) {
-    // d3.json('/js/us-data-area_harvested.json', function(err, json) {
-    // d3.json('/js/us-data-production.json', function(err, json) {
     d3.json('/js/us-data-' + type + '.json', function(err, json) {
 
       if (err) throw err;
@@ -490,15 +490,6 @@ import { drawCurveLine } from './curve-line';
     timeseries.append("path")
       .attr("class", "line")
       .attr("d", line(lineData));
-
-    timeseries.selectAll(".point").remove()
-    if (dat.data.hasOwnProperty(uiState.year)) {
-      timeseries.append("circle")
-        .attr("class", "point selected")
-        .attr("r", 4)
-        .attr("cx", x(uiState.year))
-        .attr("cy", y(dat.data[uiState.year]));
-    }
   }
 
   function destroyTooltip() {

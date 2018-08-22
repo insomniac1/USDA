@@ -11015,10 +11015,11 @@ d3.json("/js/us-data-show.json", function (error, data) {
   var searchCounty = $("#searchCounty");
   var searchOptions = [];
   for (var i = 0; i < county_state.length; i++) {
+    var new_name = county_state[i].name;
     searchOptions.push({
       // id: county_state[i].state + '-' + county_state[i].originalKey,
       id: county_state[i].originalKey + '-' + county_state[i].countyID + '-' + county_state[i].stateName,
-      text: county_state[i].name,
+      text: new_name.substring(0, new_name.length - 2),
       originalKey: county_state[i].originalKey
     });
   }
@@ -11053,6 +11054,7 @@ function drawBarZoomMap(data) {
 
   $('#zoom-bar-chart').html('');
   // console.log(data);
+  var mobileScreen = document.getElementById("zoom-bar-chart").offsetWidth < 550 ? true : false;
 
   var bar_zoom_sp = $('#zoom-bar-chart');
   var margin = { top: 20, right: 0, bottom: 30, left: 0 },
@@ -11065,7 +11067,13 @@ function drawBarZoomMap(data) {
 
   var y = d3.scale.linear().range([height_bar, 0]);
 
-  var xAxis = d3.svg.axis().scale(x0).tickSize(0).orient("bottom");
+  var xAxis = d3.svg.axis().scale(x0).tickSize(0).orient("bottom").tickFormat(function (d) {
+    if (mobileScreen) {
+      return d % 3 == 0 ? d : '';
+    } else {
+      return d;
+    }
+  });
 
   var yAxis = d3.svg.axis().scale(y).orient("left");
 
@@ -11589,7 +11597,9 @@ function changeState(stateID) {
   if (uiState.state === undefined) {
     labels.region.html('United States');
   } else if (summary) {
-    labels.region.html(summary.state[stateID].name);
+    if (summary && summary.state && summary.state[stateID]) {
+      labels.region.html(summary.state[stateID].name);
+    }
   }
   updateStateLabel(stateID);
 }
@@ -11618,9 +11628,10 @@ function changeCounty(countyID) {
 }
 
 function updateStateLabel(stateID) {
-  // console.log(summary);
   if (stateID && summary) {
-    $('#tooltip-state').html(summary.state[stateID].name);
+    if (summary && summary.state && summary.state[stateID]) {
+      $('#tooltip-state').html(summary.state[stateID].name);
+    }
   }
 }
 
@@ -11640,9 +11651,6 @@ function updateDataMap() {
   loading.select(".error").classed("hidden_elem", true);
   loading.classed("hidden_elem", false);
 
-  // d3.json('/js/us-data-yield.json', function(err, json) {
-  // d3.json('/js/us-data-area_harvested.json', function(err, json) {
-  // d3.json('/js/us-data-production.json', function(err, json) {
   d3.json('/js/us-data-' + type + '.json', function (err, json) {
 
     if (err) throw err;
@@ -11721,11 +11729,6 @@ function updateTimeseries() {
 
   timeseries.selectAll(".line").remove();
   timeseries.append("path").attr("class", "line").attr("d", line(lineData));
-
-  timeseries.selectAll(".point").remove();
-  if (dat.data.hasOwnProperty(uiState.year)) {
-    timeseries.append("circle").attr("class", "point selected").attr("r", 4).attr("cx", x(uiState.year)).attr("cy", y(dat.data[uiState.year]));
-  }
 }
 
 function destroyTooltip() {
@@ -12023,13 +12026,6 @@ $(document).ready(function () {
     var type = btn.attr('data-type');
 
     (0, _mapCounties.updateDataMap)(type);
-
-    // if(btn.hasClass('btn-active')) {
-    //   btn.removeClass('btn-active');
-    // } else {
-    //   btn.parents('.btn-js-group').find('.btn-active').removeClass('btn-active');
-    //   btn.addClass('btn-active');
-    // }
   });
 
   // Temporary solution in order to show county on first page load
