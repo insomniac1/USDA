@@ -129,7 +129,7 @@ app.get('/api/map-data/', (request, response) => {
     csv()
       .fromFile('./public/data_by_state/' + state_itm_name.name + '.csv')
       .then((state_json) => {
-          
+
           var output = {};
           Object.keys(county_list).map(function(countyKey, index) {
               var county_itm = county_list[countyKey];
@@ -147,13 +147,13 @@ app.get('/api/map-data/', (request, response) => {
               var states_rows = state_json.filter(function(s, z) {
                 return s.area_symbol === county_itm.countyID;
               });
-          
+
               if(states_rows.length > 0){
                 states_rows.forEach(function(states_row, j) {
-                    
-                 
+
+
                     county_add = true;
-                    
+
                     /*
                     // for PRODUCTION
                     if(states_row.area_harvested !== '' && states_row.area_harvested !== ' ' && states_row.Yield !== '' && states_row.Yield !== ' ' && states_row.Year !== '' && states_row.Year !== ' '){
@@ -168,14 +168,14 @@ app.get('/api/map-data/', (request, response) => {
 
                     if(states_row.Yield !== '' && states_row.Yield !== ' ' && states_row.Year !== '' && states_row.Year !== ' '){
                       var year_string = states_row.Year;
-                      
+
                       var yield_number = Number(states_row.area_harvested)*Number(states_row.yield);
                       county_new_data[year_string] = yield_number;
                     }
                 });
               }
-              
-              
+
+
               if(county_add){
                 var min_range = 0;
                 var max_range = 0;
@@ -192,7 +192,7 @@ app.get('/api/map-data/', (request, response) => {
                 }
               }
 
-             
+
 
           });
 
@@ -390,7 +390,7 @@ app.post('/api/updateData', (request, response) => {
         `-v`, `${vegetation}`, `${vegetation}`, `${vegetation}`, `${vegetation}`, `${vegetation}`, `${vegetation}`, `${vegetation}`, `${vegetation}`, `${vegetation}`, `${vegetation}`, `${vegetation}`, `${vegetation}`, `${vegetation}`, `${vegetation}`, `${vegetation}`, `${vegetation}`, `${vegetation}`, `${vegetation}`, `${vegetation}`, `${vegetation}`, `${vegetation}`,
        `-t`, `${temperature}`, `${temperature}`, `${temperature}`, `${temperature}`, `${temperature}`, `${temperature}`, `${temperature}`, `${temperature}`, `${temperature}`, `${temperature}`, `${temperature}`, `${temperature}`, `${temperature}`, `${temperature}`, `${temperature}`, `${temperature}`, `${temperature}`, `${temperature}`, `${temperature}`, `${temperature}`, `${temperature}`
      ],
-     scriptPath: '/var/www/usda'
+    
   }
   // Yash said instead of -2 make it the same value the user decides
   PythonShell.run(`${pickledStringPath}`, options, function(err, results) {
@@ -399,6 +399,7 @@ app.post('/api/updateData', (request, response) => {
       console.log(err);
       response.send(err);
     }
+      var results = results + " Bushels Per Acre";
     response.status(200).send(results);
 
   });
