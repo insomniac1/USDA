@@ -8,7 +8,7 @@ $(document).ready(function() {
   var slider_water = document.getElementById("slider-water");
   var rangeMaxVal_water = $(slider_water).prop('max');
 
-  
+
 
   // Default value
   $(slider_water).siblings('.count').text($(slider_water).val() + ' mm').css({
@@ -19,9 +19,9 @@ $(document).ready(function() {
 
   slider_water.oninput = function() {
 
-    var predictedData = JSON.parse($("#predicted-data").val()); 
-    predictedData.wateravailability = this.value; 
-    var textObject = JSON.stringify(predictedData); 
+    var predictedData = JSON.parse($("#predicted-data").val());
+    predictedData.wateravailability = this.value;
+    var textObject = JSON.stringify(predictedData);
     $("#predicted-data").text(textObject);
 
     $(this).siblings('.count').text(this.value + ' mm').css({
@@ -44,9 +44,9 @@ $(document).ready(function() {
   $(slider_carbon).siblings('.fill').css('width', $(slider_carbon).val() * (100 / rangeMaxVal_carbon) + '%');
 
   slider_carbon.oninput = function() {
-    var predictedData = JSON.parse($("#predicted-data").val()); 
-    predictedData.soilcarbon = this.value;  
-    var textObject = JSON.stringify(predictedData); 
+    var predictedData = JSON.parse($("#predicted-data").val());
+    predictedData.soilcarbon = this.value;
+    var textObject = JSON.stringify(predictedData);
     $("#predicted-data").text(textObject);
 
     $(this).siblings('.count').text(this.value + ' g').css({
@@ -74,9 +74,9 @@ $(document).ready(function() {
   $(slider_soil).siblings('.fill').css('width', $(slider_soil).val() * (100 / rangeMaxVal_soil) + '%');
 
   slider_soil.oninput = function() {
-    var predictedData = JSON.parse($("#predicted-data").val()); 
-    predictedData.soilquality = this.value; 
-    var textObject = JSON.stringify(predictedData); 
+    var predictedData = JSON.parse($("#predicted-data").val());
+    predictedData.soilquality = this.value;
+    var textObject = JSON.stringify(predictedData);
     $("#predicted-data").text(textObject);
 
     $(this).siblings('.count').text(soilValues[this.value]).css({
@@ -113,17 +113,17 @@ $(document).ready(function() {
     tooltipFormat: vegetationTooltip,
   });
 
-  $("#round-temperature").on('change', function() { 
-    var predictedData = JSON.parse($("#predicted-data").val()); 
-    predictedData.temperature = $(this).find('input').val();  
-    var textObject = JSON.stringify(predictedData); 
-    $("#predicted-data").text(textObject);  
-  }); 
-   $("#round-vegetation").on('change', function() { 
-    var predictedData = JSON.parse($("#predicted-data").val()); 
-    predictedData.vegetation = $(this).find('input').val() / 100; 
-    var textObject = JSON.stringify(predictedData); 
-    $("#predicted-data").text(textObject);      
+  $("#round-temperature").on('change', function() {
+    var predictedData = JSON.parse($("#predicted-data").val());
+    predictedData.temperature = $(this).find('input').val();
+    var textObject = JSON.stringify(predictedData);
+    $("#predicted-data").text(textObject);
+  });
+   $("#round-vegetation").on('change', function() {
+    var predictedData = JSON.parse($("#predicted-data").val());
+    predictedData.vegetation = $(this).find('input').val() / 100;
+    var textObject = JSON.stringify(predictedData);
+    $("#predicted-data").text(textObject);
   });
 
   $('.map-tab-btn').on('click', function(){
@@ -144,7 +144,7 @@ $(document).ready(function() {
     }
   });
 
-  
+
   // Temporary solution in order to show county on first page load
   setTimeout(function() {
      $('#searchCounty').val('55027-WI027').trigger('change.select2');
@@ -169,8 +169,8 @@ function updatePredictedData() {
     var predictedData = $("#predicted-data").val();
 
     $.ajax({
-      url: '/api/updateData/',
       type: 'POST',
+      url: '/api/updateData',
       data: predictedData, // TO DO: make id dinamic
       headers: {
           "Content-Type" : "application/json",
@@ -181,5 +181,3 @@ function updatePredictedData() {
       }
     });
 };
-
-
