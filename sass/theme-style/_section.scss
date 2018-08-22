@@ -282,6 +282,12 @@
     .round-slider-item {
       margin-bottom: 45px;
 
+      @include media-breakpoint-down(sm) {
+        & > div {
+          margin: 0 auto;
+        }
+      }
+
       &:last-child {
         margin-bottom: 0;
       }

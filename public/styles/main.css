@@ -12168,6 +12168,12 @@ footer ul {
   margin-bottom: 45px;
 }
 
+@media (max-width: 767.98px) {
+  .section--range-sliders .round-sliders .round-slider-item > div {
+    margin: 0 auto;
+  }
+}
+
 .section--range-sliders .round-sliders .round-slider-item:last-child {
   margin-bottom: 0;
 }
