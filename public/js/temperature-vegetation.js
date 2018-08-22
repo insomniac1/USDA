@@ -283,10 +283,21 @@ export function drawTemperatureVegetation(data) {
       e.clientX = d3.mouse(this)[0];
       e.clientY = d3.mouse(this)[1];
 
-      var area_tooltip = '<div id="area-tooltip" style="left: ' + (e.clientX + 25) + 'px; top: ' + (e.clientY - 50) + 'px;">';
-          area_tooltip +=    '<span><strong>' + seriesLabels[d.name] + '</strong></br>' + d.value + '</span>';
-          area_tooltip +=    '<span><strong>Year</strong></br>' + d.year + '</span>';
-          area_tooltip += '</div>';
+      var container_width = $("#chart-gradient").width();
+
+      if (e.clientX > container_width - 200) {
+        var area_tooltip = '<div id="area-tooltip" style="left: ' + (e.clientX - 200) + 'px; top: ' + (e.clientY - 50) + 'px;">';
+            area_tooltip +=    '<span><strong>' + seriesLabels[d.name] + '</strong></br>' + d.value + '</span>';
+            area_tooltip +=    '<span><strong>Year</strong></br>' + d.year + '</span>';
+            area_tooltip += '</div>';
+      } else {
+        var area_tooltip = '<div id="area-tooltip" style="left: ' + (e.clientX + 25) + 'px; top: ' + (e.clientY - 50) + 'px;">';
+            area_tooltip +=    '<span><strong>' + seriesLabels[d.name] + '</strong></br>' + d.value + '</span>';
+            area_tooltip +=    '<span><strong>Year</strong></br>' + d.year + '</span>';
+            area_tooltip += '</div>';
+      }
+
+
 
       $('.point-itm-' + d.name + '-' + i).css('opacity', 1);
 
