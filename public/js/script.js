@@ -142,6 +142,9 @@ $(document).ready(function() {
       btn.addClass('btn-active');
     }
   });
+  setTimeout(function() {
+     $('#searchCounty').val('19023-IA023-IOWA').trigger('change.select2');
+   }, 3000);
 
 });
 

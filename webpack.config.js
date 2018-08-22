@@ -3,6 +3,7 @@ var path = require('path');
 
  module.exports = {
      entry: './public/js/main.js',
+     mode: 'development',
      output: {
          path: path.resolve(__dirname, 'public', 'build'),
          filename: 'main.bundle.js'
