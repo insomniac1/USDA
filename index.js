@@ -4,6 +4,8 @@ const bodyParser = require('body-parser');
 const shell = require('shelljs');
 const dataFilePath = './data.csv';
 
+const stateDataFilePath = './data_by_state/';
+
 const spawn = require("child_process").spawn;
 const pickledStringPath = './yield_model_cli.py';
 
@@ -66,9 +68,10 @@ app.get('/api/bar-data.json', (request, response) => {
 app.get('/api/data/', (request, response) => {
 
   countyID = request.query.id;
+  stateName = request.query.state.replace('_', ' ');
 
   csv()
-    .fromFile(dataFilePath)
+    .fromFile(stateDataFilePath + stateName + '.csv')
     .then((data) => {
 
       //sends csv file as array of county objects
@@ -106,7 +109,7 @@ app.get('/api/data/', (request, response) => {
         }
 
 
-        var cropquality_amount = 0;
+      var cropquality_amount = 0;
       var  cropquality_excellent = 0;
       var  cropquality_fair = 0;
       var  cropquality_good = 0;

@@ -521,18 +521,20 @@ import { drawCurveLine } from './curve-line';
     var originalKey = originalKey_str.split("-");
 
     var state_id = Math.floor(originalKey[0]/1000);
-    var countyId = originalKey[1];
+    var countyID = originalKey[1];
+    var stateName = originalKey[2];
 
     var selectedCounty = $(this).find('option[value="' + originalKey_str + '"]').html();
     $(".selectedCountyName").each(function(){
       $(this).text(selectedCounty);
     });
-    // console.log(selectedCounty);
-    // console.log(countyId);
 
     $.ajax({
       type: 'GET',
-      data: { id: countyId }, // TO DO: make id dinamic
+      data: { 
+        id: countyID,
+        state: stateName
+      },
       dataType: "json",
       contentType: "application/json; charset=utf-8",
       url: '/api/data/',
@@ -542,7 +544,7 @@ import { drawCurveLine } from './curve-line';
         
         if(data.length == 0){
           data.push({
-            area_symbol: countyId,
+            area_symbol: countyID,
             years: [],
             soil_chemistry: [],
             bar_map: []
