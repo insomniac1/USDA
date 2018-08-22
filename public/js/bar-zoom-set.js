@@ -2,6 +2,7 @@ export function drawBarZoomMap(data) {
   
   $('#zoom-bar-chart').html('');
   // console.log(data);
+  var mobileScreen = document.getElementById("zoom-bar-chart").offsetWidth < 550 ? true : false;
 
   var bar_zoom_sp = $('#zoom-bar-chart');
   var margin = {top: 20, right: 0, bottom: 30, left: 0},
@@ -19,7 +20,14 @@ export function drawBarZoomMap(data) {
   var xAxis = d3.svg.axis()
     .scale(x0)
     .tickSize(0)
-    .orient("bottom");
+    .orient("bottom")
+    .tickFormat(function (d) {
+      if(mobileScreen){
+        return (d % 3 == 0) ? d : '';
+      } else {
+        return d;
+      }
+    });
 
   var yAxis = d3.svg.axis()
     .scale(y)

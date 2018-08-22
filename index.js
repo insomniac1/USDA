@@ -330,7 +330,8 @@ app.get('/api/data/', (request, response) => {
               rate: 'Acres'
             },
             {
-              value: (value.Yield)?Number(value.Yield):0,
+              // value: ((value.Yield)?Number(value.Yield):0) * ((value.area_harvested)?Number(value.area_harvested):0),
+              value: ((value.Yield)?Number(value.Yield):0) * ((value.area_harvested)?Number(value.area_harvested):0) / 100,
               rate: 'Production'
             }
           ]
