@@ -287,14 +287,26 @@ export function drawTemperatureVegetation(data) {
 
       if (e.clientX > container_width - 200) {
         var area_tooltip = '<div id="area-tooltip" style="left: ' + (e.clientX - 200) + 'px; top: ' + (e.clientY - 50) + 'px;">';
-            area_tooltip +=    '<span><strong>' + seriesLabels[d.name] + '</strong></br>' + d.value + '</span>';
-            area_tooltip +=    '<span><strong>Year</strong></br>' + d.year + '</span>';
-            area_tooltip += '</div>';
+        if(seriesLabels[d.name] == 'Temperature') {
+          area_tooltip +=    '<span><strong>' + seriesLabels[d.name] + '</strong></br>' + d.value.toFixed(1) + ' °F </span>';
+        } else if (seriesLabels[d.name] == 'Corn Yield') {
+          area_tooltip +=    '<span><strong>' + seriesLabels[d.name] + '</strong></br>' + d.value + ' Bushels/Acre </span>';
+        } else if (seriesLabels[d.name] == 'Vegetation') {
+          area_tooltip +=    '<span><strong>' + seriesLabels[d.name] + '</strong></br>' + d.value + '</span>';
+        }
+        area_tooltip +=    '<span><strong>Year</strong></br>' + d.year + '</span>';
+        area_tooltip += '</div>';
       } else {
         var area_tooltip = '<div id="area-tooltip" style="left: ' + (e.clientX + 25) + 'px; top: ' + (e.clientY - 50) + 'px;">';
+          if(seriesLabels[d.name] == 'Temperature') {
+            area_tooltip +=    '<span><strong>' + seriesLabels[d.name] + '</strong></br>' + d.value.toFixed(1) + ' °F </span>';
+          } else if (seriesLabels[d.name] == 'Corn Yield') {
+            area_tooltip +=    '<span><strong>' + seriesLabels[d.name] + '</strong></br>' + d.value + ' Bushels/Acre </span>';
+          } else if (seriesLabels[d.name] == 'Vegetation') {
             area_tooltip +=    '<span><strong>' + seriesLabels[d.name] + '</strong></br>' + d.value + '</span>';
-            area_tooltip +=    '<span><strong>Year</strong></br>' + d.year + '</span>';
-            area_tooltip += '</div>';
+          }
+          area_tooltip +=    '<span><strong>Year</strong></br>' + d.year + '</span>';
+          area_tooltip += '</div>';
       }
 
 

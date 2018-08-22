@@ -203,6 +203,8 @@ export function drawSoilChemistry(soil_chemistry_data) {
 
     var container_width = $("#chart-gradient").width();
 
+
+
     if (e.clientX > container_width - 200) {
       var cicle_tooltip = '<div id="circle-tooltip" style="left: ' + (e.clientX - 200) + 'px; top: ' + (e.clientY - 20) + 'px;">';
       cicle_tooltip +=    '<span class="soil-chemistry-county"><strong>County</strong></br>' + d.county + '</span>';
@@ -213,17 +215,17 @@ export function drawSoilChemistry(soil_chemistry_data) {
 
     switch(d.type) {
         case 'water':
-            cicle_tooltip +=  '<span class="soil-chemistry-water"><strong>Accessible Water</strong></br>' + Number.parseFloat(d.value).toFixed(1) + 'mm</span>';
+            cicle_tooltip +=  '<span class="soil-chemistry-water"><strong>Accessible Water</strong></br>' + Number.parseFloat(d.value).toFixed(1) + ' mm</span>';
             break;
         case 'carbon':
-            cicle_tooltip +=  '<span class="soil-chemistry-carbon""><strong>Carbon</strong></br>' + Number.parseFloat(d.value).toFixed(1) + '</span>';
+            cicle_tooltip +=  '<span class="soil-chemistry-carbon""><strong>Carbon</strong></br>' + Number.parseFloat(d.value).toFixed(1) + ' Per Square Meter</span>';
             break;
         case 'soil_quality':
             cicle_tooltip +=  '<span class="soil-chemistry-soil"><strong>Soil</strong></br>' + Number.parseFloat(d.value).toFixed(1) + '</span>';
             break;
         default:
     }
-    cicle_tooltip +=  '<span class="soil-chemistry-yield"><strong>Corn Yield</strong></br>' + Number.parseFloat(d.yield).toFixed(1) + '</span>';
+    cicle_tooltip +=  '<span class="soil-chemistry-yield"><strong>Corn Yield</strong></br>' + Number.parseFloat(d.yield).toFixed(1) + ' Bushels/Acre</span>';
     cicle_tooltip += '</div>';
 
     $('#chart-circle-wrapper').append(cicle_tooltip);

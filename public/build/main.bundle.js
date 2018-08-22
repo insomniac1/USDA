@@ -12294,17 +12294,17 @@ function drawSoilChemistry(soil_chemistry_data) {
 
     switch (d.type) {
       case 'water':
-        cicle_tooltip += '<span class="soil-chemistry-water"><strong>Accessible Water</strong></br>' + Number.parseFloat(d.value).toFixed(1) + 'mm</span>';
+        cicle_tooltip += '<span class="soil-chemistry-water"><strong>Accessible Water</strong></br>' + Number.parseFloat(d.value).toFixed(1) + ' mm</span>';
         break;
       case 'carbon':
-        cicle_tooltip += '<span class="soil-chemistry-carbon""><strong>Carbon</strong></br>' + Number.parseFloat(d.value).toFixed(1) + '</span>';
+        cicle_tooltip += '<span class="soil-chemistry-carbon""><strong>Carbon</strong></br>' + Number.parseFloat(d.value).toFixed(1) + ' Per Square Meter</span>';
         break;
       case 'soil_quality':
         cicle_tooltip += '<span class="soil-chemistry-soil"><strong>Soil</strong></br>' + Number.parseFloat(d.value).toFixed(1) + '</span>';
         break;
       default:
     }
-    cicle_tooltip += '<span class="soil-chemistry-yield"><strong>Corn Yield</strong></br>' + Number.parseFloat(d.yield).toFixed(1) + '</span>';
+    cicle_tooltip += '<span class="soil-chemistry-yield"><strong>Corn Yield</strong></br>' + Number.parseFloat(d.yield).toFixed(1) + ' Bushels/Acre</span>';
     cicle_tooltip += '</div>';
 
     $('#chart-circle-wrapper').append(cicle_tooltip);
@@ -12606,12 +12606,24 @@ function drawTemperatureVegetation(data) {
 
     if (e.clientX > container_width - 200) {
       var area_tooltip = '<div id="area-tooltip" style="left: ' + (e.clientX - 200) + 'px; top: ' + (e.clientY - 50) + 'px;">';
-      area_tooltip += '<span><strong>' + seriesLabels[d.name] + '</strong></br>' + d.value + '</span>';
+      if (seriesLabels[d.name] == 'Temperature') {
+        area_tooltip += '<span><strong>' + seriesLabels[d.name] + '</strong></br>' + d.value.toFixed(1) + ' °F </span>';
+      } else if (seriesLabels[d.name] == 'Corn Yield') {
+        area_tooltip += '<span><strong>' + seriesLabels[d.name] + '</strong></br>' + d.value + ' Bushels/Acre </span>';
+      } else if (seriesLabels[d.name] == 'Vegetation') {
+        area_tooltip += '<span><strong>' + seriesLabels[d.name] + '</strong></br>' + d.value + '</span>';
+      }
       area_tooltip += '<span><strong>Year</strong></br>' + d.year + '</span>';
       area_tooltip += '</div>';
     } else {
       var area_tooltip = '<div id="area-tooltip" style="left: ' + (e.clientX + 25) + 'px; top: ' + (e.clientY - 50) + 'px;">';
-      area_tooltip += '<span><strong>' + seriesLabels[d.name] + '</strong></br>' + d.value + '</span>';
+      if (seriesLabels[d.name] == 'Temperature') {
+        area_tooltip += '<span><strong>' + seriesLabels[d.name] + '</strong></br>' + d.value.toFixed(1) + ' °F </span>';
+      } else if (seriesLabels[d.name] == 'Corn Yield') {
+        area_tooltip += '<span><strong>' + seriesLabels[d.name] + '</strong></br>' + d.value + ' Bushels/Acre </span>';
+      } else if (seriesLabels[d.name] == 'Vegetation') {
+        area_tooltip += '<span><strong>' + seriesLabels[d.name] + '</strong></br>' + d.value + '</span>';
+      }
       area_tooltip += '<span><strong>Year</strong></br>' + d.year + '</span>';
       area_tooltip += '</div>';
     }
