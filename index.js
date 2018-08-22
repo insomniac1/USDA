@@ -250,7 +250,8 @@ app.get('/api/data/', (request, response) => {
         for (k = 0; k < 21; k++) {
           temperature_amount += parseFloat(value["Temperature_" + k]);
         }
-
+        temperature_amount = temperature_amount/21;
+        
         var vegetation_amount = 0;
         for (k = 0; k < 21; k++) {
           vegetation_amount += parseFloat(value["Vegetation_" + k]);
