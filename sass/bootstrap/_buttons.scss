@@ -3,7 +3,10 @@
 //
 // Base styles
 //
-
+.btn-style {
+  font-weight: $btn-font-weight;
+  @include button-size($btn-padding-y, $btn-padding-x, $font-size-base, $btn-line-height, $btn-border-radius);
+}
 .btn {
   display: inline-block;
   font-weight: $btn-font-weight;

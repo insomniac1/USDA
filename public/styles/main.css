@@ -2239,6 +2239,14 @@ textarea.form-control {
   border-bottom: 1px solid #7A7A7A;
 }
 
+.btn-style {
+  font-weight: 700;
+  padding: 0.5rem 0.938rem;
+  font-size: 1rem;
+  line-height: 1.625;
+  border-radius: 6rem;
+}
+
 .btn {
   display: inline-block;
   font-weight: 700;
