@@ -8,3 +8,5 @@ require("./curve-line.js");
 
 
 require("./script.js");
+
+require('core-js');
