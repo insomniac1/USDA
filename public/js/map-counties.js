@@ -3,7 +3,7 @@ import { drawTemperatureVegetation } from './temperature-vegetation';
 import { drawSoilChemistry } from './soil-chemistry';
 import { drawCurveLine } from './curve-line';
 
-(function() {
+
 
   var tooltip = d3.select(".tooltip"),
       tooltipState = tooltip.select("#tooltip-state");
@@ -111,6 +111,7 @@ import { drawCurveLine } from './curve-line';
         })
         .attr("d", path)
         .on("mouseout", function() {
+          destroyTooltip();
           highlight.selectAll('*').remove();
           if (uiState.mode === 'STATE') {
             changeCounty(undefined);
@@ -389,7 +390,8 @@ import { drawCurveLine } from './curve-line';
     }
   }
 
-  function updateData() {
+
+  export function updateDataMap(type = 'yield') {
     isDataReady = false;
 
 
@@ -397,15 +399,19 @@ import { drawCurveLine } from './curve-line';
     loading.select(".error").classed("hidden_elem", true);
     loading.classed("hidden_elem", false);
 
-    d3.json('/js/us-data-show.json', function(err, json) {
+    // d3.json('/js/us-data-yield.json', function(err, json) {
+    // d3.json('/js/us-data-area_harvested.json', function(err, json) {
+    // d3.json('/js/us-data-production.json', function(err, json) {
+    d3.json('/js/us-data-' + type + '.json', function(err, json) {
+
       if (err) throw err;
 
       summary = json;
 
       // console.log(summary.county.)
 
-      color_map.range(summary.metadata.colorRange); // From file us-data-show.js
-      color_map.domain(summary.metadata.colorQuantiles); // From file us-data-show.js
+      color_map.range(summary.metadata.colorRange); // From file us-data.js
+      color_map.domain(summary.metadata.colorQuantiles); // From file us-data.js
 
       x.domain(summary.metadata.yearRange);
       timeseries.select("g.x.axis")
@@ -469,7 +475,7 @@ import { drawCurveLine } from './curve-line';
       }
     }
 
-    if (dat === undefined) return;
+    if (dat === undefined || dat.data == null) return;
 
     var lineData = Object.keys(dat.data)
       .map(function(d) {
@@ -646,6 +652,4 @@ import { drawCurveLine } from './curve-line';
 
   initUI();
   initMap();
-  window.setTimeout(updateData, 1500);
-
-})();
+  window.setTimeout(updateDataMap, 1500);

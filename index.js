@@ -1,10 +1,13 @@
 const express = require('express');
 const csv = require('csvtojson');
+const fs = require('fs');
 const bodyParser = require('body-parser');
 const shell = require('shelljs');
+var jsonfile = require('jsonfile')
+
 const dataFilePath = './data.csv';
 
-const stateDataFilePath = './data_by_state/';
+const stateDataFilePath = './public/data_by_state/';
 
 const spawn = require("child_process").spawn;
 const pickledStringPath = './yield_model_cli.py';
@@ -64,6 +67,151 @@ app.get('/api/gradient-area-data.csv', (request, response) => {
 app.get('/api/bar-data.json', (request, response) => {
   response.render('api/bar_data');
 });
+
+
+app.get('/api/map-data/', (request, response) => {
+
+  var state_name = [
+      { name: 'ALABAMA'},
+      { name: 'ARIZONA'},
+      { name: 'ARKANSAS'},
+      { name: 'CALIFORNIA'},
+      { name: 'COLORADO'},
+      { name: 'DELAWARE'},
+      { name: 'FLORIDA'},
+      { name: 'GEORGIA'},
+      { name: 'IDAHO'},
+      { name: 'ILLINOIS'},
+      { name: 'INDIANA'},
+      { name: 'IOWA'},
+      { name: 'KANSAS'},
+      { name: 'KENTUCKY'},
+      { name: 'LOUISIANA'},
+      { name: 'MARYLAND'},
+      { name: 'MASSACHUSETTS'},
+      { name: 'MICHIGAN'},
+      { name: 'MINNESOTA'},
+      { name: 'MISSISSIPPI'},
+      { name: 'MISSOURI'},
+      { name: 'MONTANA'},
+      { name: 'NEBRASKA'},
+      { name: 'NEVADA'},
+      { name: 'NEW HAMPSHIRE'},
+      { name: 'NEW JERSEY'},
+      { name: 'NEW MEXICO'},
+      { name: 'NEW YORK'},
+      { name: 'NORTH CAROLINA'},
+      { name: 'NORTH DAKOTA'},
+      { name: 'OHIO'},
+      { name: 'OKLAHOMA'},
+      { name: 'OREGON'},
+      { name: 'PENNSYLVANIA'},
+      { name: 'RHODE ISLAND'},
+      { name: 'SOUTH CAROLINA'},
+      { name: 'SOUTH DAKOTA'},
+      { name: 'TENNESSEE'},
+      { name: 'TEXAS'},
+      { name: 'UTAH'},
+      { name: 'VERMONT'},
+      { name: 'VIRGINIA'},
+      { name: 'WASHINGTON'},
+      { name: 'WEST VIRGINIA'},
+      { name: 'WISCONSIN'},
+      { name: 'WYOMING'}
+
+    ];
+
+
+  parseusdata = JSON.parse(fs.readFileSync("./public/js/us-data-show.json", "utf8"));
+  county_list = parseusdata.county;
+
+  state_name.forEach(function(state_itm_name) {
+    csv()
+      .fromFile('./public/data_by_state/' + state_itm_name.name + '.csv')
+      .then((state_json) => {
+          
+          var output = {};
+          Object.keys(county_list).map(function(countyKey, index) {
+              var county_itm = county_list[countyKey];
+
+
+              var county_new_itm = {
+                      countyID: county_itm.countyID,
+                      data: [],
+                      yRange: [],
+                      name: county_itm.name
+                    };
+              var county_new_data = {};
+              var county_add = false;
+
+              var states_rows = state_json.filter(function(s, z) {
+                return s.area_symbol === county_itm.countyID;
+              });
+          
+              if(states_rows.length > 0){
+                states_rows.forEach(function(states_row, j) {
+                    
+                 
+                    county_add = true;
+                    
+                    /*
+                    // for PRODUCTION
+                    if(states_row.area_harvested !== '' && states_row.area_harvested !== ' ' && states_row.Yield !== '' && states_row.Yield !== ' ' && states_row.Year !== '' && states_row.Year !== ' '){
+                      var year_string = states_row.Year;
+                      var  area_harvested = (states_row.area_harvested == '' && states_row.area_harvested == ' ') ? 0 : Number(states_row.area_harvested);
+                      var  area_yield = (states_row.Yield == '' && states_row.Yield == ' ') ? 0 : Number(states_row.Yield);
+                      var yield_number = area_harvested*area_yield;
+                      var yield_number = Number(states_row.area_harvested)*Number(states_row.yield);
+                      county_new_data[year_string] = yield_number;
+                    }
+                    */
+
+                    if(states_row.Yield !== '' && states_row.Yield !== ' ' && states_row.Year !== '' && states_row.Year !== ' '){
+                      var year_string = states_row.Year;
+                      
+                      var yield_number = Number(states_row.area_harvested)*Number(states_row.yield);
+                      county_new_data[year_string] = yield_number;
+                    }
+                });
+              }
+              
+              
+              if(county_add){
+                var min_range = 0;
+                var max_range = 0;
+                for (var key_new in county_new_data) {
+                  if((county_new_data[key_new] < min_range) || (min_range == 0)) min_range = county_new_data[key_new];
+                  if(county_new_data[key_new] > max_range) max_range = county_new_data[key_new];
+                }
+
+                county_new_itm.yRange = [min_range, max_range];
+                county_new_itm.data = county_new_data;
+
+                if(county_new_itm){
+                  output[countyKey] = county_new_itm;
+                }
+              }
+
+             
+
+          });
+
+          // console.log(output);
+
+          var file = './public/js/us-data-show-empty.json'
+          jsonfile.writeFileSync(file, output, {flag: 'a'})
+
+          console.log('VOILA');
+
+        })
+
+      });
+
+  console.log('=  =  =  =  Map Data Works  =  =  =  =  =  ');
+  response.send('-  -  -  -  It works  -  -  -  -  -  -  ');
+});
+
+
 
 app.get('/api/data/', (request, response) => {
 

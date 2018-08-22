@@ -1,3 +1,5 @@
+import { updateDataMap } from './map-counties';
+
 $(document).ready(function() {
 
   /*
@@ -142,6 +144,25 @@ $(document).ready(function() {
       btn.addClass('btn-active');
     }
   });
+
+
+  $('.map-btn-data').on('click', function(){
+    var btn = $(this);
+    var type = btn.attr('data-type');
+
+    updateDataMap(type);
+
+    // if(btn.hasClass('btn-active')) {
+    //   btn.removeClass('btn-active');
+    // } else {
+    //   btn.parents('.btn-js-group').find('.btn-active').removeClass('btn-active');
+    //   btn.addClass('btn-active');
+    // }
+  });
+  
+
+
+  // Temporary solution in order to show county on first page load
   setTimeout(function() {
      $('#searchCounty').val('19023-IA023-IOWA').trigger('change.select2');
    }, 3000);
