@@ -237,20 +237,24 @@ export function drawTemperatureVegetation(data) {
       .enter().append("g")
         .attr("class", function(d, i){ return "seriesPointsHover seriesPointsHover-"+i; });
 
+    if((data[0].years.length != 1) && (data[0].years[0].state != "")){
+      console.log("Temperature DATA");
+      console.log(data);
 
-    points_hover.selectAll(".point-hover")
-      .data(function (d) { return d.values; })
-      .enter().append("circle")
-       .attr("class", "point-hover")
-       .attr("cx", function (d) {
-          return x_area(d.year) + x_area.rangeBand() / 2;
-        })
-       .attr("cy", function (d) { return y_area(d.y); })
-       .attr("r", "25px")
-       .style("opacity", 0)
-       .style("fill",function (d) { return color_area(d.name); })
-       .on("mouseover", function (d, i) { showPopover.call(this, d, i); })
-       .on("mouseout",  function (d, i) { removePopovers.call(this, d, i); })
+      points_hover.selectAll(".point-hover")
+        .data(function (d) { return d.values; })
+        .enter().append("circle")
+         .attr("class", "point-hover")
+         .attr("cx", function (d) {
+            return x_area(d.year) + x_area.rangeBand() / 2;
+          })
+         .attr("cy", function (d) { return y_area(d.y); })
+         .attr("r", "25px")
+         .style("opacity", 0)
+         .style("fill",function (d) { return color_area(d.name); })
+         .on("mouseover", function (d, i) { showPopover.call(this, d, i); })
+         .on("mouseout",  function (d, i) { removePopovers.call(this, d, i); })
+    }
 
 
 

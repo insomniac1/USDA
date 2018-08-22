@@ -122,7 +122,6 @@ import { drawCurveLine } from './curve-line';
             return;
           }
 
-
           d3.select(this).style("cursor", "pointer");
 
           highlight.append("path")
@@ -144,9 +143,6 @@ import { drawCurveLine } from './curve-line';
           // }
 
           showTooltip(d.id);
-
-
-          console.log(d);
 
         });
 
@@ -376,12 +372,20 @@ import { drawCurveLine } from './curve-line';
     } else {
       // labels.region.html(summary.county[countyID].name);
     }
-    updateStateLabel()
+    updateCountyLabel(countyID)
   }
 
   function updateStateLabel(stateID) {
+    // console.log(summary);
     if(stateID && summary) {
       $('#tooltip-state').html(summary.state[stateID].name);
+    }
+  }
+
+  function updateCountyLabel(countyID) {
+    if(countyID && summary) {
+      var countyName = (summary.county[countyID].name) ? summary.county[countyID].name : countyID;
+      $('#tooltip-state').html(countyName);
     }
   }
 
@@ -397,6 +401,8 @@ import { drawCurveLine } from './curve-line';
       if (err) throw err;
 
       summary = json;
+
+      // console.log(summary.county.)
 
       color_map.range(summary.metadata.colorRange); // From file us-data-show.js
       color_map.domain(summary.metadata.colorQuantiles); // From file us-data-show.js
@@ -492,6 +498,7 @@ import { drawCurveLine } from './curve-line';
   function destroyTooltip() {
     tooltip.style("opacity", 0);
   }
+  
   function showTooltip(d) {
     if (!isDataReady) return;
 

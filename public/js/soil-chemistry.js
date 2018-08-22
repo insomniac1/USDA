@@ -9,13 +9,14 @@ export function drawSoilChemistry(soil_chemistry_data) {
   var circle_chart_sp = $('#chart-circle-wrapper');
 
   // Scatterplot
-  var margin = {left: 30, top: 20, right: 20, bottom: 30},
+  var margin = {left: 0, top: 20, right: 0, bottom: 30},
     width_circle = circle_chart_sp.width() - margin.left - margin.right,
     height = width_circle*2/3;
 
   var svg_cicle = d3.select("#chart-circle").append("svg")
     .attr("width", (width_circle + margin.left + margin.right))
     .attr("height", (height + margin.top + margin.bottom));
+
 
   var wrapper = svg_cicle.append("g").attr("class", "chordWrapper")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
