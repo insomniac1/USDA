@@ -187,8 +187,15 @@ export function drawSoilChemistry(soil_chemistry_data) {
     e.clientX = d3.mouse(this)[0];
     e.clientY = d3.mouse(this)[1];
 
-    var cicle_tooltip = '<div id="circle-tooltip" style="left: ' + (e.clientX + 50) + 'px; top: ' + (e.clientY - 20) + 'px;">';
-    cicle_tooltip +=    '<span class="soil-chemistry-county"><strong>County</strong></br>' + d.county + '</span>';
+    var container_width = $("#chart-gradient").width();
+
+    if (e.clientX > container_width - 200) {
+      var cicle_tooltip = '<div id="circle-tooltip" style="left: ' + (e.clientX - 200) + 'px; top: ' + (e.clientY - 20) + 'px;">';
+      cicle_tooltip +=    '<span class="soil-chemistry-county"><strong>County</strong></br>' + d.county + '</span>';
+    } else {
+      var cicle_tooltip = '<div id="circle-tooltip" style="left: ' + (e.clientX + 50) + 'px; top: ' + (e.clientY - 20) + 'px;">';
+      cicle_tooltip +=    '<span class="soil-chemistry-county"><strong>County</strong></br>' + d.county + '</span>';
+    }
 
     switch(d.type) {
         case 'water':
