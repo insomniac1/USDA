@@ -1,5 +1,5 @@
 export function drawBarZoomMap(data) {
-  
+
   $('#zoom-bar-chart').html('');
   // console.log(data);
   var mobileScreen = document.getElementById("zoom-bar-chart").offsetWidth < 550 ? true : false;
@@ -97,12 +97,12 @@ export function drawBarZoomMap(data) {
                   .on("mouseover", function(d) {
                       // d3.select(this).style("fill", d3.rgb(color(d.rate)).darker(2));
                   })
-                  .attr("rx", 2) 
+                  .attr("rx", 2)
                   .attr("ry", 2)
               .on("mouseout", function(d) {
                   // d3.select(this).style("fill", color(d.rate));
               });
-          
+
 
           slice.selectAll("rect")
               .transition()
@@ -110,7 +110,7 @@ export function drawBarZoomMap(data) {
               .duration(1000)
               .attr("y", function(d) { return y(d.value); })
               .attr("height", function(d) { return height_bar - y(d.value); });
-              // .attr("d", function(d,i){ 
+              // .attr("d", function(d,i){
               //     return rectangleBarRadius(10+40*i,100-d.value,20,d.value,20);
               // });
 
@@ -125,7 +125,7 @@ export function drawBarZoomMap(data) {
           // };
 
 
-          // Add BRUSH 
+          // Add BRUSH
           var brush = d3.svg.brush()
             .x(x0)
             .on("brush", function(){
@@ -151,7 +151,7 @@ export function drawBarZoomMap(data) {
           .call(brush)
           .selectAll("rect")
             .attr("y", 0)
-            .attr("height", height_bar);  
+            .attr("height", height_bar);
 
           svg_bar.select('.resize.w')
             .attr("fill", "url(#img1)")
@@ -165,4 +165,3 @@ export function drawBarZoomMap(data) {
     }
 
 }
-

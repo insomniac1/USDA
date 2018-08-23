@@ -1,4 +1,4 @@
-import { drawBarZoomMap } from './bar-zoom-set';
+// import { drawBarZoomMap } from './bar-zoom-set';
 import { drawTemperatureVegetation } from './temperature-vegetation';
 import { drawSoilChemistry } from './soil-chemistry';
 import { drawCurveLine } from './curve-line';
@@ -111,7 +111,7 @@ import { drawCurveLine } from './curve-line';
         })
         .attr("d", path)
         .on("mouseout", function() {
-          destroyTooltip();  
+          destroyTooltip();
           highlight.selectAll('*').remove();
           if (uiState.mode === 'STATE') {
             changeCounty(undefined);
@@ -137,7 +137,7 @@ import { drawCurveLine } from './curve-line';
             .style("stroke-width", 1 / uiState.zoomScale + "px");
 
           changeCounty(d.id);
-          
+
           // if ((summary) && (summary.length > 0) && (summary.state.length > 0) && !summary.state.hasOwnProperty(d.id)) {
           //   d3.select(this).style("cursor", "not-allowed");
           //   return;
@@ -495,7 +495,7 @@ import { drawCurveLine } from './curve-line';
   function destroyTooltip() {
     tooltip.style("opacity", 0);
   }
-  
+
   function showTooltip(d) {
     if (!isDataReady) return;
 
@@ -513,14 +513,14 @@ import { drawCurveLine } from './curve-line';
   }
 
   $("#searchCounty").on("select2:select change.select2", function(e) {
-    
+
     var originalKey_str = $(this).val();
-    
+
     $('.loading_sp').each(function(){
       $(this).css('display','block');
     });
 
-    
+
     var originalKey = originalKey_str.split("-");
 
     var state_id = Math.floor(originalKey[0]/1000);
@@ -534,7 +534,7 @@ import { drawCurveLine } from './curve-line';
 
     $.ajax({
       type: 'GET',
-      data: { 
+      data: {
         id: countyID,
         state: stateName
       },
@@ -544,7 +544,7 @@ import { drawCurveLine } from './curve-line';
       success: function(data) {
         console.log(data);
         console.log('data updated');
-        
+
         if(data.length == 0){
           data.push({
             area_symbol: countyID,
@@ -593,14 +593,14 @@ import { drawCurveLine } from './curve-line';
               }
           ]
         }
-        
+
 
         $('.loading_sp').each(function(){
           $(this).css('display','none');
         });
 
 
-        drawBarZoomMap(data[0].bar_map);
+        // drawBarZoomMap(data[0].bar_map);
         drawSoilChemistry(data[0].soil_chemistry);
         drawTemperatureVegetation(data);
         drawCurveLine(data[0].years);

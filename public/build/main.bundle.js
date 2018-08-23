@@ -11132,7 +11132,7 @@ function drawBarZoomMap(data) {
     }).attr("height", function (d) {
       return height_bar - y(d.value);
     });
-    // .attr("d", function(d,i){ 
+    // .attr("d", function(d,i){
     //     return rectangleBarRadius(10+40*i,100-d.value,20,d.value,20);
     // });
 
@@ -11147,7 +11147,7 @@ function drawBarZoomMap(data) {
     // };
 
 
-    // Add BRUSH 
+    // Add BRUSH
     var brush = d3.svg.brush().x(x0).on("brush", function () {
       var domain = x0.domain();
 
@@ -11335,8 +11335,6 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.updateDataMap = updateDataMap;
 
-var _barZoomSet = __webpack_require__(/*! ./bar-zoom-set */ "./public/js/bar-zoom-set.js");
-
 var _temperatureVegetation = __webpack_require__(/*! ./temperature-vegetation */ "./public/js/temperature-vegetation.js");
 
 var _soilChemistry = __webpack_require__(/*! ./soil-chemistry */ "./public/js/soil-chemistry.js");
@@ -11344,7 +11342,8 @@ var _soilChemistry = __webpack_require__(/*! ./soil-chemistry */ "./public/js/so
 var _curveLine = __webpack_require__(/*! ./curve-line */ "./public/js/curve-line.js");
 
 var tooltip = d3.select(".tooltip"),
-    tooltipState = tooltip.select("#tooltip-state");
+    tooltipState = tooltip.select("#tooltip-state"); // import { drawBarZoomMap } from './bar-zoom-set';
+
 var tooltipOffset = [0][0];
 var loading;
 var legendIcon;
@@ -11823,7 +11822,7 @@ $("#searchCounty").on("select2:select change.select2", function (e) {
         $(this).css('display', 'none');
       });
 
-      (0, _barZoomSet.drawBarZoomMap)(data[0].bar_map);
+      // drawBarZoomMap(data[0].bar_map);
       (0, _soilChemistry.drawSoilChemistry)(data[0].soil_chemistry);
       (0, _temperatureVegetation.drawTemperatureVegetation)(data);
       (0, _curveLine.drawCurveLine)(data[0].years);

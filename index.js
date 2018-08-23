@@ -251,7 +251,7 @@ app.get('/api/data/', (request, response) => {
           temperature_amount += parseFloat(value["Temperature_" + k]);
         }
         temperature_amount = temperature_amount/21;
-        
+
         var vegetation_amount = 0;
         for (k = 0; k < 21; k++) {
           vegetation_amount += parseFloat(value["Vegetation_" + k]);
@@ -391,7 +391,7 @@ app.post('/api/updateData', (request, response) => {
         `-v`, `${vegetation}`, `${vegetation}`, `${vegetation}`, `${vegetation}`, `${vegetation}`, `${vegetation}`, `${vegetation}`, `${vegetation}`, `${vegetation}`, `${vegetation}`, `${vegetation}`, `${vegetation}`, `${vegetation}`, `${vegetation}`, `${vegetation}`, `${vegetation}`, `${vegetation}`, `${vegetation}`, `${vegetation}`, `${vegetation}`, `${vegetation}`,
        `-t`, `${temperature}`, `${temperature}`, `${temperature}`, `${temperature}`, `${temperature}`, `${temperature}`, `${temperature}`, `${temperature}`, `${temperature}`, `${temperature}`, `${temperature}`, `${temperature}`, `${temperature}`, `${temperature}`, `${temperature}`, `${temperature}`, `${temperature}`, `${temperature}`, `${temperature}`, `${temperature}`, `${temperature}`
      ],
-    
+     scriptPath: '/var/www/usda'
   }
   // Yash said instead of -2 make it the same value the user decides
   PythonShell.run(`${pickledStringPath}`, options, function(err, results) {
